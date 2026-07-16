@@ -75,9 +75,22 @@ BLOCKER, WARN, INFO = "BLOCKER", "WARN", "INFO"
 class Findings:
     def __init__(self) -> None:
         self.items: list[dict] = []
+        self.observed: dict[str, dict[str, str]] = {}
 
     def add(self, severity: str, check: str, message: str) -> None:
         self.items.append({"severity": severity, "check": check, "message": message})
+
+    def observe(self, check: str, **kv) -> None:
+        """Record the concrete values a check pulled from the package, so a
+        validation report can show observed-vs-expected for conditions that
+        PASS (a silent pass is unreviewable). Values are stringified and
+        truncated; lists join with commas."""
+        slot = self.observed.setdefault(check, {})
+        for k, v in kv.items():
+            if isinstance(v, (list, tuple, set)):
+                v = ", ".join(str(x) for x in sorted(v)) if v else "(none)"
+            s = str(v)
+            slot[k] = s if len(s) <= 400 else s[:397] + "..."
 
     @property
     def blockers(self) -> int:
@@ -273,6 +286,7 @@ def check_revision_collision(base: str, version: str, stage: str,
             return 0, ""
 
     status, _ = fetch(base)
+    f.observe("revision-collision", this_stage_url=base, http_status=status or "(unreachable)")
     if status == 200:
         f.add(WARN, "revision-collision",
               f"Stage /{stage}/ is already published at {base} — a NEW submission "
@@ -295,6 +309,7 @@ def check_filenames(items: dict[str, str], stage: str, f: Findings,
     `required` is the track's format set: (md, html, pdf) on the markdown
     track, (docx, html, pdf) on the DOCX-native track."""
     stems = {os.path.splitext(os.path.basename(p))[0] for p in items.values()}
+    f.observe("filenames", stems=stems)
     if len(stems) > 1:
         f.add(BLOCKER, "filenames", f"Delivery items do not share one basename: {sorted(stems)}")
     stem = sorted(stems)[0] if stems else ""
@@ -317,6 +332,8 @@ def check_front_matter(md_text: str, items: dict[str, str], version: str, stage:
     """Validate This/Latest stage URL blocks. Returns the This-Stage base URL."""
     this_urls = stage_urls_from_md(md_text, "This")
     latest_urls = stage_urls_from_md(md_text, "Latest")
+    f.observe("front-matter", this_stage_urls=this_urls or "(none)",
+              latest_stage_urls=latest_urls or "(none)")
     base = ""
     if not this_urls:
         f.add(BLOCKER, "front-matter", "No 'This stage' URL block found in the markdown.")
@@ -362,6 +379,7 @@ def check_front_matter(md_text: str, items: dict[str, str], version: str, stage:
 
 
 def check_residue(md_text: str, html_text: str, f: Findings) -> None:
+    f.observe("residue", scanned=[k for k, t in (("markdown", md_text), ("html", html_text)) if t])
     for label, text in (("markdown", strip_code_blocks(md_text, "md")),
                         ("html", strip_code_blocks(html_text, "html"))):
         for m in re.finditer(r"TODO\([^)]*\)|TODO:", text):
@@ -383,6 +401,13 @@ def check_html(html_text: str, stem: str, f: Findings,
     p = _AnchorParser()
     p.feed(html_text)
     title = " ".join(p.title.split())
+    f.observe("html-title", title=title or "(absent)")
+    f.observe("html-anchors",
+              internal_links=len(set(p.internal_hrefs)), anchors=len(p.ids),
+              unresolved=len({h for h in p.internal_hrefs if h not in p.ids}))
+    f.observe("html-residue",
+              title_block_headers=len(re.findall(r'<header\s+id="title-block-header"', html_text, re.I)),
+              runner_paths=len(set(re.findall(r'(?:href|src)="(/home/runner/[^"]*)"', html_text))))
     if re.search(r"(?i)[\s\-–—](tmp|draft|wip)$", title):
         f.add(BLOCKER, "html-title", f"HTML <title> carries working residue: '{title}'")
     if title and stem.split("-")[0].replace("_", " ") and len(title) < 8:
@@ -425,6 +450,7 @@ def check_html(html_text: str, stem: str, f: Findings,
 
 def check_md_links(md_text: str, f: Findings) -> None:
     md_text = strip_code_blocks(md_text, "md")
+    f.observe("md-links", links_scanned=len(re.findall(r"\[<?\S+?>?\]\(\S+?\)", md_text)))
     for m in re.finditer(r"\[<?(\S+?)>?\]\((\S+?)\)", md_text):
         if m.group(1) == m.group(2) and m.group(1).startswith("http"):
             f.add(WARN, "md-links",
@@ -446,6 +472,7 @@ def check_md_fences(md_text: str, f: Findings) -> None:
     The curly-attribute form (```{.lang title="x"}) is fine."""
     in_fence = False
     delim = ""
+    f.observe("fence-collapse", fences_scanned=len(re.findall(r"^\s{0,3}(?:`{3,}|~{3,})", md_text, re.M)))
     for i, line in enumerate(md_text.splitlines(), 1):
         m = re.match(r"^(\s{0,3})(`{3,}|~{3,})(.*)$", line)
         if not m:
@@ -475,6 +502,7 @@ def check_image_policy(stage_dir: str, html_text: str, f: Findings) -> None:
     event handlers, or external refs is active content on docs.oasis-open.org.
     Size caps mirror the inliner's policy (warn 500KB, refuse 2MB, 5MB total)."""
     flat = (html_text or "").replace("\r", "").replace("\n", "")
+    f.observe("image-policy", img_tags=len(re.findall(r'<img\b', flat, re.I)))
     for m in re.finditer(r'<img\b[^>]*>', flat, re.I):
         tag = m.group(0)
         src_m = re.search(r'src="([^"]*)"', tag)
@@ -527,6 +555,7 @@ def check_image_policy(stage_dir: str, html_text: str, f: Findings) -> None:
                     f.add(BLOCKER, "image-policy",
                           f"{rel}: SVG references an external image/use target; "
                           f"the published artifact would not be self-contained.")
+    f.observe("image-policy", image_payload_bytes=total)
     if total > 5_242_880:
         f.add(WARN, "image-policy",
               f"Cumulative image payload {total // 1_048_576}MB exceeds the "
@@ -550,6 +579,8 @@ def check_pdf_cover(pdf_path: str, title: str, f: Findings) -> None:
         return
     norm = re.sub(r"\s+", " ", title.lower())
     count = re.sub(r"\s+", " ", page1.lower()).count(norm)
+    f.observe("pdf-cover", title=title, cover_page_occurrences=count,
+              runner_path_in_pdf="/home/runner/" in full)
     if count > 1:
         f.add(BLOCKER, "pdf-cover",
               f"Document title appears {count} times on the PDF cover page "
@@ -565,6 +596,8 @@ def check_schemas(stage_dir: str, base_this_stage: str, version: str, stage: str
         return
     # $id convention: schemas identify at the version root (latest), not the stage path
     latest_root = base_this_stage.replace(f"/{stage}/", "/")
+    _json_files = [n for r, _d, fs in os.walk(stage_dir) for n in fs if n.endswith(".json")]
+    f.observe("schema-id", json_files=len(_json_files), expected_id_root=latest_root)
     for root, _dirs, files in os.walk(stage_dir):
         for name in files:
             if not name.endswith(".json"):
@@ -621,6 +654,8 @@ def check_pdf(pdf_path: str, this_urls_base: str, version: str, f: Findings) -> 
               f"{proc.stderr.strip()[:200]}")
         return
     txt = proc.stdout
+    f.observe("pdf-sync", pdftotext="present",
+              this_stage_base_in_pdf=bool(this_urls_base) and this_urls_base in txt.replace("\n", ""))
     if this_urls_base and this_urls_base not in txt.replace("\n", ""):
         f.add(BLOCKER, "pdf-sync",
               f"PDF front matter does not contain the canonical this-stage base URL "
@@ -665,6 +700,8 @@ def check_template(md_text: str, html_text: str, f: Findings) -> None:
                       f"Required front-matter section missing: {label}.")
         else:
             positions.append((m.start(), label))
+    f.observe("template", sections_found=[lbl for _pos, lbl in sorted(positions)],
+              conformance_section=bool(re.search(r"^#+\s+[\d.\sA-Za-z]*Conformance", md_text, re.M | re.I)))
     if positions != sorted(positions):
         order = " -> ".join(lbl for _pos, lbl in positions)
         f.add(WARN, "template",
@@ -683,6 +720,8 @@ def check_template(md_text: str, html_text: str, f: Findings) -> None:
         links = re.findall(r"<link[^>]+rel=[\"']?stylesheet[\"']?[^>]*>", html_text, re.I)
         hrefs = " ".join(links)
         inline_css = re.findall(r"<style\b", html_text, re.I)
+        f.observe("template-css",
+                  stylesheet_links=len(links), inline_style_blocks=len(inline_css))
         if re.search(r"markdown-styles[^\"']*\.css", hrefs):
             pass  # canonical stylesheet
         elif links or inline_css:
@@ -739,6 +778,14 @@ def check_correction_classes(md_text: str, stage_dir: str, base: str, stage: str
     # prov-meta class: horizontal rule between logo and title becomes a PDF
     # page break in the publication CSS (blank first page)
     head = md_text[:600]
+    f.observe("cover-hr", rule_after_logo=bool(
+        re.search(r"OASISLogo[^\n]*\)\s*\n+\s*(-{3,}|\*{3,}|_{3,})\s*\n", head)))
+    f.observe("package-refs", own_stage_citations_checked=len(set(
+        re.findall(re.escape(base) + r"[\w./%-]+", prose))) if base else 0)
+    f.observe("link-mismatch", shown_target_pairs=len(re.findall(
+        r"\[(https?://[^\]\s]+)\]\((https?://[^)\s]+)\)", prose)))
+    f.observe("double-slash", double_slash_paths=len(set(
+        re.findall(r"\]\((\.?/[^)\s]*//[^)\s]*)\)", prose))))
     if re.search(r"OASISLogo[^\n]*\)\s*\n+\s*(-{3,}|\*{3,}|_{3,})\s*\n", head):
         f.add(WARN, "cover-hr",
               "Horizontal rule between the OASIS logo and the title: the publication "
@@ -802,6 +849,7 @@ def check_pdf_fonts(stage_dir: str, pdf_path: str, html_text: str, f: Findings) 
         base = re.split(r"[-,]", name)[0]
         if base:
             embedded.add(base)
+    f.observe("pdf-fonts", css_declared_families=families, pdf_embedded_fonts=embedded)
     stray = sorted(b for b in embedded
                    if not any(fam in b.lower().replace(" ", "") or
                               b.lower().replace(" ", "") in fam for fam in families))
@@ -815,6 +863,7 @@ def check_pdf_fonts(stage_dir: str, pdf_path: str, html_text: str, f: Findings) 
 
 def check_manifest(stage_dir: str, f: Findings) -> None:
     mpath = os.path.join(stage_dir, "manifest.json")
+    f.observe("manifest", manifest_json="present" if os.path.exists(mpath) else "absent")
     if not os.path.exists(mpath):
         f.add(INFO, "manifest", "No manifest.json in the package. Emit one (--emit-manifest or "
                                 "your own tool) and intake verification becomes automatic.")
@@ -883,6 +932,15 @@ def check_hygiene(stage_dir: str, f: Findings, delivery_names: set | None = None
     """OS junk and case problems. The publication origin is case-sensitive:
     a mixed-case filename means every lowercase citation of it 404s."""
     delivery_names = delivery_names or set()
+    _all = [os.path.relpath(os.path.join(r, n), stage_dir)
+            for r, _d, fs in os.walk(stage_dir) for n in fs]
+    f.observe("junk-files", files_walked=len(_all))
+    f.observe("case", mixed_case_files=[p for p in _all
+              if os.path.basename(p) != os.path.basename(p).lower()
+              and os.path.basename(p) != "OASISLogo-v3.0.png"] or "(none)")
+    f.observe("symlinks", symlinks_found=sum(
+        1 for r, ds, fs in os.walk(stage_dir) for n in ds + fs
+        if os.path.islink(os.path.join(r, n))))
     for root, dirs, files in os.walk(stage_dir):
         # Self/parent-referential symlinks materialize into unbounded directory
         # recursion on deploy (rsync -L, s3 sync --follow-symlinks): KMIP
@@ -922,6 +980,17 @@ def check_policy(md_text: str, html_text: str, version: str, stage: str,
                  f: Findings) -> None:
     """TC Handbook / template conventions that repeatedly bounce submissions."""
     prose = strip_code_blocks(md_text, "md")
+    f.observe("dead-lists", md_lists_addresses=sorted(set(
+        re.findall(r"[\w.+-]+@lists\.oasis-open\.org", prose))) or "(none)")
+    f.observe("rfc-keywords",
+              normative_keywords_present=bool(re.search(
+                  r"\b(MUST NOT|MUST|SHALL NOT|SHALL|SHOULD NOT|SHOULD|MAY|REQUIRED|RECOMMENDED|OPTIONAL)\b", prose)),
+              rfc2119_cited=bool(re.search(r"RFC\s?2119", md_text)),
+              rfc8174_cited=bool(re.search(r"RFC\s?8174", md_text)))
+    f.observe("logo", logo_sources=sorted(set(
+        re.findall(r"!\[[^\]]*\]\((\S*?[Ll]ogo\S*?)\)", md_text))) or "(none)")
+    f.observe("case", md_docs_urls_scanned=len(set(
+        re.findall(r"https://docs\.oasis-open\.org/\S+", prose))))
 
     # dead mailing-list infrastructure: mail to lists.oasis-open.org silently fails
     for m in sorted(set(re.findall(r"[\w.+-]+@lists\.oasis-open\.org", prose))):
@@ -964,6 +1033,9 @@ def check_policy(md_text: str, html_text: str, version: str, stage: str,
 
     # date agreement between md and html front matter, and copyright year
     md_date = re.search(r"^#+\s+(\d{1,2} \w+ \d{4})\s*$", md_text, re.M)
+    _cr = re.search(r"Copyright\s+©?\s*OASIS Open\s+(\d{4})", md_text)
+    f.observe("date-sync", document_date=md_date.group(1) if md_date else "(not found)",
+              copyright_year=_cr.group(1) if _cr else "(not found)")
     if md_date:
         if html_text and md_date.group(1) not in html_text:
             f.add(BLOCKER, "date-sync",
@@ -1000,6 +1072,7 @@ def check_generator_meta(html_text: str, f: Findings) -> None:
     metadata) and is a re-do, not a publication (KMIP csprd01, Jul 2026)."""
     m = re.search(r'<meta\s+name="?Generator"?\s+content="([^"]+)"', html_text, re.I)
     gen = m.group(1) if m else ""
+    f.observe("generator", generator_meta=gen or "(absent)")
     if "Microsoft Word" not in gen:
         f.add(BLOCKER, "generator",
               f"HTML Generator is '{gen or 'absent'}'; a DOCX-native render must be "
@@ -1014,6 +1087,7 @@ def check_vml_fallback(html_text: str, f: Findings) -> None:
     flat = html_text.replace("\r", "").replace("\n", " ")
     vml = len(re.findall(r"<v:imagedata\b", flat))
     fallbacks = len(re.findall(r"<!\[if !vml\]>\s*<img\b", flat))
+    f.observe("vml-fallback", vml_images=vml, img_fallbacks=fallbacks)
     if vml and fallbacks < vml:
         f.add(BLOCKER, "vml-fallback",
               f"{vml} VML image(s) but only {fallbacks} <![if !vml]><img> fallback(s): "
@@ -1038,6 +1112,9 @@ def check_asset_refs(stage_dir: str, html_path: str, html_text: str,
         target = os.path.normpath(os.path.join(base, r.split("?")[0]))
         if not os.path.exists(target):
             missing.append(r)
+    f.observe("asset-refs",
+              relative_refs_checked=sum(1 for r in refs if not re.match(r"(?i)[a-z][a-z0-9+.-]*:|//", r)),
+              missing=len(missing))
     for r in missing[:20]:
         f.add(BLOCKER, "asset-refs",
               f"HTML references '{r}' which is not in the package; it 404s on "
@@ -1077,6 +1154,8 @@ def check_html_cover(html_text: str, version: str, stage: str,
     latest_urls = urls_between(r"Latest (version|stage)",
                                [r"Technical Committee", r"Chairs?\b"])
     base = ""
+    f.observe("front-matter", cover_this_urls=this_urls or "(none)",
+              cover_previous_urls=prev_urls or "(none)", cover_latest_urls=latest_urls or "(none)")
     if this_urls is None or not this_urls:
         f.add(BLOCKER, "front-matter",
               "No 'This version' URL block found on the HTML cover.")
@@ -1102,7 +1181,10 @@ def check_html_cover(html_text: str, version: str, stage: str,
 def _first_h1(md_text: str) -> str:
     for line in md_text.splitlines():
         if line.startswith("# "):
-            return line.strip("# ").strip()
+            # strip embedded HTML (anchor spans etc.): the title is matched
+            # against extracted PDF text, where markup never appears -- an
+            # anchor left in made the A1 cover check match nothing, silently
+            return re.sub(r"<[^>]+>", "", line.strip("# ").strip()).strip()
     return ""
 
 
@@ -1113,6 +1195,8 @@ def run(stage_dir: str, f: Findings) -> None:
     those outputs for every package. Source-format checks are add-ons applied
     to whatever source the package carries."""
     version, stage = parse_stage(stage_dir)
+    f.observe("stage-name", stage_directory=stage)
+    f.observe("version-naming", version_directory=version)
     check_stage_name(stage, f)
     items = find_delivery_items(stage_dir, ("md", "docx", "html", "pdf"))
     if not items:
@@ -1130,6 +1214,9 @@ def run(stage_dir: str, f: Findings) -> None:
     elif "docx" in items:
         required.append("docx")      # Word-track contract preserves the source
     stem = check_filenames(items, stage, f, required=tuple(required))
+    f.observe("filenames", delivery_files=[os.path.basename(p) for p in items.values()],
+              formats_present=sorted(items), required_formats=sorted(required))
+    f.observe("version-naming", delivery_stem=stem)
     check_version_naming(version, stem, f)
     if "md" not in items and "docx" not in items and "html" in items:
         f.add(WARN, "filenames",
@@ -1158,6 +1245,10 @@ def run(stage_dir: str, f: Findings) -> None:
         check_asset_refs(stage_dir, items["html"], html_text, f)
         if not md_text:
             prose = re.sub(r"<[^>]+>", " ", strip_code_blocks(html_text, "html"))
+            f.observe("dead-lists", html_lists_addresses=sorted(set(
+                re.findall(r"[\w.+-]+@lists\.oasis-open\.org", prose))) or "(none)")
+            f.observe("case", html_docs_urls_scanned=len(set(
+                re.findall(r"https://docs\.oasis-open\.org/\S+", prose))))
             for m in sorted(set(re.findall(r"[\w.+-]+@lists\.oasis-open\.org", prose))):
                 f.add(BLOCKER, "dead-lists",
                       f"References mailing address '{m}': lists.oasis-open.org no longer "
@@ -1206,6 +1297,482 @@ def locate_stage_dir(root: str) -> str:
     return root
 
 
+# ---------------------------------------------------- condition registry
+#
+# Every individual defect condition the AST advertises (--list-checks) is
+# documented here: the condition verified, the value the logic PULLS from the
+# package, and what that value is COMPARED TO. Keyed (check, sig) where sig is
+# a distinctive literal substring of the condition's finding-message template;
+# conditions_inventory() asserts the registry and the AST agree in BOTH
+# directions, so an undocumented (or renamed) condition fails the inventory
+# instead of silently vanishing from validation reports.
+#
+# "applies": md = markdown-track packages only, docx = DOCX-native track only,
+# both = every package. "requires": a package/environment feature without
+# which the condition is not evaluated (reported NA, never a fake PASS).
+# "sites": number of identical f.add call sites this entry covers (default 1).
+
+CONDITION_DOCS: list[dict] = [
+    # stage-name
+    dict(check="stage-name", sig="is missing its two-digit number", applies="both",
+         condition="Stage directory name carries a two-digit revision number",
+         pulls="the stage directory name",
+         compares_to="valid stage prefixes must carry a two-digit suffix (csd01, never bare csd)"),
+    dict(check="stage-name", sig="uses a retired/invalid stage token", applies="both",
+         condition="Stage token is not a retired abbreviation",
+         pulls="the alphabetic prefix of the stage directory name",
+         compares_to="retired token set (csprd, cnprd, cos, csdpr, cndpr) per Naming Directives v1.7"),
+    dict(check="stage-name", sig="is not a recognized stage token", applies="both",
+         condition="Stage token is a recognized current stage",
+         pulls="the alphabetic prefix of the stage directory name",
+         compares_to="valid stage set: wd, csd, cs, cnd, cn, os, ps, psd, pn, pnd, errata"),
+    # version-naming
+    dict(check="version-naming", sig="does not match the vN.N convention", applies="both",
+         condition="Version directory matches the vN.N(.N) convention",
+         pulls="the version directory name from the package path",
+         compares_to="the Naming Directives version-segment pattern vN.N(.N), e.g. v1.0, v2.0.1"),
+    dict(check="version-naming", sig="the files were renamed", applies="both",
+         condition="Version embedded in the delivery filename agrees with the version directory",
+         pulls="the version segment embedded in the delivery filename stem",
+         compares_to="the version directory the package publishes under"),
+    dict(check="version-naming", sig="does not embed the version segment", applies="both",
+         condition="Delivery filename embeds the version segment",
+         pulls="the delivery filename stem",
+         compares_to="the Naming Directives filename shape <base>-<version>-<stage>"),
+    # revision-collision
+    dict(check="revision-collision", sig="is already published at", applies="both", requires="network",
+         condition="The submitted stage does not already exist on the live site",
+         pulls="the HTTP status of the this-stage URL on docs.oasis-open.org",
+         compares_to="expected non-200 for a NEW submission; an existing stage means the revision must increment"),
+    # filenames
+    dict(check="filenames", sig="No delivery items found", applies="both",
+         condition="The stage directory contains delivery items at all",
+         pulls="the file listing of the stage directory root",
+         compares_to="at least one delivery item (md/docx/html/pdf) must be present"),
+    dict(check="filenames", sig="do not share one basename", applies="both",
+         condition="All delivery items share one basename",
+         pulls="the set of delivery-item filename stems",
+         compares_to="exactly one distinct stem across md/docx/html/pdf"),
+    dict(check="filenames", sig="carries a working token", applies="both",
+         condition="Delivery filename carries no working token",
+         pulls="the delivery filename stem",
+         compares_to="forbidden working tokens: draft, tmp, rc (files are named for the published stage)"),
+    dict(check="filenames", sig="does not end in '-", applies="both",
+         condition="Delivery filename ends in the stage suffix",
+         pulls="the delivery filename stem",
+         compares_to="the stage directory name as a -<stage> suffix"),
+    dict(check="filenames", sig="Missing delivery format(s)", applies="both",
+         condition="All required delivery formats are present",
+         pulls="the set of delivery formats found in the package",
+         compares_to="the track's required set: md+html+pdf (markdown track) or docx+html+pdf (DOCX track)"),
+    dict(check="filenames", sig="No authoritative source artifact", applies="both",
+         condition="An authoritative source artifact travels with the renderings",
+         pulls="the set of source formats found in the package root",
+         compares_to="at least one authoritative source (.md or .docx) expected beside HTML/PDF"),
+    # front-matter (markdown track: 1-9; DOCX track cover: 10-12)
+    dict(check="front-matter", sig="No 'This stage' URL block", applies="md",
+         condition="Markdown front matter carries a This-stage URL block",
+         pulls="URLs under the 'This Stage/Version' heading in the markdown",
+         compares_to="at least one URL must be declared"),
+    dict(check="front-matter", sig="Stage URL is not under", applies="md",
+         condition="Every stage URL is under docs.oasis-open.org",
+         pulls="each URL in the This/Latest stage blocks",
+         compares_to="the canonical site prefix https://docs.oasis-open.org/"),
+    dict(check="front-matter", sig="This-stage URL does not contain", applies="md",
+         condition="This-stage URLs carry the version and stage path segments",
+         pulls="each URL in the This-stage block",
+         compares_to="the package's /<version>/ and /<stage>/ path segments"),
+    dict(check="front-matter", sig="which is not a file in the package", applies="md",
+         condition="Every This-stage URL points at a file shipped in the package",
+         pulls="the filename each This-stage URL points at",
+         compares_to="the set of delivery filenames actually in the package"),
+    dict(check="front-matter", sig="This-stage block does not list", applies="md",
+         condition="The This-stage block lists all three artifacts (md, html, pdf)",
+         pulls="the artifact extensions listed in the This-stage block",
+         compares_to="the full delivery set: .md, .html, .pdf"),
+    dict(check="front-matter", sig="Latest-stage URL must point at the version root", applies="md",
+         condition="Latest-stage URLs point at the persistent version root",
+         pulls="each URL in the Latest-stage block",
+         compares_to="must NOT contain the /<stage>/ segment (latest is the version-root path)"),
+    dict(check="front-matter", sig="Latest-stage URL not under", applies="md",
+         condition="Latest-stage URLs are under the package's version directory",
+         pulls="each URL in the Latest-stage block",
+         compares_to="the package's /<version>/ path segment"),
+    dict(check="front-matter", sig="confirm this is an intentional external reference", applies="md",
+         condition="Any docs.oasis-open.org URL declaring a different version is intentional",
+         pulls="every docs.oasis-open.org URL in the markdown outside Previous/Related-work blocks",
+         compares_to="the package's own version; a different version is a stale-draft tell unless external"),
+    dict(check="front-matter", sig="'Latest'-labelled URL carries the stage segment", applies="md",
+         condition="No Latest-labelled line cites a stage-pinned URL for this spec",
+         pulls="URLs on lines labelled 'Latest' in the prose",
+         compares_to="the persistent version-root form (no /<stage>/ segment)"),
+    dict(check="front-matter", sig="No 'This version' URL block found on the HTML cover", applies="docx",
+         condition="HTML cover carries a This-version URL block",
+         pulls="URLs following 'This version/stage' on the rendered HTML cover",
+         compares_to="at least one URL must be present"),
+    dict(check="front-matter", sig="This-version URL does not contain", applies="docx",
+         condition="Cover This-version URLs carry the version and stage segments",
+         pulls="each URL in the cover's This-version block",
+         compares_to="the package's /<version>/ and /<stage>/ path segments"),
+    dict(check="front-matter", sig="Latest-version URL must point at the version root", applies="docx",
+         condition="Cover Latest-version URLs point at the persistent version root",
+         pulls="each URL in the cover's Latest-version block",
+         compares_to="must NOT contain the /<stage>/ segment"),
+    # residue
+    dict(check="residue", sig="Editor TODO left in", applies="both",
+         condition="No editor TODO markers left in prose",
+         pulls="prose of the markdown and HTML (code blocks stripped)",
+         compares_to="the patterns TODO(...) and TODO: must not occur"),
+    dict(check="residue", sig="'tbd' placeholder section", applies="both",
+         condition="No bare 'tbd' placeholder sections",
+         pulls="prose of the markdown and HTML (code blocks stripped)",
+         compares_to="no line consisting solely of 'tbd'"),
+    dict(check="residue", sig="'Will be filled in", applies="both",
+         condition="No 'Will be filled in' placeholders (early-stage tolerated, must resolve before CS)",
+         pulls="prose of the markdown and HTML (code blocks stripped)",
+         compares_to="the phrase 'Will be filled in' must not occur"),
+    # html-title
+    dict(check="html-title", sig="carries working residue", applies="both",
+         condition="HTML title carries no working residue",
+         pulls="the <title> element text",
+         compares_to="must not end in tmp, draft, or wip"),
+    dict(check="html-title", sig="looks too short", applies="both",
+         condition="HTML title is a plausible document title",
+         pulls="the <title> element text and its length",
+         compares_to="a full spec title (at least 8 characters)"),
+    # html-residue
+    dict(check="html-residue", sig="title-block-header", applies="both",
+         condition="No stale pandoc title-block header in the HTML",
+         pulls="the HTML body",
+         compares_to="the <header id=\"title-block-header\"> element must be absent (lint D2)"),
+    dict(check="html-residue", sig="CI runner path leaked into the HTML", applies="both",
+         condition="No CI runner paths in HTML hrefs or srcs",
+         pulls="every href/src attribute in the HTML",
+         compares_to="the /home/runner/ path prefix must not occur (lint D3)"),
+    dict(check="html-residue", sig="<h1> elements", applies="both",
+         condition="The document title appears in exactly one H1",
+         pulls="the count of <h1> elements matching the title text",
+         compares_to="exactly 1 (more renders the title twice on the PDF cover, lint D1)"),
+    # html-anchors
+    dict(check="html-anchors", sig="has no matching anchor in the HTML", applies="both",
+         condition="Every internal fragment link resolves to an anchor",
+         pulls="each internal href (#...) and the set of element ids/anchor names",
+         compares_to="every referenced fragment must exist as an id or <a name>"),
+    dict(check="html-anchors", sig="no internal (fragment) links at all", applies="both",
+         condition="The HTML carries a linked table of contents",
+         pulls="the count of internal fragment links",
+         compares_to="at least one expected (a spec HTML without any is missing its TOC links)"),
+    # md-links
+    dict(check="md-links", sig="Dual link", applies="md",
+         condition="No dual [url](url) links in the markdown",
+         pulls="every [text](target) link where text is itself a URL",
+         compares_to="text and target being the same URL calls for a bare autolink or real anchor text"),
+    dict(check="md-links", sig="pandoc autolink pulls the", applies="md",
+         condition="No bare URL runs into '.\\' without a space",
+         pulls="each markdown line ending a URL with .\\",
+         compares_to="the safe form '. \\' (otherwise pandoc pulls the period and backslash into the href)"),
+    # fence-collapse
+    dict(check="fence-collapse", sig="collapses to inline code", applies="md",
+         condition="No opening code fence carries trailing text in its info string",
+         pulls="each opening fence line's info string",
+         compares_to="a bare language token or curly-attribute form; trailing text collapses the block (lint D6)"),
+    # image-policy
+    dict(check="image-policy", sig="Empty <img src>", applies="both",
+         condition="No empty img src attributes",
+         pulls="each <img> tag's src attribute",
+         compares_to="src must be non-empty"),
+    dict(check="image-policy", sig="Absolute-path <img src=", applies="both",
+         condition="No absolute-path image sources",
+         pulls="each <img> tag's src attribute",
+         compares_to="a leading / resolves outside the package on publication"),
+    dict(check="image-policy", sig="Path-traversal <img src=", applies="both",
+         condition="No path-traversal image sources",
+         pulls="each <img> tag's src attribute",
+         compares_to="the path must not contain .. segments"),
+    dict(check="image-policy", sig="<img srcset> present", applies="both",
+         condition="No responsive srcset image constructs",
+         pulls="each <img> tag's attributes",
+         compares_to="the publication pipeline's self-containment policy refuses srcset"),
+    dict(check="image-policy", sig="<picture> element present", applies="both",
+         condition="No <picture> elements",
+         pulls="the HTML body",
+         compares_to="the publication pipeline's self-containment policy refuses <picture>"),
+    dict(check="image-policy", sig="per-image refusal cap", applies="both",
+         condition="Every image file is under the per-image size cap",
+         pulls="the byte size of each image file in the package",
+         compares_to="the pipeline's 2MB per-image refusal cap"),
+    dict(check="image-policy", sig="SVG contains <script>", applies="both",
+         condition="No SVG carries script content",
+         pulls="the body of each .svg file",
+         compares_to="<script> elements are active content, refused on docs.oasis-open.org"),
+    dict(check="image-policy", sig="inline event handlers", applies="both",
+         condition="No SVG carries inline event handlers",
+         pulls="the body of each .svg file",
+         compares_to="on*= attributes are active content, refused"),
+    dict(check="image-policy", sig="references an external image/use target", applies="both",
+         condition="No SVG references external image or use targets",
+         pulls="the body of each .svg file",
+         compares_to="external <image>/<use> hrefs break self-containment"),
+    dict(check="image-policy", sig="Cumulative image payload", applies="both",
+         condition="Total image payload is under the cumulative cap",
+         pulls="the summed byte size of all image files",
+         compares_to="the pipeline's 5MB cumulative inlining cap"),
+    # pdf-cover
+    dict(check="pdf-cover", sig="times on the PDF cover page", applies="both", requires="pdftotext",
+         condition="The document title appears exactly once on the PDF cover page",
+         pulls="the count of title occurrences in the PDF's first page text",
+         compares_to="exactly 1 (more means stale title-block residue baked into the render, assertion A1)"),
+    dict(check="pdf-cover", sig="leaked into the rendered PDF text", applies="both", requires="pdftotext",
+         condition="No CI runner path anywhere in the PDF text",
+         pulls="the full extracted PDF text",
+         compares_to="the /home/runner/ path must not occur (assertion A2)"),
+    # schema-id
+    dict(check="schema-id", sig="not valid JSON (", applies="both", requires="schemas",
+         condition="Every .json file in the package parses as JSON",
+         pulls="each .json file's content",
+         compares_to="must parse without error"),
+    dict(check="schema-id", sig="a flattened path under the version", applies="both", requires="schemas",
+         condition="A flattened $id under the version root is a conscious convention",
+         pulls="each schema's declared $id",
+         compares_to="the file's publish path; a version-root flattened $id (CSAF v2.0 style) needs a copy at that location"),
+    dict(check="schema-id", sig="An implementer following the $id", applies="both", requires="schemas",
+         condition="Each schema's $id agrees with where the file publishes",
+         pulls="each schema's declared $id",
+         compares_to="the canonical latest-version URL derived from the package path"),
+    dict(check="schema-id", sig="disagrees with $id", applies="both", requires="schemas",
+         condition="Schema-internal self-references agree with the declared $id",
+         pulls="every docs.oasis-open.org .json URL inside each schema body",
+         compares_to="the schema's own declared $id"),
+    # pdf-sync
+    dict(check="pdf-sync", sig="pdftotext not on PATH", applies="both",
+         condition="The PDF cross-check toolchain is available",
+         pulls="the PATH lookup for pdftotext (poppler)",
+         compares_to="pdftotext present; absent means the PDF front-matter cross-check is skipped here and runs at intake"),
+    dict(check="pdf-sync", sig="pdftotext failed", applies="both", requires="pdftotext",
+         condition="pdftotext executes against the PDF",
+         pulls="the pdftotext process outcome",
+         compares_to="a clean execution"),
+    dict(check="pdf-sync", sig="pdftotext could not read the PDF", applies="both", requires="pdftotext",
+         condition="The PDF is machine-readable",
+         pulls="pdftotext's exit status on the delivery PDF",
+         compares_to="exit 0"),
+    dict(check="pdf-sync", sig="does not contain the canonical this-stage base URL", applies="both", requires="pdftotext",
+         condition="The PDF front matter carries the canonical this-stage URL",
+         pulls="the first three pages of extracted PDF text",
+         compares_to="the this-stage base URL declared by the package front matter"),
+    dict(check="pdf-sync", sig="expected only as a previous-stage reference", applies="both", requires="pdftotext",
+         condition="The PDF cites no unexpected other version of this spec",
+         pulls="every this-spec version URL in the extracted PDF text",
+         compares_to="the package's own version (previous-stage citations expected, anything else confirmed)"),
+    # template
+    dict(check="template", sig="Required front-matter section missing", applies="md",
+         condition="All required template front-matter sections are present",
+         pulls="the markdown headings",
+         compares_to="the template's required set: This/Previous/Latest stage, Technical Committee, Chairs, Editors, Abstract"),
+    dict(check="template", sig="out of template order", applies="md",
+         condition="Front-matter sections appear in template order",
+         pulls="the order of found front-matter sections",
+         compares_to="the canonical template ordering"),
+    dict(check="template", sig="No Conformance section found", applies="md",
+         condition="A Conformance section exists",
+         pulls="the markdown headings",
+         compares_to="the TC Process requirement: every Standards Track Work Product carries conformance clauses"),
+    # template-css
+    dict(check="template-css", sig="the template look is Liberation", applies="md",
+         condition="A non-canonical stylesheet keeps the template font family",
+         pulls="the primary font-family declared by the HTML's own stylesheet",
+         compares_to="the template look: Liberation Sans / Arial / Helvetica"),
+    dict(check="template-css", sig="no stylesheet at all", applies="md",
+         condition="The HTML carries a stylesheet",
+         pulls="the HTML's <link rel=stylesheet> and <style> elements",
+         compares_to="at least one styling source must be present"),
+    # package-refs
+    dict(check="package-refs", sig="is not in the package: it will 404", applies="md",
+         condition="Every file the document cites under its own stage path ships in the package",
+         pulls="each cited URL under the this-stage base and the package file tree",
+         compares_to="the cited relative path must exist as a file in the package"),
+    # link-mismatch
+    dict(check="link-mismatch", sig="Visible URL and link target disagree", applies="md",
+         condition="Visible URL text and its link target agree",
+         pulls="each [shown-url](target-url) pair in the prose",
+         compares_to="shown and target must be the same URL (a disagreement is a rename artifact)"),
+    # double-slash
+    dict(check="double-slash", sig="contains a double slash", applies="md",
+         condition="No relative link path contains a double slash",
+         pulls="each relative link target in the prose",
+         compares_to="single slashes only (the CDN 404s a double slash even where browsers tolerate it)"),
+    # cover-hr
+    dict(check="cover-hr", sig="Horizontal rule between the OASIS logo", applies="md",
+         condition="No horizontal rule between the OASIS logo and the title",
+         pulls="the first 600 characters of the markdown",
+         compares_to="no --- / *** / ___ rule after the logo (the publication CSS renders it as a PDF page break)"),
+    # pdf-fonts
+    dict(check="pdf-fonts", sig="pdffonts failed", applies="both", requires="pdffonts",
+         condition="pdffonts executes against the PDF",
+         pulls="the pdffonts process outcome",
+         compares_to="a clean execution"),
+    dict(check="pdf-fonts", sig="not declared by the package's own CSS", applies="both", requires="pdffonts",
+         condition="The PDF's embedded fonts are declared by the package's own CSS",
+         pulls="the font base names embedded in the PDF (pdffonts)",
+         compares_to="the font families declared in the package's HTML/CSS (its own typography authority)"),
+    # manifest
+    dict(check="manifest", sig="manifest.json is not valid JSON", applies="both", requires="manifest",
+         condition="manifest.json parses as JSON",
+         pulls="the manifest.json content",
+         compares_to="must parse without error"),
+    dict(check="manifest", sig="manifest lists missing file", applies="both", requires="manifest",
+         condition="Every manifest item exists in the package",
+         pulls="each path listed in the manifest",
+         compares_to="the package file tree"),
+    dict(check="manifest", sig="sha256 mismatch for", applies="both", requires="manifest",
+         condition="Every manifest sha256 matches the file's actual digest",
+         pulls="the sha256 of each manifest-listed file",
+         compares_to="the digest recorded in the manifest"),
+    # junk-files
+    dict(check="junk-files", sig="Working directory", applies="both",
+         condition="No working directories inside the package",
+         pulls="every directory name in the package tree",
+         compares_to="forbidden set: __MACOSX, .git, .venv, venv, node_modules"),
+    dict(check="junk-files", sig="Junk file in package", applies="both",
+         condition="No OS junk or editor backup files in the package",
+         pulls="every filename in the package tree",
+         compares_to="forbidden: .DS_Store, Thumbs.db, desktop.ini, and ~ / .bak / .orig / .swp suffixes"),
+    # case
+    dict(check="case", sig="Mixed-case filename", applies="both",
+         condition="Every filename in the package is lowercase",
+         pulls="every filename in the package tree",
+         compares_to="its lowercase form (the publication origin is case-sensitive; the canonical logo filename is exempt)"),
+    dict(check="case", sig="Mixed-case path in docs.oasis-open.org URL", applies="both", sites=2,
+         condition="Every self-referential docs.oasis-open.org URL path is lowercase",
+         pulls="every docs.oasis-open.org URL in the prose (markdown source on the md track, rendered HTML on the DOCX track)",
+         compares_to="its lowercase form (case-sensitive origin; /templates/ paths exempt)"),
+    # symlinks
+    dict(check="symlinks", sig="points at its own ancestor", applies="both",
+         condition="No symlink points at itself or an ancestor directory",
+         pulls="each symlink's resolved target",
+         compares_to="must not equal or contain its own directory (deploys materialize symlinks into unbounded recursion)"),
+    # dead-lists
+    dict(check="dead-lists", sig="References mailing address", applies="both", sites=2,
+         condition="No reference to a lists.oasis-open.org mailing address",
+         pulls="every @lists.oasis-open.org address in the prose (markdown source on the md track, rendered HTML on the DOCX track)",
+         compares_to="the dead-infrastructure rule: that mail host silently fails; comments route via Higher Logic"),
+    dict(check="dead-lists", sig="archives", applies="md",
+         condition="Links into the retired list archives are flagged for verification",
+         pulls="lists.oasis-open.org/archives links in the prose",
+         compares_to="each must be individually verified while the archive infrastructure is retired"),
+    # rfc-keywords
+    dict(check="rfc-keywords", sig="does not cite RFC 2119", applies="md",
+         condition="Normative key words are backed by an RFC 2119 citation",
+         pulls="normative key words (MUST, SHALL, SHOULD, MAY, ...) found in the prose",
+         compares_to="an RFC 2119 citation must be present when key words are used"),
+    dict(check="rfc-keywords", sig="RFC 8174", applies="md",
+         condition="RFC 2119 citation is paired with RFC 8174",
+         pulls="the RFC citations in the document",
+         compares_to="the current template cites both 2119 and 8174 (uppercase-only clarification)"),
+    # logo
+    dict(check="logo", sig="is not the canonical", applies="md",
+         condition="The cover logo is the canonical OASIS logo",
+         pulls="each logo image source in the markdown",
+         compares_to="https://docs.oasis-open.org/templates/OASISLogo-v3.0.png"),
+    # previous-stage
+    dict(check="previous-stage", sig="the Previous-Stage block is empty or N/A", applies="md",
+         condition="A stage past 01 cites its previous stage",
+         pulls="the URLs in the markdown's Previous-stage block",
+         compares_to="at least one docs.oasis-open.org URL required when the revision number exceeds 01"),
+    dict(check="previous-stage", sig="no Previous-version block with docs.oasis-open.org URLs found on the HTML cover", applies="docx",
+         condition="A stage past 01 cites its previous stage on the HTML cover",
+         pulls="the URLs in the cover's Previous-version block",
+         compares_to="at least one docs.oasis-open.org URL required when the revision number exceeds 01"),
+    # date-sync
+    dict(check="date-sync", sig="the HTML was rendered from a different revision", applies="md",
+         condition="The markdown front-matter date appears in the HTML",
+         pulls="the document date heading from the markdown",
+         compares_to="the rendered HTML text (absence means the HTML came from a different revision)"),
+    dict(check="date-sync", sig="Copyright year", applies="md",
+         condition="The copyright year matches the document date year",
+         pulls="the year in the OASIS copyright line",
+         compares_to="the year of the front-matter document date"),
+    # generator (DOCX track)
+    dict(check="generator", sig="must be produced by Microsoft Word", applies="docx",
+         condition="A DOCX-native render was produced by Microsoft Word",
+         pulls="the HTML Generator meta content",
+         compares_to="must contain 'Microsoft Word' (a LibreOffice render differs in kind from the TC's precedent)"),
+    # vml-fallback
+    dict(check="vml-fallback", sig="browsers that ignore VML show nothing", applies="both",
+         condition="Every VML image has an <![if !vml]> img fallback",
+         pulls="the counts of v:imagedata elements and vml-fallback img tags",
+         compares_to="fallback count must cover VML count (the invisible-cover-logo class)"),
+    # asset-refs
+    dict(check="asset-refs", sig="which is not in the package; it 404s", applies="both",
+         condition="Every relative src/href the HTML references ships in the package",
+         pulls="each package-relative src/href in the HTML (attribute values flattened across Word line wraps)",
+         compares_to="the package file tree; a missing target 404s on publication"),
+]
+
+
+def conditions_inventory() -> list[dict]:
+    """Join the AST's defect-condition sites with CONDITION_DOCS and assert
+    they agree in both directions. Returns one entry per individual condition
+    (a doc with sites=N expands to N entries), each carrying the doc fields."""
+    import ast as _ast
+    tree = _ast.parse(open(os.path.abspath(__file__), encoding="utf-8").read())
+    sites = []
+    for node in _ast.walk(tree):
+        if (isinstance(node, _ast.Call) and isinstance(node.func, _ast.Attribute)
+                and node.func.attr == "add" and len(node.args) >= 3):
+            sev = getattr(node.args[0], "id", "")
+            if sev == "INFO":
+                continue
+            cid = node.args[1].value if isinstance(node.args[1], _ast.Constant) else "(dynamic)"
+
+            def constants(n) -> list[str]:
+                if isinstance(n, _ast.Constant):
+                    return [str(n.value)]
+                if isinstance(n, _ast.JoinedStr):
+                    return [str(v.value) for v in n.values if isinstance(v, _ast.Constant)]
+                if isinstance(n, _ast.BinOp):
+                    return constants(n.left) + constants(n.right)
+                if isinstance(n, _ast.IfExp):
+                    return constants(n.body) + constants(n.orelse)
+                return []
+
+            template = "".join(constants(node.args[2]))
+            if template.startswith("..."):
+                continue
+            sites.append({"check": cid, "template": template,
+                          "severity": sev, "lineno": node.lineno})
+    matched: dict[int, dict] = {}
+    for doc in CONDITION_DOCS:
+        hits = [s for s in sites if s["check"] == doc["check"] and doc["sig"] in s["template"]]
+        want = doc.get("sites", 1)
+        if len(hits) != want:
+            raise AssertionError(
+                f"condition registry drift: ({doc['check']!r}, {doc['sig']!r}) matches "
+                f"{len(hits)} AST site(s), expected {want}")
+        for h in hits:
+            if id(h) in matched:
+                raise AssertionError(
+                    f"condition registry overlap: AST site at line {h['lineno']} matched by "
+                    f"both {matched[id(h)]['sig']!r} and {doc['sig']!r}")
+            matched[id(h)] = doc
+    unmatched = [s for s in sites if id(s) not in matched]
+    if unmatched:
+        raise AssertionError(
+            "undocumented condition site(s): " +
+            "; ".join(f"line {s['lineno']} [{s['check']}] {s['template'][:60]!r}" for s in unmatched))
+    out = []
+    for doc in CONDITION_DOCS:
+        hits = sorted((s for s in sites if matched.get(id(s)) is doc), key=lambda s: s["lineno"])
+        for i, h in enumerate(hits):
+            entry = {k: v for k, v in doc.items() if k != "sites"}
+            entry["severity"] = h["severity"]
+            if doc.get("sites", 1) > 1:
+                entry = dict(entry)
+                entry["condition"] += (" (markdown source)" if i == 0 else " (HTML render)")
+            out.append(entry)
+    return out
+
+
 def list_checks() -> int:
     """Self-introspect: parse this file's AST and count every individual
     defect condition (each BLOCKER/WARN finding site; continuation lines and
@@ -1236,6 +1803,9 @@ def list_checks() -> int:
     for cid, n in sorted(per_class.items()):
         print(f"  {cid:{width}}  {n}")
     print(f"\n{total} individual checks across {len(per_class)} check classes.")
+    inv = conditions_inventory()   # raises on registry/AST drift
+    assert len(inv) == total, f"registry expands to {len(inv)} conditions, AST counts {total}"
+    print(f"condition registry: {len(inv)} documented conditions, in sync with the AST.")
     return 0
 
 
@@ -1288,7 +1858,9 @@ def main() -> int:
 
     if args.json:
         print(json.dumps({"target": args.target, "findings": f.items,
-                          "blockers": f.blockers}, indent=2))
+                          "blockers": f.blockers,
+                          "conditions": conditions_inventory(),
+                          "observed": f.observed}, indent=2))
     else:
         # Aggregate repeated same-class warnings so blockers stay readable:
         # 102 case warnings on one KMIP package drowned 3 blockers (Jul 2026).
