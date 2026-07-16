@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="End-to-end verification chain from TC build to docs.oasis-open.org">
+  <defs>
+    <marker id="carr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4a86e8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="300" rx="14" fill="#f5f8fe" stroke="#d7e2f6"/>
+  <text x="40" y="52" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#1f2a44">Verification Chain</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
+    <rect x="40" y="100" width="190" height="110" rx="12" fill="#ffffff" stroke="#446CAA" stroke-width="2"/>
+    <text x="135" y="138" font-size="15" font-weight="700" fill="#1f2a44">TC build</text>
+    <text x="135" y="162" font-size="13" fill="#44536e">make / CI / editor tools</text>
+    <text x="135" y="182" font-size="13" fill="#44536e">renders md &#183; html &#183; pdf</text>
+
+    <rect x="278" y="100" width="190" height="110" rx="12" fill="#ffffff" stroke="#446CAA" stroke-width="2"/>
+    <text x="373" y="138" font-size="15" font-weight="700" fill="#1f2a44">manifest.json</text>
+    <text x="373" y="162" font-size="13" fill="#44536e">sha256 + roles</text>
+    <text x="373" y="182" font-size="13" fill="#44536e">source commit &#183; tools</text>
+
+    <rect x="516" y="100" width="190" height="110" rx="12" fill="#eef9f0" stroke="#2f9e44" stroke-width="2.5"/>
+    <text x="611" y="138" font-size="15" font-weight="700" fill="#1b5e2c">pub-check</text>
+    <text x="611" y="162" font-size="13" fill="#2f6b3c">92 checks, pre-vote</text>
+    <text x="611" y="182" font-size="13" fill="#2f6b3c">TC side &#183; exit 0</text>
+
+    <rect x="754" y="100" width="190" height="110" rx="12" fill="#ffffff" stroke="#446CAA" stroke-width="2"/>
+    <text x="849" y="138" font-size="15" font-weight="700" fill="#1f2a44">OASIS intake</text>
+    <text x="849" y="162" font-size="13" fill="#44536e">independent re-run</text>
+    <text x="849" y="182" font-size="13" fill="#44536e">gate + audit record</text>
+
+    <rect x="992" y="100" width="168" height="110" rx="12" fill="#182238" stroke="#182238"/>
+    <text x="1076" y="150" font-size="13.5" font-weight="700" fill="#ffffff">docs.oasis-open.org</text>
+    <text x="1076" y="178" font-size="13" fill="#8fa8d8">published</text>
+  </g>
+
+  <g stroke="#4a86e8" stroke-width="2.5" fill="none">
+    <path d="M230 155 H274" marker-end="url(#carr)"/>
+    <path d="M468 155 H512" marker-end="url(#carr)"/>
+    <path d="M706 155 H750" marker-end="url(#carr)"/>
+    <path d="M944 155 H988" marker-end="url(#carr)"/>
+  </g>
+
+  <text x="600" y="256" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#44536e" text-anchor="middle">Identical criteria run on both sides; artifacts are verified by sha256 at each step.</text>
+</svg>

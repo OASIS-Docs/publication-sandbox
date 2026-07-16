@@ -1,0 +1,159 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+
+name: 3.0 - ZIP Package Files in Directory
+
+on:
+  workflow_dispatch:
+    inputs:
+      latest_version_path:
+        description: |
+          Path to the directory to create a ZIP file for all files of directory.
+          Example: ap-hunt/v1.0/csd02
+          Ensure the path is copy & pasted from GitHub and correctly formatted.
+        required: true
+        default: '-Enter directory to ZIP-'
+      modify_date:
+        description: |
+          Enter the modification date for the files in yyyy-mm-dd format.
+          Example: 2024-07-30
+        required: true
+        default: '2024-10-10'
+
+jobs:
+  create-zip:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Validate inputs
+      run: |
+        set -e
+        LATEST_VERSION_PATH="${{ github.event.inputs.latest_version_path }}"
+        MODIFY_DATE="${{ github.event.inputs.modify_date }}"
+
+        # Validate directory path
+        if [ ! -d "$LATEST_VERSION_PATH" ]; then
+          echo "Invalid directory path. The directory does not exist."
+          exit 1
+        fi
+
+        # Validate date format
+        if ! date -d "$MODIFY_DATE" '+%Y-%m-%d' >/dev/null 2>&1; then
+          echo "Invalid MODIFY_DATE format. Expected format: yyyy-mm-dd"
+          exit 1
+        fi
+
+        echo "LATEST_VERSION_PATH=$LATEST_VERSION_PATH" >> $GITHUB_ENV
+        echo "MODIFY_DATE=$MODIFY_DATE" >> $GITHUB_ENV
+
+    - name: Set up .sh files in .githooks
+      run: |
+        set -e
+        echo "Current directory: $(pwd)"
+        ls -ltra
+
+        if [ -d ".githooks" ]; then
+          echo "Making .sh files in .githooks executable"
+          find .githooks -name "*.sh" -exec chmod +x {} \;
+
+          echo "Running install_hooks.sh"
+          bash .githooks/install_hooks.sh
+          echo "install_hooks.sh ran successfully"
+
+          echo "Running restore_metadata.sh"
+          bash .githooks/restore_metadata.sh
+          echo "restore_metadata.sh ran successfully"
+        else
+          echo ".githooks directory not found. Skipping this step."
+        fi
+      shell: bash
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y zip
+
+    - name: Create ZIP file
+      env:
+        LATEST_VERSION_PATH: ${{ env.LATEST_VERSION_PATH }}
+        MODIFY_DATE: ${{ env.MODIFY_DATE }}
+      run: |
+        set -e
+        cd "$GITHUB_WORKSPACE"
+        BASE_NAME=$(basename "$LATEST_VERSION_PATH")
+        PARENT_DIR=$(basename "$(dirname "$LATEST_VERSION_PATH")")
+        GRANDPARENT_DIR=$(basename "$(dirname "$(dirname "$LATEST_VERSION_PATH")")")
+        ZIP_NAME="${GRANDPARENT_DIR}-${PARENT_DIR}-${BASE_NAME}.zip"
+
+        # Debug: Print paths and names
+        echo "Base Name: $BASE_NAME"
+        echo "Parent Directory: $PARENT_DIR"
+        echo "Grandparent Directory: $GRANDPARENT_DIR"
+        echo "ZIP Name: $ZIP_NAME"
+
+        cd "$LATEST_VERSION_PATH"
+
+        # If ZIP file already exists, list its contents
+        if [ -f "$ZIP_NAME" ]; then
+          echo "ZIP file already exists. Listing contents:"
+          unzip -l "$ZIP_NAME"
+        fi
+
+        # Create ZIP file
+        echo "Creating ZIP file..."
+        zip -r "$ZIP_NAME" ./*
+
+        echo "ZIP file created: $ZIP_NAME"
+
+        # Set modification date for all files including ZIP file
+        echo "Updating modification date to $MODIFY_DATE 17:00:00 UTC"
+        find . -type f -exec touch -d "$MODIFY_DATE 17:00:00" {} +
+        touch -d "$MODIFY_DATE 17:00:00" "$ZIP_NAME"
+
+        chmod 755 "$ZIP_NAME"
+        echo "Changed permissions of ZIP to 755 Confirmation:"
+        pwd
+        ls -ltra *.zip
+
+        echo "ZIP file contents:"
+        unzip -l "$ZIP_NAME"
+
+        echo "ZIP_FILE=$ZIP_NAME" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ZIP_FILE: ${{ env.ZIP_FILE }}
+        LATEST_VERSION_PATH: ${{ env.LATEST_VERSION_PATH }}
+      run: |
+        set -e
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+        git add .
+
+        # Check if there are any changes to commit
+        if ! git diff --cached --quiet; then
+          # Find the Markdown file
+          MD_FILE=$(find "$LATEST_VERSION_PATH" -name '*.md' | head -n 1)
+          MD_FILENAME=$(basename "$MD_FILE" .md)
+
+          # Commit the changes with a descriptive message
+          git commit -m "Updated $MD_FILENAME and created ZIP file"
+
+          # Push the changes to the repository
+          git push
+        else
+          echo "No changes to commit."
+        fi
+      shell: bash
+

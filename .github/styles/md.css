@@ -1,0 +1,83 @@
+/*
+Copyright 2025-2026 OASIS Open
+SPDX-License-Identifier: Apache-2.0
+Authored by Michael Coletta, Technical Advisor to OASIS Open.
+*/
+
+body {
+    margin-left: 3pc;
+    margin-right: 3pc;
+    font-family: LiberationSans, Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    line-height: 1.2;
+}
+
+html {
+    overflow-x: auto;
+}
+
+/* styles for section headings - levels 1-5 (maybe include heading1, etc. later) */
+h1 { font-size: 18pt; }
+h2 { font-size: 14pt; }
+h3 { font-size: 13pt; }
+h4 { font-size: 12pt; }
+h5 { font-size: 11pt; }
+h1big { font-size: 24pt; }
+h1, h2, h3, h4, h5, h1big {
+    font-family: LiberationSans, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 8pt 0;
+    color: #446CAA;
+}
+
+/* style for h6, for use as Reference tag */
+h6 {
+    font-size: 12pt;
+    line-height: 1.0;
+    font-family: LiberationSans, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 0pt;
+}
+
+/* style for hr to insert a page break before each ruled line */
+hr {
+    page-break-before: always;
+}
+
+/* Table styles - bordered with option for striped */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    display: table;
+    font-size: 12pt;
+    margin-top: 6pt;
+}
+table, th, td {
+    border: 1pt solid black;
+    padding: 6pt 6pt;
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    color: #ffffff;
+    background-color: #1a8cff;
+}
+.table-striped tbody tr:nth-child(even) {
+    background-color: #d6f3ff;
+}
+
+/* style for code blocks */
+code, kbd, pre, samp {
+    font-family: CourierNew, monospace;
+    font-size: 1em;
+    white-space: pre-wrap;
+    background-color: #e8e8e8;
+    display: inline;
+}
+
+/* offset block quote */
+blockquote {
+    background-color: #e8e8e8;
+    display: inline;
+}

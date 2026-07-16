@@ -1,0 +1,112 @@
+{
+  "$comment": "Copyright 2025-2026 OASIS Open. SPDX-License-Identifier: Apache-2.0 Authored by Michael Coletta, Technical Advisor to OASIS Open.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASIS-Docs/csaf-sandbox/main/pub-check/manifest-schema.json",
+  "title": "OASIS work-product publication manifest",
+  "description": "Machine-verifiable provenance for a work-product package: which files constitute the release, what they hash to, which source commit and tools produced them. If a package ships a manifest.json conforming to this schema, intake verification is mechanical.",
+  "type": "object",
+  "required": [
+    "version",
+    "stage",
+    "items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+$",
+      "examples": [
+        "v1.0"
+      ]
+    },
+    "stage": {
+      "type": "string",
+      "pattern": "^(wd|csd|cs|cnd|cn|os|ps|psd|pn|pnd|errata)[0-9]*$",
+      "examples": [
+        "csd01"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repo": {
+          "type": "string",
+          "examples": [
+            "oasis-tcs/openeox"
+          ]
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,40}$|^$"
+        },
+        "tag": {
+          "type": "string",
+          "examples": [
+            "eox-core-1.0-csd-01-20260713-rc3"
+          ]
+        }
+      }
+    },
+    "tools": {
+      "type": "object",
+      "description": "Tool name to version string, as reported by the tool itself.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path relative to the stage directory, forward slashes."
+          },
+          "role": {
+            "enum": [
+              "authoritative",
+              "delivery",
+              "schema",
+              "example",
+              "other"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "tc": {
+      "type": "string",
+      "description": "TC shortname, e.g. openeox.",
+      "examples": [
+        "openeox"
+      ]
+    },
+    "slug": {
+      "type": "string",
+      "description": "Work-product slug, e.g. eox-core.",
+      "examples": [
+        "eox-core"
+      ]
+    },
+    "published_url": {
+      "type": "string",
+      "description": "Canonical stage URL on docs.oasis-open.org once published."
+    }
+  }
+}

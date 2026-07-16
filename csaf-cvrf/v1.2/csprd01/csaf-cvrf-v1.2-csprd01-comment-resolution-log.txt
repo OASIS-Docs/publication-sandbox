@@ -1,0 +1,34 @@
+In https://lists.oasis-open.org/archives/csaf-comment/201707/msg00000.html, Stefan Hagen, specification editor reports: 
+
+Subject: No public comments received in 30 day public review period of csaf-cvrf-v1.2-csprd01
+
+From: "Mr. Stefan Hagen" <stefan@hagen.link>
+Date: Fri, 21 Jul 2017 02:23:40 -0700 (PDT)
+
+Dear TC members,
+
+this mail is to: 
+
+1) indicate, that the TC received no public comment during the 30 day public review period for CSAF Common Vulnerability Reporting Framework (CVRF) v1.2 (csaf-cvrf-v1.2-csprd01) 
+
+and
+
+2) provide a link to the archived "empty" public comment resolution log at:
+https://www.oasis-open.org/committees/download.php/61245/csaf-cvrf-v1-2-csd01-pr01-20170721-comment-resolution-log.xls
+
+Thank You to all that contributed to the successful public review !
+
+---
+
+In https://lists.oasis-open.org/archives/csaf/201707/msg00004.html, Mr. Hagen reported: 
+
+Subject: Groups - Public Comment Resolution Log for csaf-cvrf-v1.2-csprd01 uploaded
+
+From: Stefan Hagen<stefan@hagen.link>
+Date: Fri, 21 Jul 2017 02:17:21 -0700 (PDT)
+
+Submitter's message
+
+Approval due to observation of two facts: 1)Archive folder for June 2016 of the public comments list at https://lists.oasis-open.org/archives/csaf-comment/201706/maillist.html only contains the announcement message and 2) there is no folder for July 2017 (on 2017-07-21 09:14 UTC), thus no comment received in July part of period. 
+
+We received one TC internal comment with purely editorial content ("no technical corrections/comments") from Beth Pumo (https://lists.oasis-open.org/archives/csaf/201707/msg00003.html) that the editor intents to implement as non-material changes revision as candidate for balloting and further progression in the OASIS standards creation process. 

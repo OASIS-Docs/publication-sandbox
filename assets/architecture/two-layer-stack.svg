@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="arrN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1B3A5C"/></marker><marker id="arrT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E7B7E"/></marker><marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0B5CAD"/></marker><marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#B7C6D2"/></marker><marker id="arrW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FFFFFF"/></marker><marker id="arrSL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5F7B96"/></marker></defs>
+<rect x="0" y="0" width="900" height="1100" fill="#FFFFFF"/>
+<rect x="0.5" y="0.5" width="899" height="1099" fill="none" stroke="#DCE4EC" stroke-width="1"/>
+<text x="450.0" y="46" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="bold" fill="#1B3A5C" text-anchor="middle">The OASIS Publication Quality Stack</text>
+<text x="450.0" y="74" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#4A6076" text-anchor="middle">Package in at the bottom, verified publication at the top; two layers joined at gate 4b</text>
+<line x1="32" y1="1010" x2="32" y2="300" stroke="#C6D4DE" stroke-width="4" marker-end="url(#arrG)"/>
+<text transform="rotate(-90 50 655)" x="50" y="655" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#9AAEBE" text-anchor="middle" letter-spacing="1.5">PUBLICATION READINESS</text>
+<rect x="250" y="980" width="400" height="72" rx="14" ry="14" fill="#FFFFFF" stroke="#0B5CAD" stroke-width="2"/>
+<text x="450" y="1012" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="#1B3A5C" text-anchor="middle" letter-spacing="0.5">PACKAGE IN</text>
+<text x="450" y="1034" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#4A6076" text-anchor="middle">the assembled TC submission package</text>
+<line x1="450" y1="980" x2="450" y2="960" stroke="#1B3A5C" stroke-width="2.2" marker-end="url(#arrN)"/>
+<rect x="60" y="735" width="780" height="220" rx="14" ry="14" fill="#E6F6F5" stroke="#149C9F" stroke-width="2.5"/>
+<path d="M74,735 H826 A14,14 0 0 1 840,749 V775 H60 V749 A14,14 0 0 1 74,735 Z" fill="#149C9F"/>
+<text x="450" y="760" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.3">LAYER 1  ·  VALIDATION  ·  pub-check (mechanical, tool-side)</text>
+<text x="95" y="808" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="bold" fill="#1B3A5C" text-anchor="start">pub_check.py:  92 checks across 34 classes</text>
+<text x="95" y="832" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#4A6076" text-anchor="start">Runs in the TC's own CI before submission.</text>
+<text x="95" y="854" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#4A6076" text-anchor="start">Re-run identically by TC Administration at gate 4b.</text>
+<text x="95" y="878" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#4A6076" text-anchor="start">Every finding gets a severity:</text>
+<rect x="112.0" y="890" width="56" height="18" rx="9.0" ry="9.0" fill="#C0392B"/><text x="140" y="902.2" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">BLOCKER</text>
+<rect x="190.0" y="890" width="46" height="18" rx="9.0" ry="9.0" fill="#D98A00"/><text x="213" y="902.2" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">WARN</text>
+<rect x="252.0" y="890" width="46" height="18" rx="9.0" ry="9.0" fill="#2C6FB0"/><text x="275" y="902.2" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">INFO</text>
+<text x="95" y="936" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#0E7B7E" text-anchor="start">Output: a Validation Report, observed vs expected for all 92.</text>
+<rect x="500" y="793" width="315" height="148" rx="10" ry="10" fill="#FFFFFF" stroke="#149C9F" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="514" y="817" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" fill="#0E7B7E" text-anchor="start" letter-spacing="0.4">WHAT THE TOOL SEES</text>
+<text x="514" y="843" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">filenames  ·  case  ·  front matter</text>
+<text x="514" y="863" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">anchors  ·  fonts  ·  placeholders</text>
+<text x="514" y="883" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">schema $id  ·  stage naming</text>
+<text x="514" y="903" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">image policy  ·  junk files</text>
+<text x="514" y="928" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="normal" fill="#7A8C99" text-anchor="start">only the package, never the live site</text>
+<rect x="60" y="300" width="780" height="390" rx="14" ry="14" fill="#F3F6F9" stroke="#1B3A5C" stroke-width="2.5"/>
+<path d="M74,300 H826 A14,14 0 0 1 840,314 V340 H60 V314 A14,14 0 0 1 74,300 Z" fill="#1B3A5C"/>
+<text x="450" y="325" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.2">LAYER 2  ·  PUBLICATION AUDIT  ·  human + adversarial (event-side)</text>
+<circle cx="98" cy="370" r="3.4" fill="#149C9F"/><text x="112" y="374" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="#0E7B7E" text-anchor="start">Gate 4b: run pub-check + triage findings  (the dovetail)</text>
+<circle cx="98" cy="397" r="3.4" fill="#1B3A5C"/><text x="112" y="401" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">GitHub vs LIVE byte identity</text>
+<circle cx="98" cy="424" r="3.4" fill="#1B3A5C"/><text x="112" y="428" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Render class vs the TC's own precedent</text>
+<circle cx="98" cy="451" r="3.4" fill="#1B3A5C"/><text x="112" y="455" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Front matter vs the LIVE roster</text>
+<circle cx="98" cy="478" r="3.4" fill="#1B3A5C"/><text x="112" y="482" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Current Naming Directives</text>
+<circle cx="98" cy="505" r="3.4" fill="#1B3A5C"/><text x="112" y="509" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">LIVE directory index chain</text>
+<circle cx="98" cy="532" r="3.4" fill="#1B3A5C"/><text x="112" y="536" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Zip integrity</text>
+<circle cx="98" cy="559" r="3.4" fill="#1B3A5C"/><text x="112" y="563" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Four announcement channels at destination</text>
+<circle cx="98" cy="586" r="3.4" fill="#1B3A5C"/><text x="112" y="590" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">TCADMIN ticket record</text>
+<circle cx="98" cy="613" r="3.4" fill="#1B3A5C"/><text x="112" y="617" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Independent adversarial verifier (refute mandate)</text>
+<circle cx="98" cy="640" r="3.4" fill="#1B3A5C"/><text x="112" y="644" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#243B4F" text-anchor="start">Visual eyeball of the LIVE page</text>
+<rect x="500" y="360" width="315" height="250" rx="10" ry="10" fill="#FFFFFF" stroke="#1B3A5C" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="514" y="384" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" fill="#1B3A5C" text-anchor="start" letter-spacing="0.3">WHAT ONLY A HUMAN /</text>
+<text x="514" y="402" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" fill="#1B3A5C" text-anchor="start" letter-spacing="0.3">LIVE CHECK CAN SEE</text>
+<text x="514" y="430" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">Live ground truth the tool</text>
+<text x="514" y="448" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">cannot reach:</text>
+<circle cx="520" cy="472" r="3.4" fill="#1B3A5C"/><text x="534" y="476" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">the running site</text>
+<circle cx="520" cy="496" r="3.4" fill="#1B3A5C"/><text x="534" y="500" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">the roster as it stands today</text>
+<circle cx="520" cy="520" r="3.4" fill="#1B3A5C"/><text x="534" y="524" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">the four destinations</text>
+<circle cx="520" cy="544" r="3.4" fill="#1B3A5C"/><text x="534" y="548" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">the rendered page</text>
+<circle cx="520" cy="568" r="3.4" fill="#1B3A5C"/><text x="534" y="572" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="normal" fill="#243B4F" text-anchor="start">an adversary set to refute it</text>
+<text x="450" y="668" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#4A6076" text-anchor="middle">Gate 4b requires running pub-check and triaging every finding.</text>
+<polygon points="400,735 500,735 515,693 385,693" fill="#149C9F" stroke="#0E7B7E" stroke-width="1.5"/>
+<line x1="450" y1="733" x2="450" y2="723" stroke="#FFFFFF" stroke-width="2.4" marker-end="url(#arrW)"/>
+<rect x="372" y="697" width="156" height="22" rx="11" ry="11" fill="#0E7B7E"/>
+<text x="450" y="712" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.4">GATE 4b  ·  DOVETAIL</text>
+<rect x="140" y="130" width="620" height="150" rx="16" ry="16" fill="#1B3A5C"/>
+<circle cx="212" cy="205" r="34" fill="#149C9F"/>
+<path d="M196,205 l11,12 l21,-24" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="480" y="182" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.3">PUBLISHED + VERIFIED PUBLICATION</text>
+<text x="480" y="212" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="normal" fill="#CBD8E6" text-anchor="middle">live on docs.oasis-open.org</text>
+<text x="480" y="236" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#A6BACB" text-anchor="middle">all four channels announced</text>
+<text x="480" y="258" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" fill="#A6BACB" text-anchor="middle">audit report filed to the ticket and _audit/</text>
+<line x1="450" y1="300" x2="450" y2="282" stroke="#1B3A5C" stroke-width="2.2" marker-end="url(#arrN)"/>
+</svg>

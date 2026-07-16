@@ -1,0 +1,6 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+
+beautifulsoup4==4.11.1
+requests==2.28.1

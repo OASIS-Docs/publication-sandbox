@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-label="Publication pipeline: markdown to HTML to PDF to zip">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4a86e8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="330" rx="14" fill="#f5f8fe" stroke="#d7e2f6"/>
+  <text x="40" y="52" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#1f2a44">Pipeline Stages</text>
+
+  <!-- Stage 1 -->
+  <g>
+    <rect x="40" y="80" width="330" height="170" rx="12" fill="#ffffff" stroke="#4a86e8" stroke-width="2"/>
+    <rect x="40" y="80" width="330" height="40" rx="12" fill="#446CAA"/>
+    <rect x="40" y="104" width="330" height="16" fill="#446CAA"/>
+    <text x="205" y="106" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">STAGE 1 &#183; Markdown &#8594; HTML</text>
+    <g font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="13" fill="#1f2a44">
+      <rect x="58" y="134" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="70" y="152">prettier --write spec.md</text>
+      <rect x="58" y="166" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="70" y="184">pandoc -f markdown+autolink&#8230;</text>
+      <rect x="58" y="198" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="70" y="216">9 OASIS HTML fix-ups (python)</text>
+    </g>
+  </g>
+
+  <!-- Stage 2 -->
+  <g>
+    <rect x="435" y="80" width="330" height="170" rx="12" fill="#ffffff" stroke="#4a86e8" stroke-width="2"/>
+    <rect x="435" y="80" width="330" height="40" rx="12" fill="#446CAA"/>
+    <rect x="435" y="104" width="330" height="16" fill="#446CAA"/>
+    <text x="600" y="106" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">STAGE 2 &#183; HTML &#8594; PDF</text>
+    <g font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="13" fill="#1f2a44">
+      <rect x="453" y="134" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="465" y="152">fix_html_for_pdf.py</text>
+      <rect x="453" y="166" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="465" y="184">wkhtmltopdf + A4 + footers</text>
+    </g>
+    <text x="453" y="232" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#5b6b8c">production has moved to headless Chrome + CSS Paged Media</text>
+  </g>
+
+  <!-- Stage 3 -->
+  <g>
+    <rect x="830" y="80" width="330" height="170" rx="12" fill="#ffffff" stroke="#4a86e8" stroke-width="2"/>
+    <rect x="830" y="80" width="330" height="40" rx="12" fill="#446CAA"/>
+    <rect x="830" y="104" width="330" height="16" fill="#446CAA"/>
+    <text x="995" y="106" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">STAGE 3 &#183; Package</text>
+    <g font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="13" fill="#1f2a44">
+      <rect x="848" y="134" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="860" y="152">zip -r spec-stage.zip .</text>
+      <rect x="848" y="166" width="294" height="26" rx="6" fill="#eef4ff"/>
+      <text x="860" y="184">touch &#8594; publication date</text>
+    </g>
+  </g>
+
+  <!-- arrows between stages -->
+  <g stroke="#4a86e8" stroke-width="2.5" fill="none">
+    <path d="M372 165 H431" marker-end="url(#arr)"/>
+    <path d="M767 165 H826" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="40" y="300" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#44536e">The workflow YAML around these commands is CI plumbing only. Full command reference: <tspan font-weight="700" fill="#2c4a8a">TRANSFORMS.md</tspan></text>
+</svg>

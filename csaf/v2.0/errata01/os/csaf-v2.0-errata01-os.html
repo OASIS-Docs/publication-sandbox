@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<base href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.html">
+<meta name="description" content="This document provides Errata for the OASIS Standard Common Security Advisory Framework Version 2.0.">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Common Security Advisory Framework Version 2.0 Errata 01</title>
+  <link rel="stylesheet" href="https://docs.oasis-open.org/templates/css/markdown-styles-v1.7.3a.css" />
+</head>
+<body>
+<link rel="stylesheet" href="https://docs.oasis-open.org/templates/css/markdown-styles-v1.7.3a.css" />
+
+<p><img src="https://docs.oasis-open.org/templates/OASISLogo-v3.0.png"
+alt="OASIS Logo" /></p>
+<hr style="page-break-before: avoid" />
+<h1big id="common-security-advisory-framework-version-20-errata-01">Common
+Security Advisory Framework Version 2.0 Errata 01</h1big>
+<h2 id="oasis-approved-errata">OASIS Approved Errata</h2>
+<h2 id="26-january-2024">26 January 2024</h2>
+<h4 id="this-stage">This stage:</h4>
+<p><a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.md">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.md</a>
+(Authoritative)<br />
+<a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.html">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.html</a><br />
+<a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.pdf">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.pdf</a></p>
+<h4 id="previous-stage">Previous stage:</h4>
+<p><a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.md">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.md</a>
+(Authoritative)<br />
+<a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.html">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.html</a><br />
+<a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.pdf">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.pdf</a></p>
+<h4 id="latest-stage">Latest stage:</h4>
+<p><a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.md">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.md</a>
+(Authoritative)<br />
+<a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.html">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.html</a><br />
+<a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.pdf">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.pdf</a></p>
+<h4 id="technical-committee">Technical Committee:</h4>
+<p><a href="https://www.oasis-open.org/committees/csaf/">OASIS Common
+Security Advisory Framework (CSAF) TC</a></p>
+<h4 id="chair">Chair:</h4>
+<p>Omar Santos (<a
+href="mailto:osantos@cisco.com">osantos@cisco.com</a>), <a
+href="https://cisco.com/">Cisco Systems</a></p>
+<h4 id="editors">Editors:</h4>
+<p>Langley Rock (<a
+href="mailto:lrock@redhat.com">lrock@redhat.com</a>), <a
+href="https://redhat.com/">Red Hat</a><br />
+Stefan Hagen (<a href="mailto:stefan@hagen.link">stefan@hagen.link</a>),
+<a href="https://stefan-hagen.website/">Individual</a><br />
+Thomas Schmidt (<a
+href="mailto:thomas.schmidt@bsi.bund.de">thomas.schmidt@bsi.bund.de</a>),
+<a href="https://www.bsi.bund.de/">Federal Office for Information
+Security (BSI) Germany</a></p>
+<h4 id="additional-artifacts">Additional artifacts:</h4>
+<p>This document is one component of a Work Product that also
+includes:</p>
+<ul>
+<li>Aggregator JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/aggregator_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/aggregator_json_schema.json</a>.</li>
+<li>CSAF JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/csaf_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/csaf_json_schema.json</a>.</li>
+<li>Provider JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/provider_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/provider_json_schema.json</a>.</li>
+</ul>
+<h4 id="declared-json-namespaces">Declared JSON namespaces:</h4>
+<ul>
+<li><a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/aggregator_json_schema.json"><span>https://docs.oasis-open.org/csaf/csaf/v2.0/aggregator_json_schema.json</span></a></li>
+<li><a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/csaf_json_schema.json"><span>https://docs.oasis-open.org/csaf/csaf/v2.0/csaf_json_schema.json</span></a></li>
+<li><a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/provider_json_schema.json"><span>https://docs.oasis-open.org/csaf/csaf/v2.0/provider_json_schema.json</span></a></li>
+</ul>
+<h4 id="abstract">Abstract:</h4>
+<p>This document provides Errata for the OASIS Standard <em>Common
+Security Advisory Framework Version 2.0</em>. There are no changes to
+the published CSAF document. Changes have been made only to the included
+Aggregator JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/aggregator_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/schemas/aggregator_json_schema.json</a>.
+No changes have been made to the other two included JSON schemas.</p>
+<h4 id="status">Status:</h4>
+<p>This document was last revised or approved by the OASIS Common
+Security Advisory Framework (CSAF) TC on the above date. The level of
+approval is also listed above. Check the "Latest stage" location noted
+above for possible later revisions of this document. Any other numbered
+Versions and other technical work produced by the Technical Committee
+(TC) are listed at <a
+href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=csaf#technical">https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=csaf#technical</a>.</p>
+<p>TC members should send comments on this specification to the TC's
+email list. Others should send comments to the TC's public comment list,
+after subscribing to it by following the instructions at the "Send A
+Comment" button on the TC's web page at <a
+href="https://www.oasis-open.org/committees/csaf/">https://www.oasis-open.org/committees/csaf/</a>.</p>
+<p>This specification is provided under the <a
+href="https://www.oasis-open.org/policies-guidelines/ipr/#Non-Assertion-Mode">Non-Assertion</a>
+Mode of the <a
+href="https://www.oasis-open.org/policies-guidelines/ipr/">OASIS IPR
+Policy</a>, the mode chosen when the Technical Committee was
+established. For information on whether any patents have been disclosed
+that may be essential to implementing this specification, and any offers
+of patent licensing terms, please refer to the Intellectual Property
+Rights section of the TC's web page (<a
+href="https://www.oasis-open.org/committees/csaf/ipr.php">https://www.oasis-open.org/committees/csaf/ipr.php</a>).</p>
+<p>Note that any machine-readable content (<a
+href="https://www.oasis-open.org/policies-guidelines/tc-process-2017-05-26/#wpComponentsCompLang">Computer
+Language Definitions</a>) declared Normative for this Work Product is
+provided in separate plain text files. In the event of a discrepancy
+between any such plain text file and display content in the Work
+Product's prose narrative document(s), the content in the separate plain
+text file prevails.</p>
+<h4 id="citation-format">Citation format:</h4>
+<p>When referencing this specification the following citation format
+should be used:</p>
+<p><strong>[csaf-v2.0-errata01]</strong></p>
+<p><em>Common Security Advisory Framework Version 2.0 Errata 01</em>.
+Edited by Langley Rock, Stefan Hagen, and Thomas Schmidt. 26 January
+2024. OASIS Approved Errata. <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.html">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/os/csaf-v2.0-errata01-os.html</a>.
+Latest stage: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.html">https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csaf-v2.0-errata01.html</a>.</p>
+<h4 id="notices">Notices</h4>
+<p>Copyright © OASIS Open 2024. All Rights Reserved.</p>
+<p>Distributed under the terms of the OASIS <a
+href="https://www.oasis-open.org/policies-guidelines/ipr/">IPR
+Policy</a>.</p>
+<p>The name "OASIS" is a trademark of <a
+href="https://www.oasis-open.org/">OASIS</a>, the owner and developer of
+this specification, and should be used only to refer to the organization
+and its official outputs.</p>
+<p>For complete copyright information please see the full Notices
+section in Appendix C below.</p>
+<hr />
+<h1 id="table-of-contents">Table of Contents</h1>
+<nav id="TOC" role="doc-toc">
+<ul type="none">
+<li><a href="#1-introduction" id="toc-1-introduction">1 Introduction</a>
+<ul type="none">
+<li><a href="#11-description-of-changes"
+id="toc-11-description-of-changes">1.1 Description of changes</a></li>
+<li><a href="#12-scope-of-changes" id="toc-12-scope-of-changes">1.2
+Scope of changes</a></li>
+</ul></li>
+<li><a href="#2-conformance" id="toc-2-conformance">2
+Conformance</a></li>
+<li><a href="#appendix-a-normative-references"
+id="toc-appendix-a-normative-references">Appendix A. Normative
+References</a></li>
+<li><a href="#appendix-b-acknowledgments"
+id="toc-appendix-b-acknowledgments">Appendix B. Acknowledgments</a></li>
+<li><a href="#appendix-c-notices" id="toc-appendix-c-notices">Appendix
+C. Notices</a></li>
+</ul>
+</nav>
+<hr />
+<h1 id="1-introduction">1 Introduction</h1>
+<p>This document lists the approved changes to the OASIS Standard
+<em>Common Security Advisory Framework Version 2.0</em>, consisting of
+the following components:</p>
+<ul>
+<li><em>Common Security Advisory Framework Version 2.0</em> (prose
+document)</li>
+<li>Aggregator JSON schema</li>
+<li>CSAF JSON schema</li>
+<li>Provider JSON schema</li>
+</ul>
+<p>There are no changes to the published CSAF document. Changes have
+been made only to the included Aggregator JSON schema. No changes have
+been made to the other two included JSON schemas.</p>
+<h2 id="11-description-of-changes">1.1 Description of changes</h2>
+<p>In the aggregator schema, a typo has been corrected that blocked
+creation of any valid JSON aggregator document instance.</p>
+<p>In line 178 of the <code>aggregator_json_schema.json</code>, the
+entry <code>mirror</code> as <code>required</code> field has been
+corrected to be <code>mirrors</code> to match the existing property
+definition in line 187 of the same schema file. There is no field
+<code>mirror</code>.</p>
+<h2 id="12-scope-of-changes">1.2 Scope of changes</h2>
+<p>The only approved change is to the Aggregator JSON schema file,
+"aggregator_json_schema.json". The corrected file is linked in the
+section <a href="#additional-artifacts">Additional artifacts</a> on the
+title page.</p>
+<hr />
+<h1 id="2-conformance">2 Conformance</h1>
+<p>The conformance requirements stated in the OASIS Standard <em>Common
+Security Advisory Framework Version 2.0</em> [<a
+href="#csaf-v20-os">csaf-v2.0-os</a>] are not changed in any way by the
+publication of this Errata document.</p>
+<hr />
+<h1 id="appendix-a-normative-references">Appendix A. Normative
+References</h1>
+<p>The following documents are referenced in such a way that some or all
+of their content constitutes requirements of this document.</p>
+<h6 id="csaf-v20-os">[csaf-v2.0-os]</h6>
+<p><em>Common Security Advisory Framework Version 2.0</em>. Edited by
+Langley Rock, Stefan Hagen, and Thomas Schmidt. 18 November 2022. OASIS
+Standard. <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/os/csaf-v2.0-os.html">https://docs.oasis-open.org/csaf/csaf/v2.0/os/csaf-v2.0-os.html</a>.
+This specification includes the following components:</p>
+<ul>
+<li>Aggregator JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/os/schemas/aggregator_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/os/schemas/aggregator_json_schema.json</a>.</li>
+<li>CSAF JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/os/schemas/csaf_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/os/schemas/csaf_json_schema.json</a>.</li>
+<li>Provider JSON schema: <a
+href="https://docs.oasis-open.org/csaf/csaf/v2.0/os/schemas/provider_json_schema.json">https://docs.oasis-open.org/csaf/csaf/v2.0/os/schemas/provider_json_schema.json</a>.</li>
+</ul>
+<hr />
+<h1 id="appendix-b-acknowledgments">Appendix B. Acknowledgments</h1>
+<p>The following individuals were members of the OASIS CSAF Technical
+Committee during the creation of this specification and their
+contributions are gratefully acknowledged:</p>
+<p><strong>CSAF TC Members:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">First Name</th>
+<th style="text-align: left;">Last Name</th>
+<th style="text-align: left;">Company</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alexandre</td>
+<td style="text-align: left;">Dulaunoy</td>
+<td style="text-align: left;">CIRCL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Anthony</td>
+<td style="text-align: left;">Berglas</td>
+<td style="text-align: left;">Cryptsoft Pty Ltd.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Art</td>
+<td style="text-align: left;">Manion</td>
+<td style="text-align: left;">Carnegie Mellon University</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aukjan</td>
+<td style="text-align: left;">van Belkum</td>
+<td style="text-align: left;">EclecticIQ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ben</td>
+<td style="text-align: left;">Sooter</td>
+<td style="text-align: left;">Electric Power Research Institute
+(EPRI)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bernd</td>
+<td style="text-align: left;">Grobauer</td>
+<td style="text-align: left;">Siemens AG</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bruce</td>
+<td style="text-align: left;">Rich</td>
+<td style="text-align: left;">Cryptsoft Pty Ltd.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chok</td>
+<td style="text-align: left;">Poh</td>
+<td style="text-align: left;">Oracle</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dan</td>
+<td style="text-align: left;">West</td>
+<td style="text-align: left;">Microsoft</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">David</td>
+<td style="text-align: left;">Waltermire</td>
+<td style="text-align: left;">NIST</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Denny</td>
+<td style="text-align: left;">Page</td>
+<td style="text-align: left;">TIBCO Software Inc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duncan</td>
+<td style="text-align: left;">Sparrell</td>
+<td style="text-align: left;">sFractal Consulting LLC</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eric</td>
+<td style="text-align: left;">Johnson</td>
+<td style="text-align: left;">TIBCO Software Inc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">Rahn</td>
+<td style="text-align: left;">Arista Networks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Feng</td>
+<td style="text-align: left;">Cao</td>
+<td style="text-align: left;">Oracle</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Greg</td>
+<td style="text-align: left;">Scott</td>
+<td style="text-align: left;">Cryptsoft Pty Ltd.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Harold</td>
+<td style="text-align: left;">Booth</td>
+<td style="text-align: left;">NIST</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jason</td>
+<td style="text-align: left;">Masters</td>
+<td style="text-align: left;">TELUS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jennifer</td>
+<td style="text-align: left;">Victor</td>
+<td style="text-align: left;">Dell</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jessica</td>
+<td style="text-align: left;">Fitzgerald-McKay</td>
+<td style="text-align: left;">National Security Agency</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jonathan</td>
+<td style="text-align: left;">Bitle</td>
+<td style="text-align: left;">Kaiser Permanente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Justin</td>
+<td style="text-align: left;">Corlett</td>
+<td style="text-align: left;">Cryptsoft Pty Ltd.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kazuo</td>
+<td style="text-align: left;">Noguchi</td>
+<td style="text-align: left;">Hitachi, Ltd.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kent</td>
+<td style="text-align: left;">Landfield</td>
+<td style="text-align: left;">McAfee</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Langley</td>
+<td style="text-align: left;">Rock</td>
+<td style="text-align: left;">Red Hat</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Martin</td>
+<td style="text-align: left;">Prpic</td>
+<td style="text-align: left;">Red Hat</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Masato</td>
+<td style="text-align: left;">Terada</td>
+<td style="text-align: left;">Hitachi, Ltd.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mike</td>
+<td style="text-align: left;">Gorski</td>
+<td style="text-align: left;">Cisco Systems</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nicole</td>
+<td style="text-align: left;">Parrish</td>
+<td style="text-align: left;">Mitre Corporation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Omar</td>
+<td style="text-align: left;">Santos</td>
+<td style="text-align: left;">Cisco Systems</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Patrick</td>
+<td style="text-align: left;">Maroney</td>
+<td style="text-align: left;">AT&amp;T</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rhonda</td>
+<td style="text-align: left;">Levy</td>
+<td style="text-align: left;">Cisco Systems</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Richard</td>
+<td style="text-align: left;">Struse</td>
+<td style="text-align: left;">Mitre Corporation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ritwik</td>
+<td style="text-align: left;">Ghoshal</td>
+<td style="text-align: left;">Oracle</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Robert</td>
+<td style="text-align: left;">Coderre</td>
+<td style="text-align: left;">Accenture</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Robert</td>
+<td style="text-align: left;">Keith</td>
+<td style="text-align: left;">Accenture</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stefan</td>
+<td style="text-align: left;">Hagen</td>
+<td style="text-align: left;">Individual</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tania</td>
+<td style="text-align: left;">Ward</td>
+<td style="text-align: left;">Dell</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ted</td>
+<td style="text-align: left;">Bedwell</td>
+<td style="text-align: left;">Cisco Systems</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thomas</td>
+<td style="text-align: left;">Proell</td>
+<td style="text-align: left;">Siemens AG</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Thomas</td>
+<td style="text-align: left;">Schmidt</td>
+<td style="text-align: left;">Federal Office for Information Security
+(BSI) Germany</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tim</td>
+<td style="text-align: left;">Hudson</td>
+<td style="text-align: left;">Cryptsoft Pty Ltd.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tobias</td>
+<td style="text-align: left;">Limmer</td>
+<td style="text-align: left;">Siemens AG</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tony</td>
+<td style="text-align: left;">Cox</td>
+<td style="text-align: left;">Cryptsoft Pty Ltd.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vincent</td>
+<td style="text-align: left;">Danen</td>
+<td style="text-align: left;">Red Hat</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Will</td>
+<td style="text-align: left;">Rideout</td>
+<td style="text-align: left;">Arista Networks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Xiaoyu</td>
+<td style="text-align: left;">Ge</td>
+<td style="text-align: left;">Huawei Technologies Co., Ltd.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="appendix-c-notices">Appendix C. Notices</h1>
+<p>Copyright © OASIS Open 2024. All Rights Reserved.</p>
+<p>All capitalized terms in the following text have the meanings
+assigned to them in the OASIS Intellectual Property Rights Policy (the
+"OASIS IPR Policy"). The full <a
+href="https://www.oasis-open.org/policies-guidelines/ipr/">Policy</a>
+may be found at the OASIS website.</p>
+<p>This document and translations of it may be copied and furnished to
+others, and derivative works that comment on or otherwise explain it or
+assist in its implementation may be prepared, copied, published, and
+distributed, in whole or in part, without restriction of any kind,
+provided that the above copyright notice and this section are included
+on all such copies and derivative works. However, this document itself
+may not be modified in any way, including by removing the copyright
+notice or references to OASIS, except as needed for the purpose of
+developing any document or deliverable produced by an OASIS Technical
+Committee (in which case the rules applicable to copyrights, as set
+forth in the OASIS IPR Policy, must be followed) or as required to
+translate it into languages other than English.</p>
+<p>The limited permissions granted above are perpetual and will not be
+revoked by OASIS or its successors or assigns.</p>
+<p>This document and the information contained herein is provided on an
+"AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE
+INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED
+WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
+<p>As stated in the OASIS IPR Policy, the following three paragraphs in
+brackets apply to OASIS Standards Final Deliverable documents (Committee
+Specification, Candidate OASIS Standard, OASIS Standard, or Approved
+Errata).</p>
+<p>[OASIS requests that any OASIS Party or any other party that believes
+it has patent claims that would necessarily be infringed by
+implementations of this OASIS Standards Final Deliverable, to notify
+OASIS TC Administrator and provide an indication of its willingness to
+grant patent licenses to such patent claims in a manner consistent with
+the IPR Mode of the OASIS Technical Committee that produced this
+deliverable.]</p>
+<p>[OASIS invites any party to contact the OASIS TC Administrator if it
+is aware of a claim of ownership of any patent claims that would
+necessarily be infringed by implementations of this OASIS Standards
+Final Deliverable by a patent holder that is not willing to provide a
+license to such patent claims in a manner consistent with the IPR Mode
+of the OASIS Technical Committee that produced this OASIS Standards
+Final Deliverable. OASIS may include such claims on its website, but
+disclaims any obligation to do so.]</p>
+<p>[OASIS takes no position regarding the validity or scope of any
+intellectual property or other rights that might be claimed to pertain
+to the implementation or use of the technology described in this OASIS
+Standards Final Deliverable or the extent to which any license under
+such rights might or might not be available; neither does it represent
+that it has made any effort to identify any such rights. Information on
+OASIS' procedures with respect to rights in any document or deliverable
+produced by an OASIS Technical Committee can be found on the OASIS
+website. Copies of claims of rights made available for publication and
+any assurances of licenses to be made available, or the result of an
+attempt made to obtain a general license or permission for the use of
+such proprietary rights by implementers or users of this OASIS Standards
+Final Deliverable, can be obtained from the OASIS TC Administrator.
+OASIS makes no representation that any information or list of
+intellectual property rights will at any time be complete, or that any
+claims in such list are, in fact, Essential Claims.]</p>
+<p>The name "OASIS" is a trademark of <a
+href="https://www.oasis-open.org/">OASIS</a>, the owner and developer of
+this specification, and should be used only to refer to the organization
+and its official outputs. OASIS welcomes reference to, and
+implementation and use of, specifications, while reserving the right to
+enforce its marks against misleading uses. Please see <a
+href="https://www.oasis-open.org/policies-guidelines/trademark/">https://www.oasis-open.org/policies-guidelines/trademark/</a>
+for above guidance.</p>
+</body>
+</html>

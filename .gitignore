@@ -1,0 +1,75 @@
+# ignore wkhtmltox installer .deb files and numbered backups
+wkhtmltox_*.deb*
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.log
+*.LOG
+temp_output.html
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+.venv/
+.github/src/venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Python-specific cache
+*.cache
+
+# pipenv
+Pipfile.lock
+
+# Pytest
+.cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Coverage reports
+.coverage
+.coverage.*
+htmlcov/
+*.cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+context_dump.txt

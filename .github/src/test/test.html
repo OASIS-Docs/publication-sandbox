@@ -1,0 +1,891 @@
+<!--
+Copyright 2025-2026 OASIS Open
+SPDX-License-Identifier: Apache-2.0
+Authored by Michael Coletta, Technical Advisor to OASIS Open.
+-->
+
+<p><img src="media/image1.png"
+style="width:3.1875in;height:0.65625in" /></p>
+<p>CACAO Layout Extension Version 1.0</p>
+<p><strong>Committee Specification 01</strong></p>
+<p><strong>04 April 2024</strong></p>
+<p><strong>This version:</strong></p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.docx"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.docx</u></a>
+(Authoritative)</p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.html"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.html</u></a></p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.pdf"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.pdf</u></a></p>
+<p><strong>Previous version:</strong></p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.docx"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.docx</u></a>
+(Authoritative)</p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.html"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.html</u></a></p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.pdf"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.pdf</u></a></p>
+<p><strong>Latest version:</strong></p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.docx"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.docx</u></a>
+(Authoritative)</p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html</u></a></p>
+<p><a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.pdf"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.pdf</u></a></p>
+<p><strong>Technical Committee:</strong></p>
+<p><a
+href="https://groups.oasis-open.org/communities/tc-community-home2?CommunityKey=b75cccb8-adc6-4de5-8b99-018dc7d322b6"><u>OASIS
+Collaborative Automated Course of Action Operations (CACAO) for Cyber
+Security TC</u></a></p>
+<p><strong>Chairs:</strong></p>
+<p>Bret Jordan (<a
+href="mailto:jordan@afero.io"><u>jordan@afero.io</u></a>), Afero</p>
+<p>Allan Thomson (<a
+href="mailto:atcyber1000@gmail.com"><u>atcyber1000@gmail.com</u></a>),
+Individual</p>
+<p><strong>Editors:</strong></p>
+<p>Vasileios Mavroeidis (<a
+href="mailto:vasileim@ifi.uio.no">vasileim@ifi.uio.no</a>), <a
+href="https://www.uio.no/english/">University of Oslo</a></p>
+<p>Mateusz Zych (<a
+href="mailto:mateusdz@ifi.uio.no">mateusdz@ifi.uio.no</a>), <a
+href="https://www.uio.no/english/">University of Oslo</a></p>
+<p><strong>Related Work:</strong></p>
+<p>This document is related to:</p>
+<ul>
+<li><p><em>CACAO Security Playbooks Version 2.0.</em> Edited by Bret
+Jordan and Allan Thomson. 27 November 2023. OASIS Committee
+Specification 01. <a
+href="https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html"><u>https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html</u></a>.
+Latest version: <a
+href="https://docs.oasisopen.org/cacao/security-playbooks/v2.0/security-playbooks-v2.0.html"><u>https://docs.oasisopen.org/cacao/security-playbooks/v2.0/security-playbooks-v2.0.html</u></a>.</p></li>
+</ul>
+<p><strong>Abstract:</strong></p>
+<p>Collaborative Automated Course of Action Operations (CACAO) is a
+schema and taxonomy for cyber security playbooks. The CACAO
+specification describes how these playbooks can be created, documented,
+and shared in a structured and standardized way across organizational
+boundaries and technological solutions [<a
+href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>].</p>
+<p>This specification defines the CACAO Layout Extension for the purpose
+of visually representing CACAO playbooks accurately and consistently
+across implementations.</p>
+<p><strong>Status:</strong></p>
+<p>This document was last revised or approved by the OASIS Collaborative
+Automated Course of Action Operations (CACAO) for Cyber Security TC on
+the above date. The level of approval is also listed above. Check the
+"Latest version" location noted above for possible later revisions of
+this document. Any other numbered Versions and other technical work
+produced by the Technical Committee (TC) are listed at <a
+href="https://groups.oasis-open.org/communities/tc-community-home2?CommunityKey=b75cccb8-adc6-4de5-8b99-018dc7d322b6#technical">https://groups.oasis-open.org/communities/tc-community-home2?CommunityKey=b75cccb8-adc6-4de5-8b99-018dc7d322b6#technical</a>.</p>
+<p>Any individual may submit comments to the TC at <a
+href="mailto:Technical-Committee-Comments@oasis-open.org">Technical-Committee-Comments@oasis-open.org</a>.
+TC members should send comments on this document to the TC's email
+list.</p>
+<p>This document is provided under the <a
+href="https://www.oasis-open.org/policies-guidelines/ipr/#Non-Assertion-Mode"><u>Non-Assertion</u></a>
+Mode of the <a
+href="https://www.oasis-open.org/policies-guidelines/ipr/"><u>OASIS IPR
+Policy</u></a>, the mode chosen when the Technical Committee was
+established. For information on whether any patents have been disclosed
+that may be essential to implementing this document, and any offers of
+patent licensing terms, please refer to the Intellectual Property Rights
+section of the TC’s web page (<a
+href="https://www.oasis-open.org/committees/cacao/ipr.php"><u>https://www.oasis-open.org/committees/cacao/ipr.php</u></a>).</p>
+<p>Note that any machine-readable content (<a
+href="https://www.oasis-open.org/policies-guidelines/tc-process-2017-05-26/#wpComponentsCompLang"><u>Computer
+Language Definitions</u></a>) declared Normative for this Work Product
+is provided in separate plain text files. In the event of a discrepancy
+between any such plain text file and display content in the Work
+Product's prose narrative document(s), the content in the separate plain
+text file prevails.</p>
+<p><strong>Key words:</strong></p>
+<p>The key words "<strong>MUST</strong>", "<strong>MUST NOT</strong>",
+"<strong>REQUIRED</strong>", "<strong>SHALL</strong>", "<strong>SHALL
+NOT</strong>", "<strong>SHOULD</strong>", "<strong>SHOULD NOT</strong>",
+"<strong>RECOMMENDED</strong>", "<strong>NOT RECOMMENDED</strong>",
+"<strong>MAY</strong>", and "<strong>OPTIONAL</strong>" in this document
+are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when,
+and only when, they appear in all capitals, as shown here.</p>
+<p><strong>Citation format:</strong></p>
+<p>When referencing this document, the following citation format should
+be used:</p>
+<p><strong>[CACAO-Layout-Extension-v1.0]</strong></p>
+<p><em>CACAO Layout Extension Version 1.0</em>. Edited by Vasileios
+Mavroeidis and Mateusz Zych. 04 April 2024. OASIS Committee
+Specification 01. <a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.html"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/cs01/layout-extension-v1.0-cs01.html</u></a>.
+Latest version: <a
+href="https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html"><u>https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html</u></a>.</p>
+<p><strong>Notices:</strong></p>
+<p>Copyright © OASIS Open 2024. All Rights Reserved.</p>
+<p>Distributed under the terms of the OASIS IPR Policy, [<a
+href="https://www.oasis-open.org/policies-guidelines/ipr/"><u>https://www.oasis-open.org/policies-guidelines/ipr/</u></a>],
+AS-IS, WITHOUT ANY IMPLIED OR EXPRESS WARRANTY; there is no warranty of
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE or NONINFRINGEMENT of
+the rights of others. For complete copyright information please see the
+Notices section in the appendix.</p>
+<p><strong>Table of Contents</strong></p>
+<p><a href="#introduction">1 Introduction <span>4</span></a></p>
+<p><a href="#document-conventions">1.1 Document Conventions
+<span>4</span></a></p>
+<p><a href="#glossary">1.2 Glossary <span>4</span></a></p>
+<p><a href="#key-concepts-and-features">2 Key Concepts and Features
+<span>5</span></a></p>
+<p><a href="#vocabularies">2.1 Vocabularies <span>5</span></a></p>
+<p><a href="#data-types">2.2 Data Types <span>5</span></a></p>
+<p><a href="#cacao-layout">2.3 CACAO Layout <span>5</span></a></p>
+<p><a href="#layout">3 Layout <span>6</span></a></p>
+<p><a href="#layout-properties">3.1 Layout Properties
+<span>6</span></a></p>
+<p><a href="#data-types-1">4 Data Types <span>7</span></a></p>
+<p><a href="#canvas">4.1 Canvas <span>7</span></a></p>
+<p><a href="#coordinates">4.2 Coordinates <span>7</span></a></p>
+<p><a href="#connection">4.3 Connection <span>8</span></a></p>
+<p><a href="#connection-type-enumeration">4.3.1 Connection Type
+Enumeration <span>8</span></a></p>
+<p><a href="#layout-extension-definition">5 Layout Extension Definition
+<span>10</span></a></p>
+<p><a href="#conformance">6 Conformance <span>11</span></a></p>
+<p><a href="#cacao-layout-extension-producers-and-consumers">6.1 CACAO
+Layout Extension Producers and Consumers <span>11</span></a></p>
+<p><a href="#appendix-a.-examples">Appendix A. Examples
+<span>12</span></a></p>
+<p><a href="#appendix-b.-security-privacy-considerations">Appendix B.
+Security &amp; Privacy Considerations <span>14</span></a></p>
+<p><a href="#appendix-c.-references">Appendix C. References
+<span>15</span></a></p>
+<p><a href="#appendix-d.-acknowledgements">Appendix D. Acknowledgements
+<span>16</span></a></p>
+<p><a href="#appendix-e.-revision-history">Appendix E. Revision History
+<span>18</span></a></p>
+<p><a href="#appendix-f.-notices">Appendix F. Notices
+<span>19</span></a></p>
+<h1 id="introduction">1 Introduction</h1>
+<p>Collaborative Automated Course of Action Operations (CACAO) is a
+schema and taxonomy for cyber security playbooks. The CACAO
+specification describes how these playbooks can be created, documented,
+and shared in a structured and standardized way across organizational
+boundaries and technological solutions [<a
+href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>].</p>
+<p>This specification defines the CACAO Layout Extension for the purpose
+of visually representing CACAO playbooks consistently across
+implementations. Further, this specification makes this mechanism
+available through the Extension Definition of CACAO (see section 5).</p>
+<h2 id="document-conventions">1.1 Document Conventions</h2>
+<p>The following color, font and font style conventions are used in this
+document:</p>
+<ul>
+<li><p>The Consolas font is used for all type names, property names and
+literals.</p>
+<ul>
+<li><p>type names are in red with a light red background –
+string</p></li>
+<li><p>property names are in bold style – <strong>type</strong></p></li>
+<li><p>literals (values) are in blue with a blue background –
+coordinates</p></li>
+</ul></li>
+<li><p>In a property table, if a common property is being redefined in
+some way, then the background is dark grey.</p></li>
+<li><p>All examples in this document are expressed in JSON. They are in
+Consolas 9-point font, with straight quotes, black text and a light grey
+background, and using 2-space indentation. JSON examples in this
+document are representations of JSON objects [RFC8259]. They should not
+be interpreted as string literals. The ordering of keys is
+insignificant. Whitespace before or after JSON structural characters in
+the examples are insignificant [RFC8259].</p></li>
+<li><p>Parts of the example may be omitted for conciseness and clarity.
+These omitted parts are denoted with the ellipses (...).</p></li>
+<li><p>The term "hyphen" is used throughout this document to refer to
+the ASCII hyphen or minus character (45<sub>dec</sub> or
+2D<sub>hex</sub>), which in Unicode is "hyphen-minus", U+002D.</p></li>
+<li><p>Some URLs have been defanged. This specification gives no
+guidance on how to defang or re-fang content. It is done to help ensure
+that the example URLs cannot be used directly.</p></li>
+</ul>
+<h2 id="glossary">1.2 Glossary</h2>
+<p><strong>CACAO</strong> - Collaborative Automated Course of Action
+Operations</p>
+<p><strong>JSON</strong> - JavaScript Object Notation as defined in [<a
+href="#kix.yg62ebxyothy"><u>RFC7493</u></a>] and [<a
+href="#kix.mg4z9p34egnc"><u>RFC8259</u></a>]</p>
+<p>𝕎 - Whole numbers as defined as the set {0,1,2,3…} or {x: x &gt;=
+0}</p>
+<h1 id="section"><br />
+</h1>
+<h1 id="key-concepts-and-features">2 Key Concepts and Features</h1>
+<p>This section explains some key concepts and features used in this
+specification.</p>
+<h2 id="vocabularies">2.1 Vocabularies</h2>
+<p>Some properties in this specification use defined vocabularies. These
+vocabularies can be either open or closed. An open vocabulary (see
+section 10.13 of the CACAO specification [<a
+href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>])
+allows implementers to use additional values beyond what is currently
+defined in the specification. However, if a similar value is already in
+the vocabulary, that value <strong>MUST</strong> be used. Open
+vocabulary types have an -ov suffix. A closed vocabulary is effectively
+an enumeration and <strong>MUST</strong> be used as defined. Enumeration
+types have an -enum suffix.</p>
+<p>Vocabularies defined in this specification enhance interoperability
+by increasing the likelihood that different entities use the exact same
+string to represent the same concept.</p>
+<h2 id="data-types">2.2 Data Types</h2>
+<p>This specification uses the following data types as defined in the
+CACAO specification [<a
+href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>]:
+string, integer, list, enum, and identifier.</p>
+<p>In addition, this specification defines three new data types: canvas,
+coordinates, and connection.</p>
+<h2 id="cacao-layout">2.3 CACAO Layout</h2>
+<p>This specification defines Layout as an Extension to CACAO Security
+Playbooks to be used for visually/graphically representing CACAO
+playbooks in a consistent, repeatable, and accurate manner.</p>
+<p>This specification defines one Extension Definition (as defined in
+section 5) for CACAO Playbooks and has the following identifier:</p>
+<p>extension-definition--418ee24c-9cb1-46d9-afa5-309e01aabc7f</p>
+<h1 id="layout"><br />
+3 Layout</h1>
+<p>The Layout object (layout) defines the canvas size (meant to be used
+in the playbook metadata level - section 3.1 in the CACAO specification
+[<a href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>])
+and coordinates for Workflow Steps and Agent and Targets.</p>
+<h2 id="layout-properties">3.1 Layout Properties</h2>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 16%" />
+<col style="width: 56%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Property Name</strong></td>
+<td><strong>Data Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td><strong>type</strong> (required)</td>
+<td>string</td>
+<td>The value of this property <strong>MUST</strong> be layout.</td>
+</tr>
+<tr class="odd">
+<td><strong>canvas</strong> (optional)</td>
+<td>canvas</td>
+<td><p>This property defines the canvas size.</p>
+<p>This property <strong>MUST</strong> be used only with the
+“playbook_extension” property at the metadata level of a CACAO playbook
+as defined in section 3.1 of the CACAO specification.</p></td>
+</tr>
+<tr class="even">
+<td><strong>coordinates</strong> (optional)</td>
+<td>coordinates</td>
+<td><p>The coordinates of the visualized object in relation to the
+upper-left corner of the canvas.</p>
+<p>This property <strong>MUST</strong> be used with the
+“step_extensions” and/or “agent_target_extensions” CACAO
+properties.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 3.1</strong></p>
+<p>Layout object when used to define the size of the Canvas at the
+playbook metadata level (“playbook_extensions” property).</p>
+<p>{</p>
+<p>"type": "layout",</p>
+<p>"canvas": { … }</p>
+<p>}</p>
+<p><strong>Example 4.2</strong></p>
+<p>Layout object when used to define the Coordinates of the workflow
+steps and agent and targets and their connections (“step_extensions” or
+“agent_targets_extensions” properties).</p>
+<p>{</p>
+<p>"type": "layout",</p>
+<p>"coordinates": { … }</p>
+<p>}</p>
+<h1 id="section-1"><br />
+</h1>
+<h1 id="data-types-1"><br />
+4 Data Types</h1>
+<h2 id="canvas">4.1 Canvas</h2>
+<p>The Canvas data type (canvas) indicates the overall size (in pixels)
+of the canvas that subsequent playbook elements will be displayed. This
+data type <strong>MUST</strong> only be populated when the Layout object
+is used in the <strong>playbook_extensions</strong> property in the
+Playbook object of CACAO (as described in Section 3.1 of the CACAO
+specification [<a
+href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>]).</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 14%" />
+<col style="width: 58%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Property Name</strong></td>
+<td><strong>Data Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td><strong>width</strong> (required)</td>
+<td>integer</td>
+<td>A number (𝕎 - whole number) representing the width of the canvas.
+This number refers to pixels.</td>
+</tr>
+<tr class="odd">
+<td><strong>height</strong> (required)</td>
+<td>integer</td>
+<td>A number (𝕎 - whole number) representing the height of the canvas.
+This number refers to pixels.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 4.1</strong></p>
+<p>{</p>
+<p>"width": 1000,</p>
+<p>"height": 500</p>
+<p>}</p>
+<h2 id="coordinates">4.2 Coordinates</h2>
+<p>The Coordinates data type (coordinates) indicates the position (in
+pixels) of the midpoint of a visualized CACAO object relative to the
+upper left (origin - O) corner of a canvas, along with its connections
+(paths) to other objects. This data type <strong>MUST</strong> only be
+populated when the Layout object is used in the
+<strong>step_extension</strong> (in the Workflow Step object) and/or the
+<strong>agent_target_extension</strong> (in the Agent-Target object)
+properties.</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 14%" />
+<col style="width: 58%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Property Name</strong></td>
+<td><strong>Data Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td><strong>x</strong> (required)</td>
+<td>integer</td>
+<td>A number (𝕎 - whole number) representing the X coordinate of the
+midpoint of the object visualized relative to the upper-left (origin -
+O) corner of the canvas. This number refers to pixels.</td>
+</tr>
+<tr class="odd">
+<td><strong>y</strong> (required)</td>
+<td>integer</td>
+<td>A number (𝕎 - whole number) representing the Y coordinate of the
+midpoint of the object visualized relative to the upper-left (origin -
+O) corner of the canvas. This number refers to pixels.</td>
+</tr>
+<tr class="even">
+<td><strong>outgoing_connections</strong> (optional)</td>
+<td>list of connection</td>
+<td>The outgoing connections (paths) of the object visualized.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 4.2</strong></p>
+<p>{</p>
+<p>"x": 40,</p>
+<p>"y": 30,</p>
+<p>"outgoing_connections": [ ... ]</p>
+<p>}</p>
+<h2 id="connection">4.3 Connection </h2>
+<p>A Connection data type (connection) defines the position of an
+outgoing relation/path of a visualized CACAO object. It comprises a list
+of points (in pixels) that altogether represent a line. A CACAO object
+may have multiple outgoing connections, each one of them represented by
+a connection data type. A connection should have, at a minimum, two
+<strong>x</strong> and <strong>y</strong> values to represent a straight
+line (point to point).</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 14%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Property Name</strong></td>
+<td><strong>Data Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td><strong>connection_type</strong> (required)</td>
+<td>enum</td>
+<td><p>The type of connection being used.</p>
+<p>The value of this property <strong>MUST</strong> come from the
+connection-type-enum enumeration.</p></td>
+</tr>
+<tr class="odd">
+<td><strong>x</strong> (required)</td>
+<td>list of integer</td>
+<td><p>A list of numbers (𝕎 - whole number) numbers (𝕎 - whole number)
+representing the X coordinates of the connection. The list
+<strong>MUST</strong> contain at least two values to represent one
+straight line. x1 and the last x coordinate of a path
+<strong>SHOULD</strong> represent the midpoint x coordinates of the two
+connected visualized objects.</p>
+<p>This property is strongly connected with the <strong>y</strong>
+property. Both <strong>x</strong> and <strong>y</strong> lists
+<strong>MUST</strong> have the same number of values defined, as they
+together create a point of the connection on the canvas (e.g., x1 with
+y1, x2 with y2, etc.).</p></td>
+</tr>
+<tr class="even">
+<td><strong>y</strong> (required)</td>
+<td>list of integer</td>
+<td><p>A list of numbers (𝕎 - whole number) numbers (𝕎 - whole number)
+representing the Y coordinates of the connection. The list
+<strong>MUST</strong> contain at least two values to represent one
+straight line. y1 and the last y coordinate of a path
+<strong>SHOULD</strong> represent the midpoint y coordinates of the two
+connected visualized objects.</p>
+<p>This property is strongly connected with the <strong>x</strong>
+property. Both <strong>x</strong> and <strong>y</strong> lists
+<strong>MUST</strong> have the same number of values defined, as they
+together create a point of the connection on the canvas (e.g., x1 with
+y1, x2 with y2, etc.).</p></td>
+</tr>
+<tr class="odd">
+<td><strong>case</strong> (optional)</td>
+<td>string</td>
+<td><p>A string that represents the case value. This property
+<strong>MUST</strong> match a dictionary key as defined in the
+dictionary of a CACAO Switch Condition Step.</p>
+<p>This property <strong>MUST</strong> be used only with the CACAO
+Switch Condition Step.</p></td>
+</tr>
+<tr class="even">
+<td><strong>next_step</strong> (optional)</td>
+<td>identifier</td>
+<td><p>An identifier that identifies the next step.</p>
+<p>This property <strong>MUST</strong> be used only with the CACAO
+Parallel Step.</p></td>
+</tr>
+</tbody>
+</table>
+<h3 id="connection-type-enumeration">4.3.1 Connection Type
+Enumeration</h3>
+<p><strong>Enumeration Name:</strong> connection-type-enum</p>
+<p>This section defines the following connection types. For more
+information about the meaning of each connection type, refer to the
+CACAO specification [<a
+href="#kix.rqgzlroy2vjq"><u>CACAO-Security-Playbooks-v2.0</u></a>].</p>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Connection Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="even">
+<td>on-completion</td>
+<td>This connection type is valid for all Workflow steps and is mutually
+exclusive with on-success and on-failure.</td>
+</tr>
+<tr class="odd">
+<td>on-success</td>
+<td>This connection type is valid for all Workflow steps and is mutually
+exclusive with on-completion.</td>
+</tr>
+<tr class="even">
+<td>on-failure</td>
+<td>This connection type is valid for all Workflow steps. It is mutually
+exclusive with on-completion.</td>
+</tr>
+<tr class="odd">
+<td>on-true</td>
+<td>This connection type <strong>MUST</strong> only be used by If
+Condition Steps and While Condition Steps.</td>
+</tr>
+<tr class="even">
+<td>on-false</td>
+<td>This connection type <strong>MUST</strong> only be used by If
+Condition Steps.</td>
+</tr>
+<tr class="odd">
+<td>cases</td>
+<td>This connection type <strong>MUST</strong> only be used by Switch
+Condition Steps.</td>
+</tr>
+<tr class="even">
+<td>next-steps</td>
+<td>This connection type <strong>MUST</strong> only be used by Parallel
+Steps.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 4.3</strong></p>
+<p>The “on-completion” connection from a CACAO Workflow Step</p>
+<p>{</p>
+<p>"connection_type": "on-completion"</p>
+<p>"x": [40, 90],</p>
+<p>"y": [30, 30]</p>
+<p>}</p>
+<p><strong>Example 4.4</strong></p>
+<p>Connection from a CACAO Switch Conditional Step</p>
+<p>{</p>
+<p>"connection_type": "cases"</p>
+<p>"x": [40, 90],</p>
+<p>"y": [30, 30],</p>
+<p>"case": "1"</p>
+<p>}</p>
+<p><strong>Example 4.5</strong></p>
+<p>Connection from a CACAO Parallel Step</p>
+<p>{</p>
+<p>"connection_type": "next-steps"</p>
+<p>"x": [40, 90],</p>
+<p>"y": [30, 30],</p>
+<p>"next_step": "action--c6728da5-f96a-4ba8-a4eb-fda6f24c9d7f"</p>
+<p>}</p>
+<h1 id="layout-extension-definition">5 Layout Extension Definition</h1>
+<p>This section defines the Layout extension for CACAO Playbooks and has
+the following identifier:</p>
+<p>extension-definition--418ee24c-9cb1-46d9-afa5-309e01aabc7f</p>
+<p>The definition for this extension is as follows:</p>
+<p>{</p>
+<p>"type": "extension-definition",</p>
+<p>"name": "CACAO Layout",</p>
+<p>"description": "Extension definition for diagramming CACAO
+playbooks.",</p>
+<p>"created_by": "identity--5abe695c-7bd5-4c31-8824-2528696cdbf1",</p>
+<p>"schema":
+"https://raw.githubusercontent.com/oasis-tcs/cacao/master/Extensions/layout/schemas/layout.json",</p>
+<p>"version": "1.0.0",</p>
+<p>"external_references": [</p>
+<p>{</p>
+<p>"name": "CACAO Layout Specification.",</p>
+<p>"description": "Specification for diagramming CACAO Playbooks.",</p>
+<p>"source": "[CACAO-Layout-Extension-v1.0] CACAO Layout Extension
+Version 1.0. Edited by Vasileios Mavroeidis and Mateusz Zych. 16 January
+2024. OASIS Committee Specification Draft 01.
+https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.html.
+Latest version:
+https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html.",</p>
+<p>"url":
+"https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html"</p>
+<p>}</p>
+<p>]</p>
+<p>}</p>
+<h1 id="conformance">6 Conformance</h1>
+<h2 id="cacao-layout-extension-producers-and-consumers">6.1 CACAO Layout
+Extension Producers and Consumers</h2>
+<p>A "CACAO Layout Extension Producer" and a "CACAO Layout Extension
+Consumer" is any software that can create CACAO 2.0 Layout Extensions
+and conforms to the following normative requirements:</p>
+<ul>
+<li><p>It <strong>MUST</strong> be able to create content encoded as
+JSON.</p></li>
+<li><p>All properties marked required in section 3 <strong>MUST</strong>
+be present in the created content.</p></li>
+<li><p>All properties <strong>MUST</strong> conform to the data type and
+normative requirements for that property.</p></li>
+</ul>
+<h1 id="section-2"><br />
+</h1>
+<h1 id="appendix-a.-examples">Appendix A. Examples</h1>
+<p>The following example highlights how a CACAO Switch Condition Step is
+visualized using the Layout Extension. A complete example is available
+on the official CACAO TC GitHub [<a
+href="#ku9f6cnuf2xn"><u>CACAO-TC-GitHub</u></a>].</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>{</p>
+<p>"type": "playbook",</p>
+<p>"spec_version": "cacao-2.0",</p>
+<p>"id": "playbook--aa1898b6-5251-49b4-aeb7-fd5e912583ff",</p>
+<p>"name": "Example Playbook",</p>
+<p>"description": "A CACAO playbook showcasing how to use the Layout
+extension.",</p>
+<p>"created_by": "identity--5abe695c-7bd5-4c31-8824-2528696cdbf1",</p>
+<p>"created": "2023-11-20T13:26:54.640Z",</p>
+<p>"modified": "2023-11-20T13:26:54.640Z",</p>
+<p>"revoked": false,</p>
+<p>"workflow_start": "start--5820e9bf-35c0-4b36-a266-7c173a9edeb5",</p>
+<p>"workflow": {</p>
+<p>...</p>
+<p>"switch-condition--72c55a11-5091-4714-8050-baa854d72eda": {</p>
+<p>"type": "switch-condition",</p>
+<p>"name": "switch case example",</p>
+<p>"cases": {</p>
+<p>"1": "action--4005472a-0b74-48c6-b04b-45bb8cf2b1ae",</p>
+<p>"2": "action--63483dce-6122-4975-8c7c-795d2453243d",</p>
+<p>"default": "action--9a4ef680-ba51-4c1b-9b2d-715caf06ef3a"</p>
+<p>},</p>
+<p>"on_completion": "action--9ae9e500-155e-4f63-a76e-a43856063f55",</p>
+<p>"step_extensions": {</p>
+<p>"extension-definition--418ee24c-9cb1-46d9-afa5-309e01aabc7f": {</p>
+<p>"type": "layout",</p>
+<p>"coordinates": {</p>
+<p>"x": 690,</p>
+<p>"y": 440,</p>
+<p>"outgoing_connections": [</p>
+<p>{</p>
+<p>"connection_type": "on-completion",</p>
+<p>"x": [810, 900],</p>
+<p>"y": [470, 470]</p>
+<p>},</p>
+<p>{</p>
+<p>"connection_type": "cases",</p>
+<p>"x": [750, 750, 900],</p>
+<p>"y": [500, 540, 540],</p>
+<p>"case": "1"</p>
+<p>},</p>
+<p>{</p>
+<p>"connection_type": "cases",</p>
+<p>"x": [750, 750, 900],</p>
+<p>"y": [500, 610, 610],</p>
+<p>"case": "2"</p>
+<p>},</p>
+<p>{</p>
+<p>"connection_type": "cases",</p>
+<p>"x": [750, 750, 900],</p>
+<p>"y": [500, 690, 690],</p>
+<p>"case": "default"</p>
+<p>}</p>
+<p>]</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>...</p>
+<p>},</p>
+<p>"playbook_extension": {</p>
+<p>"extension-definition--418ee24c-9cb1-46d9-afa5-309e01aabc7f": {</p>
+<p>"type": "layout",</p>
+<p>"canvas": {</p>
+<p>"width": 1300,</p>
+<p>"height": 800</p>
+<p>}</p>
+<p>}</p>
+<p>},</p>
+<p>"extension_definitions": {</p>
+<p>"extension-definition--418ee24c-9cb1-46d9-afa5-309e01aabc7f": {</p>
+<p>"type": "extension-definition",</p>
+<p>"name": "CACAO Layout",</p>
+<p>"description": "Extension definition for diagramming CACAO
+playbooks.",</p>
+<p>"created_by": "identity--5abe695c-7bd5-4c31-8824-2528696cdbf1",</p>
+<p>"schema":
+"https://raw.githubusercontent.com/oasis-tcs/cacao/master/Extensions/layout/schemas/layout.json",</p>
+<p>"version": "1.0.0",</p>
+<p>"external_references": [</p>
+<p>{</p>
+<p>"name": "CACAO Layout Specification.",</p>
+<p>"description": "Specification for diagramming CACAO Playbooks
+graphically.",</p>
+<p>"source": "[CACAO-Layout-Extension-v1.0] CACAO Layout Extension
+Version 1.0. Edited by Vasileios Mavroeidis and Mateusz Zych. 16 January
+2024. OASIS Committee Specification Draft 01.
+https://docs.oasis-open.org/cacao/layout-extension/v1.0/csd01/layout-extension-v1.0-csd01.html.
+Latest version:
+https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html.",</p>
+<p>"url":
+"https://docs.oasis-open.org/cacao/layout-extension/v1.0/layout-extension-v1.0.html"</p>
+<p>}</p>
+<p>]</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<h1 id="section-3"><br />
+</h1>
+<h1 id="appendix-b.-security-privacy-considerations">Appendix B.
+Security &amp; Privacy Considerations</h1>
+<p>See Appendix B from CACAO Security Playbooks Version 2.0 [<a
+href="https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html#_Toc152256574"><u>CACAO-Security-Playbooks-v2.0</u></a>].</p>
+<h1 id="appendix-c.-references">Appendix C. References</h1>
+<p><span id="kix.rqgzlroy2vjq"
+class="anchor"></span><strong>[CACAO-Security-Playbooks-v2.0]</strong></p>
+<p><em>CACAO Security Playbooks Version 2.0.</em> Edited by Bret Jordan
+and Allan Thomson. 27 November 2023. OASIS Committee Specification 01.
+<a
+href="https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html"><u>https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html</u></a>.
+Latest version: <a
+href="https://docs.oasisopen.org/cacao/security-playbooks/v2.0/security-playbooks-v2.0.html"><u>https://docs.oasisopen.org/cacao/security-playbooks/v2.0/security-playbooks-v2.0.html</u></a>.</p>
+<p><strong>[RFC</strong><span id="kix.yg62ebxyothy"
+class="anchor"></span><strong>7493]</strong></p>
+<p><em>The I-JSON Message Format</em>, RFC 7493, March 2014. [Online].
+Available: <a
+href="https://www.rfc-editor.org/info/rfc7493"><u>https://www.rfc-editor.org/info/rfc7493</u></a></p>
+<p><span id="kix.mg4z9p34egnc"
+class="anchor"></span><strong>[RFC8259]</strong></p>
+<p><em>The JavaScript Object Notation (JSON) Data Interchange
+Format</em>, RFC 8259, December 2017. [Online]. Available: <a
+href="https://www.rfc-editor.org/info/rfc8259"><u>https://www.rfc-editor.org/info/rfc8259.txt</u></a></p>
+<p><span id="ku9f6cnuf2xn"
+class="anchor"></span><strong>[CACAO-TC-GitHub]</strong></p>
+<p><em>The official GitHub of the CACAO Technical Committee</em>.
+[Online]. Available: <a
+href="https://github.com/oasis-tcs/cacao"><u>https://github.com/oasis-tcs/cacao</u></a></p>
+<h1 id="section-4"><br />
+</h1>
+<h1 id="appendix-d.-acknowledgements">Appendix D. Acknowledgements</h1>
+<p><strong>Chairs:</strong></p>
+<p>Bret Jordan (jordan@afero.io), Afero</p>
+<p>Allan Thomson (atcyber1000@gmail.com), Individual</p>
+<p><strong>Special Thanks:</strong></p>
+<p>Substantial contributions to this specification from the following
+individuals are gratefully acknowledged:</p>
+<p>Bret Jordan, Afero</p>
+<p>Allan Thomson, Individual</p>
+<p>Mateusz Zych, University of Oslo &amp; Cyentific AS</p>
+<p>Vasileios Mavroeidis, University of Oslo &amp; Sekoia.io</p>
+<p><strong>Participants:</strong></p>
+<p>The following individuals were members of this Technical Committee
+during the creation of this specification and their contributions are
+gratefully acknowledged:</p>
+<p>Bret Jordan, Afero</p>
+<p>Patrick Maroney, AT&amp;T</p>
+<p>Dean Thompson, Australia and New Zealand Banking Group (ANZ Bank)</p>
+<p>Naasief Edross, Cisco Systems</p>
+<p>Omar Santos, Cisco Systems</p>
+<p>Michael Simonson, Cisco Systems</p>
+<p>Jyoti Verma, Cisco Systems</p>
+<p>Arsalan Iqbal, CTM360</p>
+<p>Jane Ginn, Cyber Threat Intelligence Network, Inc. (CTIN)</p>
+<p>Ryan Hohimer, Cyber Threat Intelligence Network, Inc. (CTIN)</p>
+<p>Christian Hunt, Cyber Threat Intelligence Network, Inc. (CTIN)</p>
+<p>Ben Ottoman, Cyber Threat Intelligence Network, Inc. (CTIN)</p>
+<p>Christopher Robinson, Cyber Threat Intelligence Network, Inc.
+(CTIN)</p>
+<p>Avkash Kathiriya, Cyware Labs</p>
+<p>Ryan Joyce, DarkLight, Inc.</p>
+<p>Paul Patrick, DarkLight, Inc.</p>
+<p>Marlon Taylor, DHS Cybersecurity and Infrastructure Security Agency
+(CISA)</p>
+<p>Francisco Luis de Andres Perez, Francisco Luis de Andrés Pérez</p>
+<p>Stephanie Hazlewood, IBM</p>
+<p>John Morris, IBM</p>
+<p>Mahbod Tavallaee, IBM</p>
+<p>Srinivas Tummalapenta, IBM</p>
+<p>Terry MacDonald, Individual</p>
+<p>Anil Saldanha, Individual</p>
+<p>Allan Thomson, Individual</p>
+<p>Rodger Frank, Johns Hopkins University Applied Physics Laboratory</p>
+<p>Karin Marr, Johns Hopkins University Applied Physics Laboratory</p>
+<p>Desiree Beck, Mitre Corporation</p>
+<p>Richard Piazza, Mitre Corporation</p>
+<p>David Kemp, National Security Agency</p>
+<p>Stephen Banghart, NIST</p>
+<p>Jason Keirstead, <mark>Cyware Labs</mark></p>
+<p>David Bizeul, Sekoia.io</p>
+<p>Duncan Sparrell, sFractal Consulting LLC</p>
+<p>Marco Caselli, Siemens AG</p>
+<p>Manos Athanatos, Telecommunication Systems Institute</p>
+<p>Franck Quinard, TIBCO Software Inc.</p>
+<p>Frank Fransen, TNO</p>
+<p>Luca Morgese Zangrandi, TNO</p>
+<p>Mateusz Zych, University of Oslo &amp; Cyentific AS</p>
+<p>Vasileios Mavroeidis, University of Oslo &amp; Sekoia.io</p>
+<h1 id="section-5"><br />
+</h1>
+<h1 id="appendix-e.-revision-history">Appendix E. Revision History</h1>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 16%" />
+<col style="width: 23%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Revision</strong></td>
+<td><strong>Date</strong></td>
+<td><strong>Editor(s)</strong></td>
+<td><strong>Changes Made</strong></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2024-01-16</td>
+<td><p>Vasileios Mavroeidis,</p>
+<p>Mateusz Zych</p></td>
+<td>Write up of Version 1.0.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="appendix-f.-notices">Appendix F. Notices</h1>
+<p>Copyright © OASIS Open 2024. All Rights Reserved.</p>
+<p>All capitalized terms in the following text have the meanings
+assigned to them in the OASIS Intellectual Property Rights Policy (the
+"OASIS IPR Policy"). The full Policy may be found at the OASIS website:
+[<a
+href="https://www.oasis-open.org/policies-guidelines/ipr/"><u>https://www.oasis-open.org/policies-guidelines/ipr/</u></a>]</p>
+<p>This document and translations of it may be copied and furnished to
+others, and derivative works that comment on or otherwise explain it or
+assist in its implementation may be prepared, copied, published, and
+distributed, in whole or in part, without restriction of any kind,
+provided that the above copyright notice and this section are included
+on all such copies and derivative works. However, this document itself
+may not be modified in any way, including by removing the copyright
+notice or references to OASIS, except as needed for the purpose of
+developing any document or deliverable produced by an OASIS Technical
+Committee (in which case the rules applicable to copyrights, as set
+forth in the OASIS IPR Policy, must be followed) or as required to
+translate it into languages other than English.</p>
+<p>The limited permissions granted above are perpetual and will not be
+revoked by OASIS or its successors or assigns.</p>
+<p>This document and the information contained herein is provided on an
+"AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE
+INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED
+WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. OASIS
+AND ITS MEMBERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THIS DOCUMENT OR ANY
+PART THEREOF.</p>
+<p>As stated in the OASIS IPR Policy, the following three paragraphs in
+brackets apply to OASIS Standards Final Deliverable documents (Committee
+Specifications, OASIS Standards, or Approved Errata).</p>
+<p>[OASIS requests that any OASIS Party or any other party that believes
+it has patent claims that would necessarily be infringed by
+implementations of this OASIS Standards Final Deliverable, to notify
+OASIS TC Administrator and provide an indication of its willingness to
+grant patent licenses to such patent claims in a manner consistent with
+the IPR Mode of the OASIS Technical Committee that produced this
+deliverable.]</p>
+<p>[OASIS invites any party to contact the OASIS TC Administrator if it
+is aware of a claim of ownership of any patent claims that would
+necessarily be infringed by implementations of this OASIS Standards
+Final Deliverable by a patent holder that is not willing to provide a
+license to such patent claims in a manner consistent with the IPR Mode
+of the OASIS Technical Committee that produced this OASIS Standards
+Final Deliverable. OASIS may include such claims on its website, but
+disclaims any obligation to do so.]</p>
+<p>[OASIS takes no position regarding the validity or scope of any
+intellectual property or other rights that might be claimed to pertain
+to the implementation or use of the technology described in this OASIS
+Standards Final Deliverable or the extent to which any license under
+such rights might or might not be available; neither does it represent
+that it has made any effort to identify any such rights. Information on
+OASIS' procedures with respect to rights in any document or deliverable
+produced by an OASIS Technical Committee can be found on the OASIS
+website. Copies of claims of rights made available for publication and
+any assurances of licenses to be made available, or the result of an
+attempt made to obtain a general license or permission for the use of
+such proprietary rights by implementers or users of this OASIS Standards
+Final Deliverable, can be obtained from the OASIS TC Administrator.
+OASIS makes no representation that any information or list of
+intellectual property rights will at any time be complete, or that any
+claims in such list are, in fact, Essential Claims.]</p>
+<p>The name "OASIS" is a trademark of OASIS, the owner and developer of
+this document, and should be used only to refer to the organization and
+its official outputs. OASIS welcomes reference to, and implementation
+and use of, documents, while reserving the right to enforce its marks
+against misleading uses. Please see <a
+href="https://www.oasis-open.org/policies-guidelines/trademark/"><u>https://www.oasis-open.org/policies-guidelines/trademark/</u></a>
+for above guidance.</p>

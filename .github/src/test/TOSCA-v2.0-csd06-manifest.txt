@@ -1,0 +1,122 @@
+Work Product Manifest File
+
+This manifest file is an administrative metadata document produced
+by OASIS Staff as part of the approved Work Product publication
+process.  It provides detailed information about the artifacts
+which constitute the Work Product in any published release, viz.,
+for each specific level of approval (csd01, csd02, cs01, cos, etc).
+
+Users may find the manifest file useful in the following situations,
+or similar situations, to help answer basic questions:
+
+1) "Can I examine the extent/content/structure of the published Work
+   Product without having to download the distribution package from
+   the OASIS Library and then UNzip the entire canonical release
+   package from the ZIP format?"  Yes: scan the manifest file
+   published in any release directory (e.g. in /csd01/, /csprd02/)
+   and inspect the section "ZIP archive contents"
+
+2) "Someone sent me an XML schema file for the level CS01 instance
+   of an OASIS specification: how can I determine whether this
+   schema file is identical to the one published by OASIS?"
+   Compute the MD5 or SHA-1 digest for the file you have, and
+   compare it to the value(s) presented in the manifest file.
+
+===============================
+Contents of this manifest file
+===============================
+
+  - Essential bibliographic information
+  - ZIP archive listing for contents and storage hierarchy
+  - Digest/hash values (MD5, SHA-1) for files in the release directory
+
+* Note that the digest/hash values are not intended to support
+security per se: they are provided simply for casual checking
+of a local file's hash value against the published file to
+detect disk corruption or other non-malicious alteration.
+
+* Note that the MD5/SHA-1 digest/hash values for primary ".html" format
+files in the OASIS Library release directory, as displayed below, are
+computed for OASIS server function, whereas the same ".html" files
+included in the ZIP package file, as prepared for local use, vary by a
+few bytes. The ZIP archive contents listing includes the digest/hash
+(CRC-32) and byte count for these ".html" files in the ZIP package.
+
+======================================
+Essential bibliographic information
+======================================
+
+TOSCA Version 2.0
+Committee Specification Draft 06
+20 June 2024
+Copyright (c) OASIS Open 2024.  All Rights Reserved.
+Produced by:  OASIS Topology and Orchestration Specification for Cloud Applications (TOSCA) TC
+              https://groups.oasis-open.org/communities/tc-community-home2?CommunityKey=f9412cf3-297d-4642-8598-018dc7d3f409
+Release URI:  https://docs.oasis-open.org/tosca/TOSCA/v2.0/csd06/TOSCA-v2.0-csd06.zip
+Manifest URI: https://docs.oasis-open.org/tosca/TOSCA/v2.0/csd06/TOSCA-v2.0-csd06-manifest.txt
+
+===========================
+ZIP archive contents
+===========================
+
+Archive:  TOSCA-v2.0-csd06.zip
+ Length   Method    Size  Cmpr    Date    Time   CRC-32   Name
+--------  ------  ------- ---- ---------- ----- --------  ----
+       0  Stored        0   0% 06-20-2024 16:00 00000000  images/
+   11142  Defl:N    10700   4% 06-20-2024 16:00 725d7b30  images/types_templates.png
+   23060  Defl:N    21978   5% 06-20-2024 16:00 29d7ec0e  images/core_concepts.png
+   28920  Defl:N    28239   2% 06-20-2024 16:00 426485b8  images/functional_architecture.png
+    9145  Defl:N     8967   2% 06-20-2024 16:00 88371730  images/templates_representations.png
+   19543  Defl:N    19282   1% 06-20-2024 16:00 e0d7a813  images/requirements_and_capabilities.png
+    9657  Defl:N     9469   2% 06-20-2024 16:00 e4c6ffe0  images/representations_implementations.png
+   39130  Defl:N    38596   1% 06-20-2024 16:00 4ac7a8d1  images/tosca_file.png
+   18164  Defl:N    17593   3% 06-20-2024 16:00 f6257199  images/processor.png
+   19401  Defl:N    19062   2% 06-20-2024 16:00 71bb74c4  images/service_decomposition.png
+       0  Stored        0   0% 06-20-2024 16:00 00000000  styles/
+    3019  Defl:N     1367  55% 06-20-2024 16:00 a7ea592e  styles/markdown-styles-v1.7.3-6level.css
+ 1064795  Defl:N   164802  85% 06-20-2024 16:00 fcb8f7c5  TOSCA-v2.0-csd06.html
+  497472  Defl:N   116225  77% 06-20-2024 16:00 f93dfe55  TOSCA-v2.0-csd06.md
+ 2631035  Defl:N  1126562  57% 06-20-2024 16:00 54bd30ac  TOSCA-v2.0-csd06.pdf
+    6895  Defl:N     2003  71% 06-20-2024 16:00 b25ba615  TOSCA-v2.0-namespace.html
+--------          -------  ---                            -------
+ 4381378          1584845  64%                            16 files
+
+========================================================================
+MD5 digest/hash values for files in the OASIS Library release directory
+========================================================================
+
+3debfae2c5b4898d4df12c4b7d535ec0  images/core_concepts.png
+ba1cad80a2bcfa8793003c64ddcbf035  images/functional_architecture.png
+8942a8734f5aa52f3f2971779d343d05  images/processor.png
+4b0d2650c860d87327cbfe941aa0f877  images/representations_implementations.png
+c4c002de66098461636378ce01b81f0c  images/requirements_and_capabilities.png
+6f447227e6380364f1b55b0bd84d6dd7  images/service_decomposition.png
+fe61d0a71d077086968cfb5f08d12330  images/templates_representations.png
+f7c1ca87cf478bc96a5ba72b8aa0f105  images/tosca_file.png
+a7fbd3239a5c61a39e46d7a4f31a7a42  images/types_templates.png
+53aea587e79c6fbabb8e4e0cb99792f2  styles/markdown-styles-v1.7.3-6level.css
+da268776e71ea1ac6723d7eb17566dfa  TOSCA-v2.0-csd06.html
+6c92bacd2e80c3ce37d50e2792afbb9c  TOSCA-v2.0-csd06.md
+2acd434756b84ece437a09d9ef1c807d  TOSCA-v2.0-csd06.pdf
+97c1a37b0afdf47179bed5f101702da1  TOSCA-v2.0-csd06.zip
+9e06f7fce5eace45c59632f9aa8f6578  TOSCA-v2.0-namespace.html
+
+==========================================================================
+SHA-1 digest/hash values for files in the OASIS Library release directory
+==========================================================================
+
+d7fa11673643bfeb6971bea9d11ba4409fad2f25  images/core_concepts.png
+9326e579c880084634ccc315915da5b46a689f92  images/functional_architecture.png
+a8e775ec94afff0a55f4656b2314260baf42937d  images/processor.png
+6e645946d88b67a4e7b82528f9ac045979bc9bcb  images/representations_implementations.png
+d7cfbcf8133586f5a31aade8e3a1e051dba688f9  images/requirements_and_capabilities.png
+d88f60a04d79c2e55739d90615b17a7740618088  images/service_decomposition.png
+ec04680ea56f89deec61b8aaaf6d10caf53ff2cd  images/templates_representations.png
+c1e2d557ceec5d204642d1e7b6959274ba2c5d38  images/tosca_file.png
+b06b6c4901fe868760184d42c52f0c89dc53d560  images/types_templates.png
+90271324888b1b0ba5298b44d7d973e2c4812c89  styles/markdown-styles-v1.7.3-6level.css
+83e5ce8dec3dc9d43c54f4baa271dd238ec4584f  TOSCA-v2.0-csd06.html
+3c443e6c3e4d7b2e483497e83c17e98776ebd1c4  TOSCA-v2.0-csd06.md
+928e0984f311864ab051b119bd09d75f812ab31d  TOSCA-v2.0-csd06.pdf
+d73479ef5192ce5f98d29807b896a684b22d2e9f  TOSCA-v2.0-csd06.zip
+75a91c5003a42543920d620364b960d736519c95  TOSCA-v2.0-namespace.html

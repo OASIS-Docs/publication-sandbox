@@ -1,0 +1,20 @@
+OASIS CSAF Sandbox
+Copyright 2025-2026 OASIS Open
+
+SOFTWARE (the document-processing pipeline under .github/ and the pub-check
+publication-readiness gate code under pub-check/, including pub_check.py and
+manifest-schema.json) is authored by Michael Coletta, Technical Advisor to
+OASIS Open, and licensed under the Apache License, Version 2.0 (see LICENSE).
+
+DOCUMENTATION PROSE (TRANSFORMS.md and pub-check/README.md, which together
+state the OASIS publication acceptance criteria) is Copyright (c) OASIS Open
+2026, All Rights Reserved. It may be copied and distributed verbatim with
+its notice retained; derivative works are not permitted without prior
+written authorization from OASIS Open. These documents are the canonical
+statement of the criteria; the Apache-2.0 grant does NOT extend to them.
+
+The OASIS specification packages archived in this repository (csaf/,
+csaf-cvrf/) are OASIS Work Products. They are NOT relicensed by this file:
+each package retains its own OASIS copyright, IPR, and license notices as
+published, per the OASIS IPR Policy. The OASIS name and logo are trademarks
+of OASIS Open and are not licensed under Apache-2.0.
