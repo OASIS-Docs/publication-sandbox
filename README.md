@@ -11,7 +11,7 @@ Authored by Michael Coletta, Technical Advisor to OASIS Open.
   <a href="NOTICE"><img alt="Criteria prose: OASIS verbatim-only" src="https://img.shields.io/badge/criteria_prose-OASIS_verbatim--only-446CAA"></a>
   <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776ab">
   <img alt="Dependencies: stdlib only" src="https://img.shields.io/badge/gate_dependencies-stdlib_only-2f9e44">
-  <img alt="Checks: 91 individual, 34 classes" src="https://img.shields.io/badge/checks-91_individual_%C2%B7_34_classes-f08c00">
+  <img alt="Checks: 92 individual, 34 classes" src="https://img.shields.io/badge/checks-92_individual_%C2%B7_34_classes-f08c00">
   <img alt="Regression corpus: 13 packages" src="https://img.shields.io/badge/regression_corpus-13_packages-6741d9">
 </p>
 
@@ -48,7 +48,7 @@ python3 pub-check/pub_check.py <stage-dir> --json              # machine-readabl
 pub-check is one Python file, uses only the standard library, and needs no
 configuration. Every expectation
 is derived from the package itself (its own front matter, its own CSS, its own
-schema `$id`s). The 91 individual checks (34 check classes; `--list-checks` asserts the inventory from the code) cover template structure and the TC
+schema `$id`s). The 92 individual checks (34 check classes; `--list-checks` asserts the inventory from the code) cover template structure and the TC
 Process Conformance requirement, stage naming and version-directory conventions, live revision-collision probing, filename conventions,
 front-matter URL consistency, editor residue, internal anchors, the pandoc
 autolink trap, schema `$id` vs publish path, PDF-vs-source sync, PDF embedded
@@ -88,6 +88,25 @@ sha256 and role; plus source commit and tool versions), OASIS intake can
 verify it directly. The TC's build records what it produced, the gate checks it
 against the criteria, and the manifest lets every later step verify both.
 
+## Where the gate sits: validation and audit
+
+![Validation and audit dovetail](assets/architecture/validation-audit-dovetail.svg)
+
+Two layers, one engine. The TC side runs pub-check in its own CI and owns
+"the document is ready": all 92 conditions, each reported as the value the
+tool pulled from the package set against the value it was compared to, in
+full. TC Administration re-runs the identical code at intake (audit gate 4b)
+and wraps it with the gates only a human or a live check can do: byte
+identity against the published site, render class against the TC's own
+precedent, the live roster, directory index chains, announcement channels,
+and an independent adversarial verifier. Both reports are filed to the TC's
+ticket and the internal audit record.
+
+![Publication quality stack](assets/architecture/two-layer-stack.svg)
+
+Sources and a regenerating build script:
+[assets/architecture/](assets/architecture/).
+
 ## CI
 
 [`.github/workflows/pub-check.yml`](.github/workflows/pub-check.yml) defines
@@ -107,7 +126,7 @@ pub-check:
 ```
 publication-sandbox/
 ├── pub-check/                       # The publication gate
-│   ├── pub_check.py                 #   91 individual checks in 34 classes, stdlib only
+│   ├── pub_check.py                 #   92 individual checks in 34 classes, stdlib only
 │   ├── manifest-schema.json         #   provenance manifest contract
 │   └── README.md                    #   checks, severities, corpus (canonical criteria)
 ├── TRANSFORMS.md                    # The pipeline, command by command (canonical criteria)

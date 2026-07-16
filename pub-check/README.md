@@ -27,7 +27,7 @@ That is the point of sharing the tool: both sides run the same code, so
 acceptance is mechanical on both ends instead of trusted on either.
 
 Single file, Python 3.10+, standard library only. No configuration:
-everything is derived from the package itself. 91 individual checks across
+everything is derived from the package itself. 92 individual checks across
 34 check classes -- `--list-checks` asserts the inventory from the code, so
 the advertised numbers cannot drift from the implementation. The gate is the
 union of the intake acceptance criteria and the publication pipeline's full
