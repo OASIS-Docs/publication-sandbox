@@ -15,7 +15,7 @@ Author: Michael Coletta, Technical Advisor to OASIS Open.
 
 **Author: Michael Coletta, Technical Advisor, OASIS Open**
 
-![oasis-pub-check: the acceptance criteria](../assets/gate.svg?v=98)
+![oasis-pub-check: the acceptance criteria](../assets/gate.png?v=98)
 
 `oasis_pub_check.py` is the executable form of the publication acceptance
 criteria: the TC-side version of the checks OASIS TC Administration
@@ -176,7 +176,7 @@ same command on either side of the gate (`--emit-manifest`):
   [OpenDocument releases](https://docs.oasis-open.org/office/OpenDocument/v1.4/csd01/OpenDocument-v1.4-csd01-manifest.txt)
   carry the precedent.
 
-![The verification chain](../assets/chain.svg?v=98)
+![The verification chain](../assets/chain.png?v=98)
 
 If the package ships a `manifest.json` conforming to
 [`manifest-schema.json`](manifest-schema.json), the intake side can verify

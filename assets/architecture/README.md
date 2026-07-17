@@ -1,16 +1,7 @@
 # Publication quality architecture diagrams
 
-Hand-authored, self-contained SVGs (shapes and text only, no scripts, no
-external references). Both diagrams, and every other SVG under `assets/`,
-regenerate from one build script and one set of design tokens, the OASIS TC
-Handbook visual system: Poppins with Helvetica/Arial fallback, ink `#0a2540`,
-accent `#2248e5`, hairline borders, 2px radii. Each SVG has a companion PNG
-rendered at 2x.
-
-```bash
-python3 ../build.py          # rewrites all six SVGs from assets/
-python3 ../build.py --png    # also renders the 2x PNGs (needs rsvg-convert)
-```
+Two diagrams on the OASIS design system (Poppins, ink `#0a2540`, accent
+`#2248e5`), shipped as 2x PNGs.
 
 ## Subject
 
@@ -40,7 +31,7 @@ The prose companion to these diagrams is
 
 ## Files
 
-### `validation-audit-dovetail.svg` (1400 x 900, landscape), flagship
+### `validation-audit-dovetail.png` (2800 x 1800, landscape), flagship
 
 Two swim lanes, TC side (Layer 1) and TC Administration side (Layer 2). The
 shared `pub-check` engine sits in the seam between them with dovetail keys
@@ -51,7 +42,7 @@ verifier is called out separately, and both report artifacts flow down to
 the shared TCADMIN ticket and `_audit/` record. Primary explainer figure for
 TC editors and for TC Administration process documentation.
 
-### `two-layer-stack.svg` (900 x 1100, portrait), slide summary
+### `two-layer-stack.png` (1800 x 2200, portrait), slide summary
 
 A vertical stack that reads bottom to top: package in, Layer 1 validation,
 the step-4b dovetail joint, Layer 2 audit, published and verified

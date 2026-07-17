@@ -23,7 +23,7 @@ yourself, today, to make that path a straight line.
 The short version: there are two layers of quality control, and you own the
 first one.
 
-![How the two layers dovetail](assets/architecture/validation-audit-dovetail.svg?v=98)
+![How the two layers dovetail](assets/architecture/validation-audit-dovetail.png?v=98)
 
 ## The two layers
 
@@ -64,7 +64,7 @@ point of sharing the tool: both sides run the same code, so acceptance is
 mechanical on both ends instead of trusted on either. Your green run
 predicts our green run; it never substitutes for it.
 
-![The OASIS publication quality stack](assets/architecture/two-layer-stack.svg?v=98)
+![The OASIS publication quality stack](assets/architecture/two-layer-stack.png?v=98)
 
 ## Layer 1: the 98 checks
 
@@ -83,7 +83,7 @@ regression corpus of real submissions in their original received form.
 
 The checks group into six areas:
 
-![pub-check validation flow](assets/gate.svg?v=98)
+![pub-check validation flow](assets/gate.png?v=98)
 
 | Area | Checks | What it protects |
 |---|---|---|

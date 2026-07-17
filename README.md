@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 Authored by Michael Coletta, Technical Advisor to OASIS Open.
 -->
 
-![OASIS Publication Assurance](assets/hero.svg?v=98)
+![OASIS Publication Assurance](assets/hero.png?v=98)
 
 <p align="center">
   <a href="LICENSE"><img alt="Code: Apache-2.0" src="https://img.shields.io/badge/code-Apache--2.0-2c4a8a"></a>
@@ -45,7 +45,7 @@ This repository contains:
 
 ## oasis-pub-check: the acceptance criteria, run before you submit
 
-![pub-check gate](assets/gate.svg?v=98)
+![pub-check gate](assets/gate.png?v=98)
 
 ```bash
 python3 pub-check/oasis_pub_check.py <stage-dir or submission.zip>   # exit 0 = publishable
@@ -88,7 +88,7 @@ provenance: [pub-check/README.md](pub-check/README.md).
 
 ## Pipeline stages
 
-![Pipeline](assets/pipeline.svg?v=98)
+![Pipeline](assets/pipeline.png?v=98)
 
 Three GitHub Actions wrap six commands. Nothing else in the YAML affects the
 output. [TRANSFORMS.md](TRANSFORMS.md) documents the exact commands, the nine
@@ -97,7 +97,7 @@ Actions tab (each takes a stage directory and a date) or locally.
 
 ## Verification chain
 
-![Verification chain](assets/chain.svg?v=98)
+![Verification chain](assets/chain.png?v=98)
 
 If the package ships a `manifest.json` conforming to
 [pub-check/manifest-schema.json](pub-check/manifest-schema.json) (per file:
@@ -107,7 +107,7 @@ against the criteria, and the manifest lets every later step verify both.
 
 ## Where the gate sits: validation and audit
 
-![Validation and audit dovetail](assets/architecture/validation-audit-dovetail.svg?v=98)
+![Validation and audit dovetail](assets/architecture/validation-audit-dovetail.png?v=98)
 
 Two layers, one engine. The TC side runs oasis-pub-check in its own CI and owns
 "the document is ready": all 98 conditions, each reported as the value the
@@ -124,10 +124,7 @@ TC editors and chairs: both layers, all 15 audit gates, the per-condition
 catalog, and a worked example with the real Validation Report from a real publication
 ([examples/eox-core-v1.0-csd01/](examples/eox-core-v1.0-csd01/)).
 
-![Publication quality stack](assets/architecture/two-layer-stack.svg?v=98)
-
-Every diagram in this repository regenerates from one build script and one
-set of design tokens: [assets/build.py](assets/build.py).
+![Publication quality stack](assets/architecture/two-layer-stack.png?v=98)
 
 ## CI
 
@@ -156,7 +153,7 @@ publication-assurance/
 ├── PUBLICATION-QUALITY.md           # The TC-facing guide: both layers, all gates
 ├── examples/eox-core-v1.0-csd01/    # The real Validation Report from a real publication
 ├── TRANSFORMS.md                    # The pipeline, command by command (canonical criteria)
-├── assets/                          # All diagrams (SVG) + build.py to regenerate them
+├── assets/                          # The diagrams (PNG)
 ├── .github/
 │   ├── src/                         # Pipeline source (pandoc + BeautifulSoup post-processing,
 │   │                                #   HTML preprocessor, wkhtmltopdf renderer)
