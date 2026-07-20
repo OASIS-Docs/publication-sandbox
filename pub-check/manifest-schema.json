@@ -1,7 +1,7 @@
 {
   "$comment": "Copyright 2025-2026 OASIS Open. SPDX-License-Identifier: Apache-2.0 Authored by Michael Coletta, Technical Advisor to OASIS Open.",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/OASIS-Docs/csaf-sandbox/main/pub-check/manifest-schema.json",
+  "$id": "https://raw.githubusercontent.com/OASIS-Docs/publication-assurance/main/pub-check/manifest-schema.json",
   "title": "OASIS work-product publication manifest",
   "description": "Machine-verifiable provenance for a work-product package: which files constitute the release, what they hash to, which source commit and tools produced them. If a package ships a manifest.json conforming to this schema, intake verification is mechanical.",
   "type": "object",
