@@ -4,14 +4,14 @@ SPDX-License-Identifier: Apache-2.0
 Authored by Michael Coletta, Technical Advisor to OASIS Open.
 -->
 
-![OASIS Publication Assurance](assets/hero.png?v=164)
+![OASIS Publication Assurance](assets/hero.png?v=165)
 
 <p align="center">
   <a href="LICENSE"><img alt="Code: Apache-2.0" src="https://img.shields.io/badge/code-Apache--2.0-2c4a8a"></a>
   <a href="NOTICE"><img alt="Criteria prose: OASIS verbatim-only" src="https://img.shields.io/badge/criteria_prose-OASIS_verbatim--only-446CAA"></a>
   <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776ab">
   <img alt="Dependencies: stdlib only" src="https://img.shields.io/badge/gate_dependencies-stdlib_only-2f9e44">
-  <img alt="Checks: 164 individual, 55 classes" src="https://img.shields.io/badge/checks-164_individual_%C2%B7_55_classes-f08c00">
+  <img alt="Checks: 165 individual, 55 classes" src="https://img.shields.io/badge/checks-165_individual_%C2%B7_55_classes-f08c00">
   <img alt="Regression corpus: 13 packages" src="https://img.shields.io/badge/regression_corpus-13_packages-6741d9">
 </p>
 
@@ -45,7 +45,7 @@ This repository contains:
 
 ## oasis-pub-check: the acceptance criteria, run before you submit
 
-![pub-check gate](assets/gate.png?v=164)
+![pub-check gate](assets/gate.png?v=165)
 
 ```bash
 python3 pub-check/oasis_pub_check.py <stage-dir or submission.zip>   # exit 0 = publishable
@@ -55,7 +55,7 @@ python3 pub-check/oasis_pub_check.py <stage-dir> --json              # machine-r
 
 oasis-pub-check is one Python file, uses only the standard library, and needs no
 configuration. Every expectation is derived from the package itself (its own
-front matter, its own CSS, its own schema `$id`s). The 164 individual checks
+front matter, its own CSS, its own schema `$id`s). The 165 individual checks
 (55 check classes; `--list-checks` asserts the inventory from the code, and
 the set grows) cover six areas:
 
@@ -88,9 +88,9 @@ failure mode a correction round surfaces becomes a new acceptance criterion.
 
 ## Where the criteria come from
 
-![How a criterion is sourced from policy](assets/authority.png?v=164)
+![How a criterion is sourced from policy](assets/authority.png?v=165)
 
-Every acceptance criterion cites the rule it enforces. 38 of the 164 checks
+Every acceptance criterion cites the rule it enforces. 38 of the 165 checks
 trace to a verbatim clause in the governing corpus (25 pages, snapshotted
 and hashed); the rest are operational rules earned from real correction
 rounds. The full criterion-to-clause map, with the exact quoted text and
@@ -98,7 +98,7 @@ its source, is [`AUTHORITIES.md`](pub-check/AUTHORITIES.md).
 
 ## Verification chain
 
-![Verification chain](assets/chain.png?v=164)
+![Verification chain](assets/chain.png?v=165)
 
 If the package ships a `manifest.json` conforming to
 [pub-check/manifest-schema.json](pub-check/manifest-schema.json) (per file:
@@ -108,10 +108,10 @@ against the criteria, and the manifest lets every later step verify both.
 
 ## Where the gate sits: validation and audit
 
-![Validation and audit dovetail](assets/architecture/validation-audit-dovetail.png?v=164)
+![Validation and audit dovetail](assets/architecture/validation-audit-dovetail.png?v=165)
 
 Two layers, one engine. The TC side runs oasis-pub-check in its own CI and owns
-"the document is ready": all 164 conditions, each reported as the value the
+"the document is ready": all 165 conditions, each reported as the value the
 tool pulled from the package set against the value it was compared to, in
 full. TC Administration re-runs the identical code at intake (checklist
 step 4b) and wraps it with the 15 mandatory audit gates only a human or a
@@ -125,7 +125,7 @@ TC editors and chairs: both layers, all 15 audit gates, the per-condition
 catalog, and a worked example with the real Validation Report from a real publication
 ([examples/eox-core-v1.0-csd01/](examples/eox-core-v1.0-csd01/)).
 
-![Publication quality stack](assets/architecture/two-layer-stack.png?v=164)
+![Publication quality stack](assets/architecture/two-layer-stack.png?v=165)
 
 ## Interoperating with nide
 
@@ -139,7 +139,7 @@ One rules file, one manifest, two gates: a green `nide quality` run predicts
 a green intake run, and the published bytes are provably the build the TC
 approved.
 
-![How pub-check dovetails with nide](assets/architecture/nide-bridge.png?v=164)
+![How pub-check dovetails with nide](assets/architecture/nide-bridge.png?v=165)
 
 ## CI
 
@@ -160,7 +160,7 @@ pub-check:
 ```
 publication-assurance/
 ├── pub-check/                       # The acceptance criteria (the primary content)
-│   ├── oasis_pub_check.py           #   164 individual checks in 55 classes, stdlib only
+│   ├── oasis_pub_check.py           #   165 individual checks in 55 classes, stdlib only
 │   ├── CHECKS.md                    #   the acceptance criteria catalog, generated from the code
 │   ├── render_checks_md.py          #   the generator (keeps CHECKS.md in sync)
 │   ├── manifest-schema.json         #   provenance manifest contract

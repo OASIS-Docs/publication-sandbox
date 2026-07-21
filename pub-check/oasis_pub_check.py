@@ -50,6 +50,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html as html_lib
 import json
 import os
 import re
@@ -484,6 +485,32 @@ def check_residue(md_text: str, html_text: str, f: Findings) -> None:
             f.add(WARN, "residue",
                   f"'Will be filled in …' placeholder present in {label} (acceptable for an "
                   f"early stage; must be resolved before CS).")
+        # Template instruction text that the editor was told to delete. The OASIS
+        # Board-approved templates carry blocks of guidance for the editor and say
+        # so explicitly: "All template instructions are included within angle
+        # brackets and need to be deleted prior to publication." When one survives
+        # it ships as if it were part of the specification. Scarred 21-Jul-2026:
+        # KMIP Usage Guide v3.0 cnd01 s1.1 went to public review carrying "NOTE
+        # (remove this note and following examples before publication)", and an
+        # external reviewer found it on day 5 of the review.
+        # Deliberately anchored on the imperative + "publication" so that ordinary
+        # prose about the publication process cannot trip it.
+        #
+        # Scanned against TAG-STRIPPED, WHITESPACE-COLLAPSED prose, not the raw
+        # text the checks above use. Word-generated HTML (the DOCX-native track)
+        # hard-wraps mid-sentence and splits phrases across <span> runs, so the
+        # KMIP instruction above is literally stored as "...and following\n
+        # examples before publication". A pattern written against raw text misses
+        # it, which is precisely how it reached public review.
+        prose = re.sub(r"<[^>]+>", " ", text) if label == "html" else text
+        prose = re.sub(r"\s+", " ", html_lib.unescape(prose))
+        for m in re.finditer(
+                r"(?i)\b(?:remove|delete|deleted|removed|strip)\b[^.;:]{0,80}?"
+                r"\b(?:before|prior to)\s+publication\b", prose):
+            f.add(BLOCKER, "residue",
+                  f"Template instruction left in {label}: '{' '.join(m.group(0).split())}'. "
+                  f"The OASIS work product templates mark editor guidance for deletion "
+                  f"before publication; this block was not removed.")
 
 
 def check_html(html_text: str, stem: str, f: Findings,
@@ -5976,6 +6003,13 @@ CONDITION_DOCS: list[dict] = [
          condition="No bare 'tbd' placeholder sections",
          pulls="prose of the markdown and HTML (code blocks stripped)",
          compares_to="no line consisting solely of 'tbd'"),
+    dict(check="residue", sig="Template instruction left in", applies="both",
+         condition="No template editor-instruction text left in the published prose",
+         pulls="prose of the markdown and HTML (code blocks stripped)",
+         compares_to="the OASIS Board-approved work product templates, which state that "
+                     "'All template instructions ... need to be deleted prior to publication'; "
+                     "an imperative to remove/delete something 'before publication' or 'prior to "
+                     "publication' surviving in the prose means an instruction block shipped"),
     dict(check="residue", sig="'Will be filled in", applies="both",
          condition="No 'Will be filled in' placeholders (early-stage tolerated, must resolve before CS)",
          pulls="prose of the markdown and HTML (code blocks stripped)",
