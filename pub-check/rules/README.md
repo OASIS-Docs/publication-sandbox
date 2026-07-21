@@ -88,6 +88,7 @@ currently-published OASIS document.
 | OASIS-RESID-TODO | BLOCKER | residue |
 | OASIS-RESID-TBD | WARN | residue |
 | OASIS-RESID-FILL-IN | WARN | residue |
+| OASIS-RESID-TEMPLATE-INSTRUCTION | BLOCKER | residue |
 | OASIS-LINK-DEAD-LISTS | WARN | dead-lists |
 | OASIS-LINK-DOUBLE-SLASH | WARN | double-slash |
 | OASIS-MEMBER-URI | BLOCKER | member-uri |

@@ -138,6 +138,27 @@ rules:
       flags: IGNORECASE
       invert: true
 
+  # The OASIS Board-approved work product templates carry editor guidance and
+  # say so: "All template instructions are included within angle brackets and
+  # need to be deleted prior to publication." When a block survives, it ships as
+  # if it were specification text. KMIP Usage Guide v3.0 cnd01 reached public
+  # review carrying "NOTE (remove this note and following examples before
+  # publication)" and an external reviewer found it on day 5.
+  # The character class deliberately admits newlines, because the instruction is
+  # routinely wrapped mid-sentence in the source.
+  - id: OASIS-RESID-TEMPLATE-INSTRUCTION
+    severity: BLOCKER
+    description: >-
+      No template editor-instruction text may remain (an imperative to remove or
+      delete something 'before publication' means an instruction block was not
+      deleted)
+    check:
+      type: all-match
+      target: prose
+      pattern: '(remove|delete|deleted|removed|strip)[^.;:]{0,80}?(before|prior to)\s+publication'
+      flags: IGNORECASE
+      invert: true
+
   # ── Link hygiene ───────────────────────────────────────────────────────────
 
   - id: OASIS-LINK-DEAD-LISTS
