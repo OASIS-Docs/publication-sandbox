@@ -8,10 +8,11 @@ Three diagrams on the OASIS design system (Poppins, ink `#0a2540`, accent
 How the OASIS publication quality architecture's two layers dovetail:
 
 - **Layer 1, validation (pub-check):** mechanical, tool-side. `oasis_pub_check.py`,
-  164 checks across 55 check classes. The TC runs it in its own CI before
+  the acceptance checks (`--list-checks` reports the live count). The TC runs
+  it in its own CI before
   submission, and TC Administration re-runs the identical code at intake. It
   only ever sees the package files. Output: the Validation Report, every one
-  of the 164 conditions with the observed value the tool pulled set against
+  of the conditions with the observed value the tool pulled set against
   the expected value it was compared to, never truncated (rendered landscape
   so the full values stay legible).
 - **Layer 2, the publication audit:** human and adversarial, event-side. 15
@@ -22,7 +23,7 @@ How the OASIS publication quality architecture's two layers dovetail:
   needs recorded evidence; the verdict is computed from the record, not
   asserted. Output: the Publication Audit Report.
 - **The dovetail:** intake checklist step 4b requires running oasis-pub-check and
-  triaging every finding, so the whole 164-check validation layer plugs into
+  triaging every finding, so the whole validation layer plugs into
   the audit as one step. Both reports are filed to the TC's ticket and the
   internal `_audit/` directory.
 

@@ -29,7 +29,8 @@ first one.
 
 **Layer 1 is validation: the acceptance criteria, run as code.** A single
 Python file, [`pub-check/oasis_pub_check.py`](pub-check/),
-runs 164 individual checks across 55 check classes (a set that grows)
+runs the acceptance checks (a set that grows; `--list-checks` reports the live
+count, and [CHECKS.md](pub-check/CHECKS.md) is the generated inventory)
 against your package: the files you are about to submit, exactly as you
 would submit them. Every
 condition is reported; one that does not apply to your package's track, or
@@ -66,7 +67,7 @@ predicts our green run; it never substitutes for it.
 
 ![The OASIS publication quality stack](assets/architecture/two-layer-stack.png?v=164)
 
-## Layer 1: the 164 checks
+## Layer 1: the checks
 
 Every check exists because a real publication went wrong in that specific
 way:
@@ -153,7 +154,7 @@ record; your own run of the tool gives you the identical underlying data
 (the findings, the exit code, and with `--json` the full per-condition
 record), just not the formatted document:
 
-- **The Validation Report** itemizes all 164 conditions: the condition
+- **The Validation Report** itemizes every condition: the condition
   verified, the value the tool pulled from your package, the value it was
   compared against, and the result. Nothing is truncated. A condition that
   could not be evaluated (no network, no `pdftotext`, no manifest shipped)
