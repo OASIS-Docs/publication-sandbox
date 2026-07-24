@@ -110,7 +110,7 @@ against the criteria, and the manifest lets every later step verify both.
 
 ![Validation and audit dovetail](assets/architecture/validation-audit-dovetail.png?v=165)
 
-Two layers, one engine. The TC side runs oasis-pub-check in its own CI and owns
+The two layers share one engine. The TC side runs oasis-pub-check in its own CI and owns
 "the document is ready": all 165 conditions, each reported as the value the
 tool pulled from the package set against the value it was compared to, in
 full. TC Administration re-runs the identical code at intake (checklist
@@ -135,7 +135,7 @@ use to author and build their specifications, reads the shared
 [`oasis.rules.yaml`](pub-check/rules/oasis.rules.yaml) via `extends: oasis`
 and runs the source-expressible rules with `nide quality` before the TC even
 votes, then emits a `nide-manifest` that pub-check hash-verifies at intake.
-One rules file, one manifest, two gates: a green `nide quality` run predicts
+One rules file and one manifest feed two gates: a green `nide quality` run predicts
 a green intake run, and the published bytes are provably the build the TC
 approved.
 
@@ -151,6 +151,41 @@ one command. A one-line make target does the same:
 pub-check:
 	python3 pub-check/oasis_pub_check.py path/to/stage-dir
 ```
+
+### Drop it into a TC repo
+
+A TC does not copy the engine into its own repo. This repository contains a
+composite GitHub Action ([`action.yml`](action.yml)) that a TC calls from its
+own workflow in one step. Copy
+[`examples/consumer-workflow.yml`](examples/consumer-workflow.yml) to
+`.github/workflows/pub-check.yml` in the TC repo, or add the step directly after
+a checkout:
+
+```yaml
+name: pub-check
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "stage dir or .zip"
+        required: true
+jobs:
+  pub-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: OASIS-Docs/publication-assurance@v1   # for production, pin to a full commit SHA
+        with:
+          target: ${{ inputs.target }}
+```
+
+The action bundles the self-contained engine (stdlib only, no external data
+files), so the TC keeps no copy and picks up fixes by bumping the tag. The step
+needs the package present, so a checkout has to run first. Any blocker fails the
+build; warnings do not. Inputs: `target` (required), `args` (e.g. `--json`),
+`python-version`, `install-poppler`.
 
 ## Repository structure
 

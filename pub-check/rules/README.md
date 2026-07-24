@@ -33,7 +33,7 @@ meta:
 
 The [`nide`](https://codes.dilettant.life/docs/nide/) authoring engine
 (used by the CSAF, DPS, SARIF, OpenEoX, and MQTT TCs) evaluates these
-rules with `nide quality`, failing the build on any BLOCKER. The two-file
+rules with `nide quality` and fails the build on any BLOCKER. The two-file
 convention is nide's design: the organisation file is fetched from here and
 never edited locally; the spec file carries TC- and spec-specific rules on
 top. Credit where due: the rules-as-data interface and the first cut of
@@ -42,14 +42,13 @@ criteria in this repository.
 
 ## Contract
 
-- **Copy unchanged.** TC repositories take this file verbatim. Local edits
-  belong in the spec-level rules file, never here.
-- **Rule ids are stable.** The `OASIS-` prefix is reserved for this file.
-  Ids are never renamed or reused; a retired rule is removed, not
-  repurposed.
-- **Severity vocabulary is `BLOCKER` and `WARN`.** A BLOCKER fails the
+- TC repositories take this file verbatim. Local edits belong in the
+  spec-level rules file, never here.
+- Rule ids are stable. The `OASIS-` prefix is reserved for this file. Ids
+  are never renamed or reused; a retired rule is removed, not repurposed.
+- The severity vocabulary is `BLOCKER` and `WARN`. A BLOCKER fails the
   build (exit 1); a WARN reports and passes (unless run `--strict`).
-- **This file is a subset, not the gate.** It carries the conditions
+- This file is a subset, not the gate. It carries the conditions
   expressible in a rules engine that reads the assembled document IR. The
   full acceptance criteria remain
   [`oasis_pub_check.py`](../oasis_pub_check.py) and its generated catalog

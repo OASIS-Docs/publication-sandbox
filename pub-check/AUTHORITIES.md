@@ -7,13 +7,13 @@ Author: Michael Coletta, Technical Advisor to OASIS Open.
 
 **Author: Michael Coletta, Technical Advisor, OASIS Open**
 
-This catalog records, for the acceptance-criteria checks that trace to **written OASIS policy**, exactly which policy each one answers to: the governing document, the section, and the verbatim clause.
+This catalog records, for the acceptance-criteria checks that trace to written OASIS policy, exactly which policy each one answers to: the governing document, the section, and the verbatim clause.
 
-It was produced by the July 2026 authority-mapping exercise, which ran against the check registry as it then stood, 96 individual conditions. Of those, **38 are grounded in written policy** and appear below; the remaining 58 are operational quality rules earned from a year of real publications, with no single written clause behind them, and are listed as such in the crosswalk (not here).
+It was produced by the July 2026 authority-mapping exercise, which ran against the check registry as it then stood, 96 individual conditions. Of those, 38 are grounded in written policy and appear below; the remaining 58 are operational quality rules earned from a year of real publications, with no single written clause behind them, and are listed as such in the crosswalk (not here).
 
-The checks added on 21 July 2026, taking the registry to its current size (see [CHECKS.md](CHECKS.md) for the live count), were themselves derived from written policy, and each carries its governing clause inline in the registry's `compares_to` field. Folding them into this catalog is outstanding work; until then, read this file as the authority record for the original 96 and `CHECKS.md` as the complete inventory.
+The checks added on 21 July 2026, which took the registry to its current size (see [CHECKS.md](CHECKS.md) for the live count), were themselves derived from written policy, and each carries its governing clause inline in the registry's `compares_to` field. Folding them into this catalog is outstanding work; until then, read this file as the authority record for the original 96 and `CHECKS.md` as the complete inventory.
 
-Corpus snapshot **2026-07-21**. Every quote below is a verbatim substring of the snapshotted source; document digests are in `corpus/MANIFEST.json`. The governing documents are the OASIS TC Process, the Committee Operations Process, the Naming Directives v1.7, and the TC Handbook.
+Corpus snapshot 2026-07-21. Every quote below is a verbatim substring of the snapshotted source; document digests are in `corpus/MANIFEST.json`. The governing documents are the OASIS TC Process, the Committee Operations Process, the Naming Directives v1.7, and the TC Handbook.
 
 The check name and signature match the tool's own catalog (`CHECKS.md`); the `AC-*` ids are the policy-derived acceptance criteria in `criteria.yaml`.
 

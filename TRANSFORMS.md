@@ -11,7 +11,7 @@ licensed under the Apache License 2.0 (see LICENSE at the repository root).
 Author: Michael Coletta, Technical Advisor to OASIS Open.
 -->
 
-# The Transforms, Without the Actions
+# The transforms, without the Actions
 
 **Author: Michael Coletta, Technical Advisor, OASIS Open**
 
@@ -101,11 +101,12 @@ wkhtmltopdf \
 A note on renderers: wkhtmltopdf is what this repository's workflows run, but
 the production pipeline has since moved to headless Chrome print-to-PDF with
 CSS Paged Media (an injected `@page` block supplies the running header and
-footer natively) because plain pandoc-plus-wkhtmltopdf output would not cut
-it. wkhtmltopdf's limits, for anyone evaluating alternatives: untagged PDF,
-no bookmarks/outline, no PDF/A conformance, and internal links depend on the
-anchor fix-ups from Stage 1. A toolchain that produces a tagged PDF with a
-real outline (for example typst) is a genuine step up on those axes.
+footer natively) because plain pandoc-plus-wkhtmltopdf output was not adequate
+for the requirement. wkhtmltopdf's limits, for anyone evaluating alternatives:
+untagged PDF, no bookmarks/outline, no PDF/A conformance, and internal links
+that depend on the anchor fix-ups from Stage 1. A toolchain that produces a
+tagged PDF with a real outline (for example typst) improves on each of those
+points.
 
 ## Stage 3: Package
 

@@ -26,22 +26,22 @@ passes will not be sent back by TC Administration for corrections, because
 intake accepts with the same checks you just ran. What the TC votes on is
 already publication-clean.
 
-Trust, but verify: TC Administration runs the identical gate on every
-submission at intake, regardless of what the TC's own build reported. A green
-run on your side predicts a green run on ours -- it never substitutes for it.
-That is the point of sharing the tool: both sides run the same code, so
-acceptance is mechanical on both ends instead of trusted on either.
+TC Administration runs the identical gate on every submission at intake,
+regardless of what the TC's own build reported. A green run on your side
+predicts a green run on ours; it does not substitute for it. Both sides run
+the same code, so acceptance is mechanical on both ends rather than trusted
+on either.
 
 The shape of the tool:
 
-- **Single file, Python 3.10+, standard library only.** Nothing to install.
-- **No configuration.** Every expectation is derived from the package
-  itself: its own front matter, its own CSS, its own schema `$id`s, its own
-  publish path.
-- **165 individual checks across 55 check classes**, and the set grows.
+- Single file, Python 3.10+, standard library only. Nothing to install.
+- No configuration. Every expectation is derived from the package itself:
+  its own front matter, its own CSS, its own schema `$id`s, its own publish
+  path.
+- 165 individual checks across 55 check classes, and the set grows.
   `--list-checks` asserts the inventory from the code, so the advertised
   numbers cannot drift from the implementation.
-- **The union of two histories**: the intake acceptance criteria and the
+- The union of two histories, the intake acceptance criteria and the
   publication pipeline's full lint registry (lint D1-D7 and the PDF
   assertions A1/A2), validated by a 12-month retrospective over real
   submissions in their original received form.

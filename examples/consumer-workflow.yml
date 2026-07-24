@@ -1,0 +1,44 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+#
+# DROP-IN publication gate for a TC repository.
+#
+# Copy this file to your repo as:  .github/workflows/pub-check.yml
+#
+# As shipped it runs on demand: go to Actions -> pub-check -> Run workflow and
+# type the path of the package to check. Nothing fails on your first push.
+#
+# To also check automatically, set PUB_CHECK_TARGET below to your package path
+# and uncomment the push / pull_request triggers.
+#
+# Any blocker fails the build; warnings do not.
+
+name: pub-check
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Stage directory or package .zip to check"
+        required: true
+  # Uncomment once PUB_CHECK_TARGET below points at your package:
+  # push:
+  # pull_request:
+
+env:
+  # EDIT to your package path: a stage directory or a .zip in this repo.
+  PUB_CHECK_TARGET: work/v1.0/csd01
+
+permissions:
+  contents: read
+
+jobs:
+  pub-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: OASIS-Docs/publication-assurance@v1   # for production, pin to a full commit SHA
+        with:
+          # Manual runs use the box you type; automatic runs use PUB_CHECK_TARGET.
+          target: ${{ github.event.inputs.target || env.PUB_CHECK_TARGET }}

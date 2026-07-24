@@ -20,8 +20,7 @@ work-product package between "the TC is ready to vote" and "the publication
 is live and verified on docs.oasis-open.org", and what your TC can run
 yourself, today, to make that path a straight line.
 
-The short version: there are two layers of quality control, and you own the
-first one.
+There are two layers of quality control, and you own the first one.
 
 ![How the two layers dovetail](assets/architecture/validation-audit-dovetail.png?v=164)
 
@@ -37,7 +36,7 @@ condition is reported; one that does not apply to your package's track, or
 whose prerequisite is absent, reports NA with the reason. It needs no
 configuration because every expectation is derived from the package itself:
 its own front matter, its own CSS, its own schema `$id`s, its own directory
-path. It sees only the package. It never touches the live site.
+path. It sees only the package and never touches the live site.
 
 You run this layer. Put it in your repository's CI, or run it by hand before
 the TC votes. A package that exits 0 is publication-clean: the vote happens
@@ -63,7 +62,7 @@ our side, with the identical code, and triage every finding. Your entire
 98-check validation layer plugs into the audit as one step. That is the
 point of sharing the tool: both sides run the same code, so acceptance is
 mechanical on both ends instead of trusted on either. Your green run
-predicts our green run; it never substitutes for it.
+predicts our green run but does not substitute for it.
 
 ![The OASIS publication quality stack](assets/architecture/two-layer-stack.png?v=164)
 
@@ -114,7 +113,7 @@ and gain Word render-fidelity checks instead; ODT-authored packages ship
 the `.odt` as the authoritative source (the OpenDocument TC publishes from
 the format it defines); packages authored in other formats (DocBook/XML,
 LaTeX) receive the full format-agnostic output and package suites. The bar
-is always the output: conformant HTML and PDF, always, with the
+is always the output: conformant HTML and PDF, with the
 authoritative source alongside, at the canonical URLs.
 
 ## Layer 2: the 15 audit gates
