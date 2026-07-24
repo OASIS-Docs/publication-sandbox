@@ -1,0 +1,22 @@
+In https://lists.oasis-open.org/archives/csaf/202401/msg00001.html, Stefan Hagen reports: 
+
+Subject: Motion to publish approved errata 01 of CSAF v2.0 Re: [csaf] was: Invitation to comment on Common Security Advisory Framework v2.0 Errata 01 - ends January 4th
+
+From: "Stefan Hagen" <stefan@hagen.link>
+To:  csaf@lists.oasis-open.org, csaf-comment@lists.oasis-open.org
+Date: Fri, 19 Jan 2024 17:57:52 +0100
+
+[...]
+
+this mail to the comments and TC mailing list is to document the fact that no comments
+have been received during the above defined public review.
+
+[...]
+
+Cheers,
+Stefan.
+---
+
+Stefan Hagen, Emmetten, Nidwalden, Switzerland.
+read: https://stefan-hagen.website
+write: stefan@hagen.link

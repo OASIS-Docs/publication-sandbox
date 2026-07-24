@@ -1,0 +1,97 @@
+Work Product Manifest File
+
+This manifest file is an administrative metadata document produced
+by OASIS Staff as part of the approved Work Product publication
+process.  It provides detailed information about the artifacts
+which constitute the Work Product in any published release, viz.,
+for each specific level of approval (csd01, csd02, cs01, cos, etc).
+
+Users may find the manifest file useful in the following situations,
+or similar situations, to help answer basic questions:
+
+1) "Can I examine the extent/content/structure of the published Work
+   Product without having to download the distribution package from
+   the OASIS Library and then UNzip the entire canonical release
+   package from the ZIP format?"  Yes: scan the manifest file
+   published in any release directory (e.g. in /csd01/, /csprd02/)
+   and inspect the section "ZIP archive contents"
+
+2) "Someone sent me an XML schema file for the level CS01 instance
+   of an OASIS specification: how can I determine whether this
+   schema file is identical to the one published by OASIS?"
+   Compute the MD5 or SHA-1 digest for the file you have, and
+   compare it to the value(s) presented in the manifest file.
+
+===============================
+Contents of this manifest file
+===============================
+
+  - Essential bibliographic information
+  - ZIP archive listing for contents and storage hierarchy
+  - Digest/hash values (MD5, SHA-1) for files in the release directory
+
+* Note that the digest/hash values are not intended to support
+security per se: they are provided simply for casual checking
+of a local file's hash value against the published file to
+detect disk corruption or other non-malicious alteration.
+
+* Note that the MD5/SHA-1 digest/hash values for primary ".html" format
+files in the OASIS Library release directory, as displayed below, are
+computed for OASIS server function, whereas the same ".html" files
+included in the ZIP package file, as prepared for local use, vary by a
+few bytes. The ZIP archive contents listing includes the digest/hash
+(CRC-32) and byte count for these ".html" files in the ZIP package.
+
+======================================
+Essential bibliographic information
+======================================
+
+Common Security Advisory Framework Version 2.0 Errata 01
+Committee Specification Draft 01
+15 December 2023
+Copyright (c) OASIS Open 2023.  All Rights Reserved.
+Produced by:  OASIS Common Security Advisory Framework (CSAF) TC
+              https://www.oasis-open.org/committees/csaf/
+Release URI:  https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01.zip
+Manifest URI: https://docs.oasis-open.org/csaf/csaf/v2.0/errata01/csd01/csaf-v2.0-errata01-csd01-manifest.txt
+
+===========================
+ZIP archive contents
+===========================
+
+Archive:  csaf-v2.0-errata01-csd01.zip
+ Length   Method    Size  Cmpr    Date    Time   CRC-32   Name
+--------  ------  ------- ---- ---------- ----- --------  ----
+   25051  Defl:N     5969  76% 12-15-2023 17:00 89670344  csaf-v2.0-errata01-csd01.html
+   13804  Defl:N     4620  67% 12-15-2023 17:00 30a8cf7e  csaf-v2.0-errata01-csd01.md
+   97562  Defl:N    75335  23% 12-15-2023 17:00 2a2c3987  csaf-v2.0-errata01-csd01.pdf
+       0  Stored        0   0% 12-15-2023 17:00 00000000  schemas/
+    7434  Defl:N     1582  79% 12-15-2023 17:00 6d7ab92d  schemas/aggregator_json_schema.json
+    7365  Defl:N     1526  79% 12-15-2023 17:00 94e7c40a  schemas/provider_json_schema.json
+   57152  Defl:N    10592  82% 12-15-2023 17:00 0e06d8f2  schemas/csaf_json_schema.json
+--------          -------  ---                            -------
+  208368            99624  52%                            7 files
+
+========================================================================
+MD5 digest/hash values for files in the OASIS Library release directory
+========================================================================
+
+10275baa6c0d68ccd04372a36f90c55a  csaf-v2.0-errata01-csd01.html
+4cddf6441e45785c5cd99c0bbfaacbd8  csaf-v2.0-errata01-csd01.md
+bfd4eb77434e8a91dc8f9a48befd181f  csaf-v2.0-errata01-csd01.pdf
+536f756cc6964a8b3eb56a278ce26f70  csaf-v2.0-errata01-csd01.zip
+c46553896af60a46f8723762f8951b67  schemas/aggregator_json_schema.json
+0e1bc03d417db16a1ef2b34ac97ea86b  schemas/csaf_json_schema.json
+5232a582d26630b74699f4f215f9c743  schemas/provider_json_schema.json
+
+==========================================================================
+SHA-1 digest/hash values for files in the OASIS Library release directory
+==========================================================================
+
+a24f95f45c7866b047bd17ed934e4949e6790c10  csaf-v2.0-errata01-csd01.html
+ea9857800f8494fa00911b637accd14977f93712  csaf-v2.0-errata01-csd01.md
+fe841ca6561c7af95bdfc58c28d701969dd38e89  csaf-v2.0-errata01-csd01.pdf
+dad6baf4622686ea919105ac1aabe00322005547  csaf-v2.0-errata01-csd01.zip
+81386e0d7f608f51256e513535f314c3686d7065  schemas/aggregator_json_schema.json
+1946b630b68fefb8a28ba9606667a8fdea95783c  schemas/csaf_json_schema.json
+ea11e6971cb18021c83bc7d8162a86b282de3d20  schemas/provider_json_schema.json

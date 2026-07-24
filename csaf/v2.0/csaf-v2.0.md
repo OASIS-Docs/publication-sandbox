@@ -1,0 +1,1 @@
+errata01/os/csaf-v2.0-errata01-os.md

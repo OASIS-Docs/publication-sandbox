@@ -1,0 +1,11 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+
+# PDF Conversion Dependencies
+# 
+# This file contains the Python dependencies required for HTML to PDF conversion
+# using wkhtmltopdf. Note that wkhtmltopdf itself must be installed separately
+# as a system binary (e.g., via brew install wkhtmltopdf on macOS).
+#
+beautifulsoup4>=4.11.1

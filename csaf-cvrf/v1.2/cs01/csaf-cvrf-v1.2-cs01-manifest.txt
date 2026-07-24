@@ -1,0 +1,155 @@
+Work Product Manifest File
+
+This manifest file is an administrative metadata document produced
+by OASIS Staff as part of the approved Work Product publication
+process.  It provides detailed information about the artifacts
+which constitute the Work Product in any published release, viz.,
+for each specific level of approval (csd01, csd02, cs01, cos, etc).
+
+Users may find the manifest file useful in the following situations,
+or similar situations, to help answer basic questions:
+
+1) "Can I examine the extent/content/structure of the published Work
+   Product without having to download the distribution package from
+   the OASIS Library and then UNzip the entire canonical release
+   package from the ZIP format?"  Yes: scan the manifest file
+   published in any release directory (e.g. in /csd01/, /csprd02/)
+   and inspect the section "ZIP archive contents"
+
+2) "Someone sent me an XML schema file for the level CS01 instance
+   of an OASIS specification: how can I determine whether this
+   schema file is identical to the one published by OASIS?"
+   Compute the MD5 or SHA-1 digest for the file you have, and
+   compare it to the value(s) presented in the manifest file.
+
+===============================
+Contents of this manifest file
+===============================
+
+  - Essential bibliographic information
+  - ZIP archive listing for contents and storage hierarchy
+  - Digest/hash values (MD5, SHA-1) for files in the release directory
+
+* Note that the digest/hash values are not intended to support
+security per se: they are provided simply for casual checking
+of a local file's hash value against the published file to
+detect disk corruption or other non-malicious alteration.
+
+* Note that the MD5/SHA-1 digest/hash values for primary ".html" format
+files in the OASIS Library release directory, as displayed below, are
+computed for OASIS server function, whereas the same ".html" files
+included in the ZIP package file, as prepared for local use, vary by a
+few bytes. The ZIP archive contents listing includes the digest/hash
+(CRC-32) and byte count for these ".html" files in the ZIP package.
+
+======================================
+Essential bibliographic information
+======================================
+
+CSAF Common Vulnerability Reporting Framework (CVRF) Version 1.2
+Committee Specification 01
+13 September 2017
+Copyright (c) OASIS Open 2017.  All Rights Reserved.
+Produced by:  OASIS Common Security Advisory Framework (CSAF) TC
+              https://www.oasis-open.org/committees/csaf/
+Release URI:  http://docs.oasis-open.org/csaf/csaf-cvrf/v1.2/cs01/csaf-cvrf-v1.2-cs01.zip
+Manifest URI: http://docs.oasis-open.org/csaf/csaf-cvrf/v1.2/cs01/csaf-cvrf-v1.2-cs01-manifest.txt
+
+===========================
+ZIP archive contents
+===========================
+
+Archive:  csaf-cvrf-v1.2-cs01.zip
+ Length   Method    Size  Cmpr    Date    Time   CRC-32   Name
+--------  ------  ------- ---- ---------- ----- --------  ----
+   27417  Defl:N    20751  24% 09-13-2017 16:00 6c9b3b24  csaf-cvrf-v1.2-cs01-DIFF.pdf
+ 5277780  Defl:N  5164472   2% 09-13-2017 16:00 5801df03  csaf-cvrf-v1.2-cs01.docx
+       0  Stored        0   0% 09-13-2017 16:00 00000000  csaf-cvrf-v1.2-cs01_files/
+  141274  Defl:N   140913   0% 09-13-2017 16:00 83f0113a  csaf-cvrf-v1.2-cs01_files/image013.png
+  122292  Defl:N   121163   1% 09-13-2017 16:00 b8643a21  csaf-cvrf-v1.2-cs01_files/image009.png
+    3853  Defl:N     3672   5% 09-13-2017 16:00 ccbd0c38  csaf-cvrf-v1.2-cs01_files/image001.jpg
+   64307  Defl:N    63965   1% 09-13-2017 16:00 0f313772  csaf-cvrf-v1.2-cs01_files/image006.png
+  137735  Defl:N   137172   0% 09-13-2017 16:00 52f5d1e4  csaf-cvrf-v1.2-cs01_files/image012.png
+   38042  Defl:N    38052   0% 09-13-2017 16:00 168e39e6  csaf-cvrf-v1.2-cs01_files/image004.png
+  123001  Defl:N   122559   0% 09-13-2017 16:00 70e6f93f  csaf-cvrf-v1.2-cs01_files/image010.png
+  188698  Defl:N   188366   0% 09-13-2017 16:00 89a813aa  csaf-cvrf-v1.2-cs01_files/image002.png
+  151558  Defl:N   151121   0% 09-13-2017 16:00 8c5a2af9  csaf-cvrf-v1.2-cs01_files/image014.png
+  122554  Defl:N   122214   0% 09-13-2017 16:00 a4026d77  csaf-cvrf-v1.2-cs01_files/image016.png
+  163623  Defl:N   163438   0% 09-13-2017 16:00 fe6dc9c9  csaf-cvrf-v1.2-cs01_files/image011.png
+  161540  Defl:N   161034   0% 09-13-2017 16:00 dafabfa8  csaf-cvrf-v1.2-cs01_files/image003.png
+  113023  Defl:N   112782   0% 09-13-2017 16:00 043ea39c  csaf-cvrf-v1.2-cs01_files/image008.png
+  118415  Defl:N   118152   0% 09-13-2017 16:00 372df6d4  csaf-cvrf-v1.2-cs01_files/image007.png
+   81033  Defl:N    80811   0% 09-13-2017 16:00 e83fffed  csaf-cvrf-v1.2-cs01_files/image005.png
+   84585  Defl:N    84210   0% 09-13-2017 16:00 a0897d26  csaf-cvrf-v1.2-cs01_files/image015.png
+  684992  Defl:N    99619  86% 09-13-2017 16:00 d60386f4  csaf-cvrf-v1.2-cs01.html
+ 1648285  Defl:N  1480592  10% 09-13-2017 16:00 8a33cc2a  csaf-cvrf-v1.2-cs01.pdf
+    7860  Defl:N     2017  74% 09-13-2017 16:00 a64750e3  csaf-cvrf-v1.2-namespace.html
+       0  Stored        0   0% 09-13-2017 16:00 00000000  schemas/
+    9247  Defl:N     1896  80% 09-13-2017 16:00 b0857beb  schemas/common.xsd
+   41903  Defl:N     5583  87% 09-13-2017 16:00 11d6afbf  schemas/vuln.xsd
+   29633  Defl:N     4269  86% 09-13-2017 16:00 0b69f4c0  schemas/cvrf.xsd
+   16681  Defl:N     2936  82% 09-13-2017 16:00 05c7f9a3  schemas/prod.xsd
+--------          -------  ---                            -------
+ 9559331          8591759  10%                            27 files
+
+========================================================================
+MD5 digest/hash values for files in the OASIS Library release directory
+========================================================================
+
+247b5e807b518630a534c56ac9521929  csaf-cvrf-v1.2-cs01-DIFF.pdf
+c1223ba1f2d368abc152edd8f2797a4f  csaf-cvrf-v1.2-cs01.docx
+13f912367de1507de722f713337d2de6  csaf-cvrf-v1.2-cs01_files/image001.jpg
+da37303e38bd271231341088f033bfbe  csaf-cvrf-v1.2-cs01_files/image002.png
+c4e96e7f3e940400731a0653dd52c59b  csaf-cvrf-v1.2-cs01_files/image003.png
+3f061dcff52c29a4b915bbd34925f14c  csaf-cvrf-v1.2-cs01_files/image004.png
+ad02247259db9b8e1e02337583ca7013  csaf-cvrf-v1.2-cs01_files/image005.png
+21f7ea101e997688def9785beeb54c93  csaf-cvrf-v1.2-cs01_files/image006.png
+957b747ee118c15a501d0f25308050c5  csaf-cvrf-v1.2-cs01_files/image007.png
+3acfe7369626d0650269f8826c9dfba7  csaf-cvrf-v1.2-cs01_files/image008.png
+3e29a4c27e6e87c8f6959761fdb70817  csaf-cvrf-v1.2-cs01_files/image009.png
+3a0df84ab10503e68f7a7542e1d3644d  csaf-cvrf-v1.2-cs01_files/image010.png
+4565e733b22b2b09f7d13e28f865b4d8  csaf-cvrf-v1.2-cs01_files/image011.png
+afcdd022daf9e2b8b0397fbf77edb263  csaf-cvrf-v1.2-cs01_files/image012.png
+9e74305513ce8a4d6549978ce8911f60  csaf-cvrf-v1.2-cs01_files/image013.png
+78e65950312218776ba31455906d2f26  csaf-cvrf-v1.2-cs01_files/image014.png
+970d37a4098960bfdde92eb66d18165a  csaf-cvrf-v1.2-cs01_files/image015.png
+2b3d6fd6cc1648c340de850ef4d4c17a  csaf-cvrf-v1.2-cs01_files/image016.png
+d18dee6fe73f8c84c6fe7ce650fa4fde  csaf-cvrf-v1.2-cs01.html
+2352efd8ff0782e1fe24b4f5f94ef14a  csaf-cvrf-v1.2-cs01.pdf
+e7667454d020acebb5e8e8ac6c58e5df  csaf-cvrf-v1.2-cs01.zip
+539bb1c9d2caf81d68ed5b26a0cf5495  csaf-cvrf-v1.2-namespace.html
+70115239eda46c791617efddda7f15d9  schemas/common.xsd
+4c46a945dc13ec3abd19dca64b3117c0  schemas/cvrf.xsd
+ad5f8b728e161cb4938af402124e91f8  schemas/prod.xsd
+f485a9412aa625dec7492771a1bab0da  schemas/vuln.xsd
+
+==========================================================================
+SHA-1 digest/hash values for files in the OASIS Library release directory
+==========================================================================
+
+b2a6a110bfd735d5b03a29e356e07ca452f660bb  csaf-cvrf-v1.2-cs01-DIFF.pdf
+398cfa353f4f634100e7151ca4b35b9f38c5527d  csaf-cvrf-v1.2-cs01.docx
+28a3d3caf923ef5a41c033b52ea69f17160f3d0f  csaf-cvrf-v1.2-cs01_files/image001.jpg
+1966d8183131dc101afb605800f8b8ed09a7198c  csaf-cvrf-v1.2-cs01_files/image002.png
+86ea05f02bd75591eab2f2517805547fc6cc6c3d  csaf-cvrf-v1.2-cs01_files/image003.png
+936e67e8bcf7c21d76b7401f026772c704ba7b5b  csaf-cvrf-v1.2-cs01_files/image004.png
+52ea137112fa12a336b02beb7520ee96e0b0f8d3  csaf-cvrf-v1.2-cs01_files/image005.png
+57892319a4de894048d8e263e5047994dfad161d  csaf-cvrf-v1.2-cs01_files/image006.png
+125a220dd97c719bb0fe2a30d139a2a14d6d8af4  csaf-cvrf-v1.2-cs01_files/image007.png
+850c502bb1c1bee5ea6dda989f2ac95d1073a892  csaf-cvrf-v1.2-cs01_files/image008.png
+d61c08ba717068994c546cdcfee6132db949c0dd  csaf-cvrf-v1.2-cs01_files/image009.png
+ec74e6d6091ffa66e79a5ba9aa1707bc8cf2b8a0  csaf-cvrf-v1.2-cs01_files/image010.png
+cddd15fb6739634268e09fbb5471a8a070d42b9b  csaf-cvrf-v1.2-cs01_files/image011.png
+a3a211b99475c3464ef83d3d589dfa48d3aaa2d8  csaf-cvrf-v1.2-cs01_files/image012.png
+8bc5be8e4685dc9bea4489a3f87f74e329fdb1ff  csaf-cvrf-v1.2-cs01_files/image013.png
+3c4db3c906eb1bbce653e112f20559bbfbf70175  csaf-cvrf-v1.2-cs01_files/image014.png
+d1b63a4537d008d3792cead152c8fadbb3179455  csaf-cvrf-v1.2-cs01_files/image015.png
+e234add61e26f05a2148746ed021872833684e61  csaf-cvrf-v1.2-cs01_files/image016.png
+8fb0b58b0c5f00512e4abe10d308556ded7037f7  csaf-cvrf-v1.2-cs01.html
+61f13e6d46ec59a9819a9e67986c330e80b7298b  csaf-cvrf-v1.2-cs01.pdf
+36ad21001d18d190c6c144c94527da519083b495  csaf-cvrf-v1.2-cs01.zip
+ccd632da43fcefa29aba7ad4afdd27f0212d8bd4  csaf-cvrf-v1.2-namespace.html
+d35acefa8e4cdb7ffc5d18abc4c8a970193ffeb7  schemas/common.xsd
+686d5b187336aadb20d4eb006dbe244138970ad7  schemas/cvrf.xsd
+37a0d292c705b9685a589ee0df9b0d76a9e325fa  schemas/prod.xsd
+29cc096757d889bc98829caeb129ae5e05d2291f  schemas/vuln.xsd

@@ -1,0 +1,86 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+#
+# oasis-pub-check as a drop-in GitHub Action.
+#
+# A TC adds ONE step to its own CI and the publication gate runs against its
+# package. The action bundles the self-contained engine
+# (pub-check/oasis_pub_check.py, stdlib only, no external data files), so the TC
+# copies nothing into its repo and pins to a version tag to receive fixes.
+#
+# Requires a checkout step before it (the gate reads the package from the
+# calling repo's checked-out working directory).
+#
+# Minimal usage in a TC repo (.github/workflows/pub-check.yml):
+#
+#   name: pub-check
+#   on:
+#     workflow_dispatch:
+#       inputs:
+#         target: { description: "stage dir or .zip", required: true }
+#   jobs:
+#     pub-check:
+#       runs-on: ubuntu-latest
+#       permissions:
+#         contents: read
+#       steps:
+#         - uses: actions/checkout@v4
+#         - uses: OASIS-Docs/publication-assurance@v1
+#           with:
+#             target: ${{ inputs.target }}
+#
+# The step fails (red CI) when the gate reports one or more blockers; warnings
+# do not fail the build (the gate exits 0 on "publishable").
+
+name: "OASIS pub-check"
+description: "Run the OASIS publication acceptance gate (oasis-pub-check) against a TC package or stage directory."
+author: "OASIS Open"
+
+branding:
+  icon: "check-circle"
+  color: "blue"
+
+inputs:
+  target:
+    description: "Stage directory or package .zip to check, relative to the calling repo's checkout (e.g. work/v1.0/csd01 or dist/mytc-v1.0-csd01.zip)."
+    required: true
+  args:
+    description: "Extra flags passed through to oasis_pub_check.py (e.g. '--json' for machine-readable output, '--emit-manifest')."
+    required: false
+    default: ""
+  python-version:
+    description: "Python version to run the gate on."
+    required: false
+    default: "3.x"
+  install-poppler:
+    description: "Install poppler-utils (pdftotext/pdffonts) for the optional PDF cross-checks. Ignored on non-Linux runners; the gate runs without it either way."
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install pdftotext (optional PDF cross-check)
+      if: inputs.install-poppler == 'true' && runner.os == 'Linux'
+      shell: bash
+      # Non-fatal: the gate soft-degrades when pdftotext/pdffonts are absent, so
+      # a package-manager hiccup must never fail the build.
+      run: sudo apt-get update && sudo apt-get install -y poppler-utils || echo "poppler-utils unavailable; PDF cross-checks will be skipped"
+
+    - name: Run the OASIS publication gate
+      shell: bash
+      # target and args come in as env vars, not interpolated into the command
+      # line, so a value cannot inject shell. $EXTRA_ARGS stays unquoted so
+      # multiple flags word-split into argv; variable expansion does not re-run
+      # command substitution, so a hostile value is passed as a literal argument.
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        TARGET: ${{ inputs.target }}
+        EXTRA_ARGS: ${{ inputs.args }}
+      run: python3 "$ACTION_PATH/pub-check/oasis_pub_check.py" "$TARGET" $EXTRA_ARGS

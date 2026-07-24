@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>                                                                            
+<!--
+Copyright 2025-2026 OASIS Open
+SPDX-License-Identifier: Apache-2.0
+Authored by Michael Coletta, Technical Advisor to OASIS Open.
+-->
+<!DOCTYPE uri-list [                                                                                               
+<!ELEMENT uri-list (uri)+ >                                                                                        
+<!ELEMENT uri (request, document) >                                                                                
+<!ELEMENT request (#PCDATA) >                                                                                      
+<!ELEMENT document (#PCDATA) >                                                                                     
+]>                                                                                                                 
+<uri-list>                                                                                                         
+ <!-- begin CSAF Common Vulnerability Reporting Framework (CVRF) Version 1.2 -->                                                                   
+<uri>                                                                                                              
+  <request>/ns/csaf-cvrf/v1.2/common</request>                                                                           
+  <document>/csaf-cvrf/v1.2/cs01/csaf-cvrf-v1.2-namespace.html</document>            
+</uri>                                                                                                             
+
+<uri>                                                                                                              
+  <request>/ns/csaf-cvrf/v1.2/cvrf</request>                                                                           
+  <document>/csaf-cvrf/v1.2/cs01/csaf-cvrf-v1.2-namespace.html</document>            
+</uri>                                                                                                             
+                                  
+<uri>                                                                                                              
+  <request>/ns/csaf-cvrf/v1.2/prod</request>                                                                           
+  <document>/csaf-cvrf/v1.2/cs01/csaf-cvrf-v1.2-namespace.html</document>            
+</uri>                                                                                                             
+
+<uri>                                                                                                              
+  <request>/ns/csaf-cvrf/v1.2/vuln</request>                                                                           
+  <document>/csaf-cvrf/v1.2/cs01/csaf-cvrf-v1.2-namespace.html</document>            
+</uri>
+<!-- end CSAF Common Vulnerability Reporting Framework (CVRF) Version 1.2 -->                                                                   
+                                                                                                            
+                                                                                                                                                                                                                                                                                                                       
+</uri-list> 

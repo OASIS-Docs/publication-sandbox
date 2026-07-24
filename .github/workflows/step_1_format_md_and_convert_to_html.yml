@@ -1,0 +1,178 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+
+name: 1.0 - Convert Markdown -> HTML
+
+on:
+  workflow_dispatch:
+    inputs:
+      sync_path:
+        description: |
+          Path to the directory with the markdown file to convert to HTML.
+          Example: imjadn/v1.0/cn02
+          Ensure the path is copied from GitHub and formatted correctly.
+        required: true
+        default: csaf/v2.1/csd01
+
+      modify_date:
+        description: |
+          Modification date for the directory in yyyy-mm-dd format.
+          Example: 2024-11-19
+        required: true
+        default: 2025-08-01
+
+
+jobs:
+  convert-and-commit:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
+      # Step 2: Set up .sh files in .githooks
+      - name: Set up .sh files in .githooks
+        run: |
+          set -e
+          echo "Current directory: $(pwd)"
+          ls -ltra
+
+          if [ -d ".githooks" ]; then
+            echo "Making .sh files in .githooks executable"
+            find .githooks -name "*.sh" -exec chmod +x {} \;
+
+            echo "Running install_hooks.sh"
+            bash .githooks/install_hooks.sh
+            echo "install_hooks.sh ran successfully"
+
+            echo "Running restore_metadata.sh"
+            bash .githooks/restore_metadata.sh
+            echo "restore_metadata.sh ran successfully"
+          else
+            echo ".githooks directory not found. Skipping this step."
+          fi
+        shell: bash
+
+      # Step 3: Validate inputs
+      - name: Validate inputs
+        run: |
+          set -e
+          SYNC_PATH="${{ github.event.inputs.sync_path }}"
+          MODIFY_DATE="${{ github.event.inputs.modify_date }}"
+
+          echo "Received SYNC_PATH: $SYNC_PATH"
+          echo "Received MODIFY_DATE: $MODIFY_DATE"
+
+          # Validate file path
+          if [ ! -d "$SYNC_PATH" ]; then
+            echo "Invalid SYNC_PATH. Directory does not exist: $SYNC_PATH"
+            exit 1
+          fi
+
+          # Validate date format
+          if ! date -d "$MODIFY_DATE" '+%Y-%m-%d' >/dev/null 2>&1; then
+            echo "Invalid MODIFY_DATE format. Expected format: yyyy-mm-dd"
+            exit 1
+          fi
+
+          echo "SYNC_PATH=$SYNC_PATH" >> $GITHUB_ENV
+          echo "MODIFY_DATE=$MODIFY_DATE" >> $GITHUB_ENV
+
+      # Step 4: Setup Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          # Removed cache: 'npm' since there is no package-lock.json or yarn.lock
+
+
+      # Step 5: Install Prettier globally
+      - name: Install Prettier
+        run: npm install -g prettier
+
+      # Step 6: Setup Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Step 7: Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          echo "Installing dependencies"
+          cd .github/src
+          echo "Inside src directory: $(pwd)"
+          ls -ltra
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install beautifulsoup4 requests
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+        shell: bash
+
+      # Step 8: Format MD and Convert to HTML
+      - name: Format MD and Convert to HTML
+        env:
+          SYNC_PATH: ${{ env.SYNC_PATH }}
+          MODIFY_DATE: ${{ env.MODIFY_DATE }}
+          GIT_REPO_BASEDIR: ${{ github.workspace }}
+        run: |
+          echo "Sanitizing SYNC_PATH: $SYNC_PATH"
+          SYNC_PATH=$(echo "$SYNC_PATH" | tr -d '\n' | xargs)  # Ensure no extra characters
+          MD_FILE=$(find "$SYNC_PATH" -name '*.md' | head -n 1)
+          
+          if [ -z "$MD_FILE" ]; then
+            echo "No Markdown file found in $SYNC_PATH"
+            exit 1
+          fi
+      
+          echo "Running step_1_format_md_and_convert_to_html_v3_0.sh with file: $MD_FILE"
+          chmod +x .github/scripts/step_1_format_md_and_convert_to_html_v3_0.sh
+          .github/scripts/step_1_format_md_and_convert_to_html_v3_0.sh "$MD_FILE" "$GIT_REPO_BASEDIR" "$SYNC_PATH" --md-format --md-to-html
+
+      # Step 9: Update modification dates
+      - name: Update modification dates
+        env:
+          SYNC_PATH: ${{ env.SYNC_PATH }}
+          MODIFY_DATE: ${{ env.MODIFY_DATE }}
+        run: |
+          echo "Files for modification updates in $SYNC_PATH:"
+          find "$SYNC_PATH" -type f
+          echo "Updating modification date to $MODIFY_DATE 17:00:00 UTC"
+          # Update modification date for all files in the directory
+          find "$SYNC_PATH" -type f -exec touch -d "$MODIFY_DATE 17:00:00 UTC" {} +
+          # Update modification date for the directory itself
+          touch -d "$MODIFY_DATE 17:00:00 UTC" "$SYNC_PATH"
+          echo "Modification date updated successfully. Listing files with new modification dates:"
+          find "$SYNC_PATH" -type f -exec ls -lh {} +
+          echo "Directory modification date updated successfully. Listing directory:"
+          ls -ld "$SYNC_PATH"
+
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SYNC_PATH: ${{ env.SYNC_PATH }}
+          ALLOW_PUSH: "1"           # <-- allow pre-push in CI
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          echo "Adding all changes within SYNC_PATH: $SYNC_PATH"
+          git add -A "$SYNC_PATH/"
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            COMMIT_MESSAGE="Formatted and converted Markdown to HTML, updated modification dates"
+            echo "Committing changes with message: '$COMMIT_MESSAGE'"
+            git commit -m "$COMMIT_MESSAGE"
+            git push
+          fi
+      

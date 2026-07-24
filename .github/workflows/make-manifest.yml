@@ -1,0 +1,30 @@
+# Generate the release manifests for a stage directory:
+# manifest.json (machine contract) and <stem>-manifest.txt (the Work
+# Product Manifest File, the staff record published beside the release).
+# One command; the same command TC Administration runs at publication.
+name: make-manifest
+on:
+  workflow_dispatch:
+    inputs:
+      stage_dir:
+        description: "Stage directory (e.g. csaf/csaf/v2.1/csd01)"
+        required: true
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate manifests
+        run: |
+          PUB_CHECK_OFFLINE=1 python3 pub-check/oasis_pub_check.py \
+            "${{ github.event.inputs.stage_dir }}" --emit-manifest
+      - name: Commit manifests
+        run: |
+          git config user.name "OASIS Publication Assurance"
+          git config user.email "michael.coletta@oasis-open.org"
+          git add "${{ github.event.inputs.stage_dir }}"
+          git commit -m "Release manifests for ${{ github.event.inputs.stage_dir }}"
+          git push

@@ -1,0 +1,184 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+
+name: 2.0 - Convert HTML -> PDF
+
+on:
+  workflow_dispatch:
+    inputs:
+      sync_path:
+        description: |
+          Enter the path to the directory with the markdown file to convert to HTML.
+          Example: ap-hunt/v1.0/csd02
+          Ensure the path is copied from GitHub and formatted correctly.
+        required: true
+        default: csaf/v2.1/csd01
+      modify_date:
+        description: |
+          Enter the modification date for the directory in yyyy-mm-dd format.
+          Example: 2024-07-30
+        required: true
+        default: 2025-08-01
+
+jobs:
+  convert-and-commit:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up .sh files in .git_hooks
+      run: |
+        set -e
+        echo "Current directory: $(pwd)"
+        ls -ltra
+        cd .git
+        echo "Inside .git directory: $(pwd)"
+        ls -ltra
+        find .
+
+        if [ -d ".git_hooks" ]; then
+          echo "Making .sh files in .git_hooks executable"
+          find .git_hooks -name "*.sh" -exec chmod +x {} \;
+
+          echo "Running install_hooks.sh"
+          ./.git_hooks/install_hooks.sh
+          echo "install_hooks.sh ran successfully"
+
+          echo "Running restore_metadata.sh"
+          ./.git_hooks/restore_metadata.sh
+          echo "restore_metadata.sh ran successfully"
+        else
+          echo ".git_hooks directory not found. Skipping this step."
+        fi
+
+    - name: Validate inputs
+      run: |
+        set -e
+        SYNC_PATH="${{ github.event.inputs.sync_path }}"
+        MODIFY_DATE="${{ github.event.inputs.modify_date }}"
+
+        # Validate date format
+        if ! date -d "$MODIFY_DATE" '+%Y-%m-%d' >/dev/null 2>&1; then
+          echo "Invalid MODIFY_DATE format. Expected format: yyyy-mm-dd"
+          exit 1
+        fi
+
+        echo "SYNC_PATH=$SYNC_PATH" >> $GITHUB_ENV
+        echo "MODIFY_DATE=$MODIFY_DATE" >> $GITHUB_ENV
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        set -e  # Exit immediately if a command exits with a non-zero status
+        echo "Installing dependencies"
+        cd .github/src
+        echo "Inside src directory: $(pwd)"
+        ls -ltra
+
+        # Create and activate virtual environment
+        python3 -m venv venv
+        source venv/bin/activate
+
+        # Upgrade pip and install Python dependencies
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+        # Update package lists
+        sudo apt-get update
+
+        # Install pandoc
+        sudo apt-get install -y pandoc
+
+        # Remove any existing wkhtmltopdf
+        sudo apt-get remove -y wkhtmltopdf || true
+
+        # Install dependencies required by wkhtmltopdf
+        sudo apt-get install -y xfonts-75dpi fonts-liberation fonts-dejavu
+
+
+      shell: bash
+      
+    - name: Install patched wkhtmltopdf
+      run: |
+        sudo apt-get update
+        sudo apt-get remove -y wkhtmltopdf
+        wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+        sudo apt-get install -y ./wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+        wkhtmltopdf --version
+
+    - name: Convert HTML to PDF
+      env:
+        SYNC_PATH: ${{ env.SYNC_PATH }}
+        MODIFY_DATE: ${{ env.MODIFY_DATE }}
+      run: |
+        set -e  # Exit immediately if a command exits with a non-zero status
+        echo "Current directory: $(pwd)"
+        ls -ltra
+        chmod +x ./.github/scripts/step_2_convert_html_to_pdf_V2_0.sh
+        ./.github/scripts/step_2_convert_html_to_pdf_V2_0.sh "$SYNC_PATH"
+        echo "step_2_convert_html_to_pdf_V2_0.sh ran successfully"
+      shell: bash
+
+    - name: Update modification dates
+      env:
+        SYNC_PATH: ${{ env.SYNC_PATH }}
+        MODIFY_DATE: ${{ env.MODIFY_DATE }}
+      run: |
+        set -e  # Exit immediately if a command exits with a non-zero status
+        echo "Files for modification updates in $SYNC_PATH:"
+        find "$SYNC_PATH" -type f
+        echo "Updating modification date to $MODIFY_DATE 17:00:00 UTC"
+        # Update modification date for all files in the directory
+        find "$SYNC_PATH" -type f -exec touch -d "$MODIFY_DATE 17:00:00" {} +
+        # Update modification date for the directory itself
+        touch -d "$MODIFY_DATE 17:00:00" "$SYNC_PATH"
+        echo "Modification date updated successfully. Listing files with new modification dates:"
+        find "$SYNC_PATH" -type f -exec ls -lh {} +
+        echo "Directory modification date updated successfully. Listing directory:"
+        ls -ld "$SYNC_PATH"
+
+    - name: Commit changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SYNC_PATH: ${{ env.SYNC_PATH }}
+      run: |
+        set -e  # Exit immediately if a command exits with a non-zero status
+        # Configure Git with the GitHub Actions bot credentials
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+        # Stage all changes
+        git add .
+
+        # Check if there are any changes to commit
+        if ! git diff --cached --quiet; then
+          # Find the Markdown file
+          MD_FILE=$(find "$SYNC_PATH" -name '*.md' | head -n 1)
+
+          if [ -z "$MD_FILE" ]; then
+            echo "Markdown file not found in $SYNC_PATH."
+          fi
+
+          # Extract the base name of the Markdown file
+          MD_FILENAME=$(basename "$MD_FILE" .md)
+
+          # Commit the changes with a descriptive message
+          git commit -m "Generated $MD_FILENAME HTML and PDF"
+
+          # Push the changes to the repository
+          git push
+        else
+          echo "No changes to commit."
+        fi
+      shell: bash

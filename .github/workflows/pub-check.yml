@@ -1,0 +1,35 @@
+# Copyright 2025-2026 OASIS Open
+# SPDX-License-Identifier: Apache-2.0
+# Authored by Michael Coletta, Technical Advisor to OASIS Open.
+
+# pub-check: run the publication gate on a stage directory.
+#
+# This workflow is deliberately thin. The gate is ONE command:
+#     python3 pub-check/oasis_pub_check.py <stage-dir>
+# Everything else below is checkout, a Python runtime, and poppler-utils
+# for the optional PDF cross-check. There is no other logic in here.
+
+name: pub-check
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage_dir:
+        description: "Stage directory to check, e.g. csaf/v2.1/csd01"
+        required: true
+
+jobs:
+  pub-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install pdftotext (optional PDF cross-check)
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
+      - name: Run the gate
+        run: python3 pub-check/oasis_pub_check.py "${{ github.event.inputs.stage_dir }}"
